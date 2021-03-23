@@ -1,13 +1,37 @@
 import React from "react"
+import { Grid, Typography, Paper, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import "./Cascade.css"
+import clsx from "clsx";
 
-export const Home = () => (
-    <>
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    margin: {
+        margin: theme.spacing(2),
+    },
+    paper: {
+        width: theme.spacing(20),
+        height: theme.spacing(10),
+        padding: theme.spacing(1)
+    }
+}))
 
-    <h1>Cascade</h1>
 
-    <h3>Welcome</h3>
-
-    <p>Get to gaming!</p>
+export const Home = () => {
     
-    </>
-);
+    const classes = useStyles();
+    return <>
+        <Paper variant="outlined" className={clsx(classes.margin, classes.paper)} square>
+            
+                
+                    <Typography variant="h4">Welcome</Typography>                    
+                
+                
+                    <Typography>Get to gaming!</Typography>
+                
+            
+        </Paper>
+        </>
+};
