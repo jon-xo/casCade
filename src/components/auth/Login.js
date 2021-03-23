@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react"
 import PropTypes from 'prop-types';
 import clsx from "clsx";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Button, Dialog, DialogTitle, DialogContent, FormControl, TextField, InputAdornment } from "@material-ui/core";
+import { ToggleButton , ToggleButtonGroup } from "@material-ui/lab";
 import { AccountCircle } from "@material-ui/icons";
+import { UserAuthToggle } from "./AuthToggle";
 import "./Login.css"
 
 // Declare local variable to declare custom css for material-ui components
@@ -55,6 +56,7 @@ ModalAlert.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired
 }
+
 
 // Create Login component with API calls to check for an existing user in the database
 // & conditional to check TextField value against database table and display ModalAlert,
@@ -118,8 +120,9 @@ export const Login = props => {
                             <Typography variant="h3" gutterBottom>
                                 casCade
                             </Typography>
-                            <Typography variant="h4" gutterBottom>
-                                Please sign in
+                            <UserAuthToggle gutterBottom/>
+                            <Typography variant="h5" gutterBottom>
+                                Sign in to get started
                             </Typography>
                             <fieldset>
                                 <FormControl className={clsx(classes.margin, classes.textField)}>
