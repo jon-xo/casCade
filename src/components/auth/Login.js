@@ -67,12 +67,15 @@ export const Login = props => {
     const history = useHistory()
     const classes = useStyles();
 
+    // Declare state variable open as false
     const [ open , setOpen] = useState(false);
     
+    // Function to update open boolean to true
     const handleOpenConditional = () => {
         setOpen(true)
     };
 
+    // Function to update open boolean to false
     const handleAlertClose = () => {
         setOpen(false);
     }
