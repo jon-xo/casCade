@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Button, Dialog, DialogTitle, DialogContent, FormControl, TextField, InputAdornment } from "@material-ui/core";
-import { ToggleButton , ToggleButtonGroup } from "@material-ui/lab";
 import { AccountCircle } from "@material-ui/icons";
 import { UserAuthToggle } from "./AuthToggle";
 import "./Login.css"
@@ -104,6 +103,7 @@ export const Login = props => {
             })
     }
 
+    // Login page is rendered with ModalAlert and ToggleButton components
     return (
         <main className="container--login">
             <ModalAlert open={open} onClose={handleAlertClose} />

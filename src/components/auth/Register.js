@@ -126,7 +126,7 @@ export const Register = (props) => {
         
     }
 
-    
+    // Register page is rendered with ModalAlert and ToggleButton components
     return (
         <main style={{ textAlign: "center" }}>
 
