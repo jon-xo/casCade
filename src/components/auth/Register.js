@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Button, Dialog, DialogTitle, DialogContent, FormControl, TextField, InputAdornment } from "@material-ui/core";
 import { AccountCircle, Email } from "@material-ui/icons";
+import { UserAuthToggle } from "./AuthToggle";
 import "./Login.css"
 
 // Declare local variable to declare custom css for material-ui components
@@ -125,7 +126,7 @@ export const Register = (props) => {
         
     }
 
-    
+    // Register page is rendered with ModalAlert and ToggleButton components
     return (
         <main style={{ textAlign: "center" }}>
 
@@ -139,9 +140,12 @@ export const Register = (props) => {
                 </Grid>
                 <Grid item xs={11} sm={8} md={6}>
                     <form autoComplete="on" onSubmit={handleRegister}>
-                        
                         <Typography variant="h3" gutterBottom>
-                        Create your casCade account
+                                casCade
+                        </Typography>
+                        <UserAuthToggle gutterBottom/>
+                        <Typography variant="h5" gutterBottom>
+                        Create your account
                         </Typography>
                         <Grid >
                             <Grid item md={12}>
