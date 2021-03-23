@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
+// Declare local component to display an alert modal when envoked
+// Component accepts two props; function and boolean
 const UserDupeAlert = (props) => {
     const { onClose, open } = props;
     const classes = useStyles();
@@ -59,17 +61,21 @@ export const Register = (props) => {
     const history = useHistory()
     const classes = useStyles();
 
+    // Declare inital state variable open as false
     const [ open , setOpen] = useState(false);
     
+    // Function to update open boolean to true
     const handleOpenConditional = () => {
         setOpen(true)
     };
 
+    // Function to update open boolean to false
     const handleAlertClose = () => {
         setOpen(false);
     }
     
-
+    // API Call to expand email value from users table
+    // and verify that user string has a value
     const existingUserCheck = () => {
         return fetch(`http://localhost:8088/users?email=${email.current.value}`)
             .then(res => res.json())
@@ -78,16 +84,18 @@ export const Register = (props) => {
 
     const handleRegister = (e) => {
         e.preventDefault()
+        
+        // const consoleObject = {
+        //     email: email.current.value,
+        //     name: `${firstName.current.value} ${lastName.current.value}`,
+        //     targetName: e.target.name,
+        //     targetValue: e.target.value 
+        // }
+        
+        // console.log(consoleObject);        
 
-        const consoleObject = {
-            email: email.current.value,
-            name: `${firstName.current.value} ${lastName.current.value}`,
-            targetName: e.target.name,
-            targetValue: e.target.value 
-        }
-        
-        console.log(consoleObject);
-        
+        // Conditional to post new user object to users table if value is true
+        // if user exists, display modal.
 
         existingUserCheck()
             .then((userExists) => {
@@ -117,6 +125,7 @@ export const Register = (props) => {
         
     }
 
+    
     return (
         <main style={{ textAlign: "center" }}>
 
