@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Tabs, Tab } from "@material-ui/core";
+import { LogoLarge } from "../Logo";
 
 // Declare local variable to declare custom css for material-ui components
 
@@ -17,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     navPaper: {
         textAlign: 'center',
         color: theme.palette.text.primary
+    },
+    simplePaper: {
+        border: 0,
     }
 }))
 
@@ -62,8 +66,8 @@ export const NavBar = () => {
         alignItems="center">
 
         <Grid item lg={12}>
-            <Paper variant="none" elevation={0} className={clsx(classes.root, classes.margin)}>
-                <Typography variant="h2" gutterBottom>casCade</Typography>
+            <Paper elevation={0} className={clsx(classes.root, classes.margin, classes.simplePaper)}>
+                <LogoLarge gutterBottom/>
             </Paper>
         </Grid>
         <Grid item lg={12}>
