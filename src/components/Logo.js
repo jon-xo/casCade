@@ -5,7 +5,7 @@ import { Typography } from "@material-ui/core";
 // Declare local variable to import material-ui styles and declare css overrides
 
 const useStyles = makeStyles((theme) => ({
-    logoRed: {
+    logoRed: { 
         color: theme.palette.error.main,
         fontWeight: 400,
     },

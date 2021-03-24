@@ -61,9 +61,9 @@ export const NavBar = () => {
     return (
         <>
         <Grid container
-        direction="row"
-        justify="flex-start"
-        alignItems="center">
+            direction="row"
+            justify="flex-start"
+            alignItems="center">
 
         <Grid item lg={12}>
             <Paper elevation={0} className={clsx(classes.root, classes.margin, classes.simplePaper)}>
@@ -78,7 +78,6 @@ export const NavBar = () => {
                         value={value}
                         indicatorColor="primary"
                         onChange={handleNavChange}
-                        className={clsx(classes.navPaper)}
                         centered
                         >
                             {/* Map method is called on the NavList array
@@ -90,9 +89,9 @@ export const NavBar = () => {
                         {navList.map((m) => {
                             const labelName = m.replace('/', '');
                             if (labelName === "") {
-                                return <Tab label="home" />
+                                return <Tab key="home" label="home" />
                             } else {
-                                return <Tab label={labelName} />
+                                return <Tab key={labelName} label={labelName} />
                             }
                         })}
                         </Tabs>
