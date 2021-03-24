@@ -1,16 +1,16 @@
 import React, { useState } from "react"
-import clsx from "clsx";
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Tabs, Tab } from "@material-ui/core";
+import { Home, Favorite, Search, Shuffle, LocalLibrary } from "@material-ui/icons";
 import { LogoLarge } from "../Logo";
+import clsx from "clsx";
 
 // Declare local variable to declare custom css for material-ui components
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        
+        display: 'flex',        
     },
     margin: {
         margin: theme.spacing(1),
@@ -25,9 +25,33 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-// Declare array of all render paths used in NavBar element
+// Declare array of objects which contains path and icon keys used in NavBar element
 
-const navList = ["/", "/library", "/favorites", "/search"];
+const newNavList = [
+    {
+        path: "/",
+        icon: "Home",
+    },
+    {
+        path: "/library",
+        icon: "LocalLibrary",
+    },
+    {
+        path: "/favorites",
+        icon: "Favorite",
+
+    },
+    {
+        path: "/search",
+        icon: "Search"
+    }
+]
+
+// Function finds and returns the index of the path key stored in the newNavList array.
+
+const matchNavObject = (location) => {
+    return newNavList.findIndex(n => n.path === location)
+};
 
 // ActiveTab component reads the current browser URL path and returns 
 // the matching index interger
@@ -35,8 +59,28 @@ const navList = ["/", "/library", "/favorites", "/search"];
 const ActiveTab = () => {
     const location = useLocation();
     const currentLocation = location.pathname;
-    const locationIndex = navList.indexOf(currentLocation);
+    const locationIndex = matchNavObject(currentLocation);
+    
     return locationIndex;
+};
+
+// Function uses switch case to match the string value of the icon key
+// and returns the matching material-ui icon component. The second paramater
+// passes any props to the component once returned.
+
+const renderNavIcon = (icon, props) => {
+    switch (icon) {
+        case 'Home':
+            return(<Home {...props} />);   
+        case 'LocalLibrary':
+            return(<LocalLibrary {...props} />);
+        case 'Favorite':
+            return(<Favorite {...props} />);
+        case 'Search':
+            return(<Search {...props} />)
+;        default:
+            return(<Home {...props} />);
+    }
 };
 
 // NavBar component sets state variable of value
@@ -54,7 +98,7 @@ export const NavBar = () => {
     const handleNavChange = (e, newNavValue) => {
         
         setValue(newNavValue)
-        history.push(navList[newNavValue])
+        history.push(newNavList[newNavValue].path)
 
     }
 
@@ -70,9 +114,9 @@ export const NavBar = () => {
                 <LogoLarge gutterBottom/>
             </Paper>
         </Grid>
-        <Grid item lg={12}>
+        <Grid item sm={12} md={12} lg={12}>
             <Grid container justify="center">
-                <Grid item lg={12}>                   
+                <Grid item sm={12} md={12} lg={12}>                   
                     <Paper elevation={2} className={clsx(classes.navPaper)}>
                         <Tabs
                         value={value}
@@ -80,18 +124,22 @@ export const NavBar = () => {
                         onChange={handleNavChange}
                         centered
                         >
-                            {/* Map method is called on the NavList array
-                                The forward slash (/) is removed from each
-                                array item, if the labelName variable equals
-                                and empty string, a Tab is returned
-                                for the Home (/) path.
+                            {/* Map method is called on the NavList array of objects.
+                                The forward slash (/) is removed from each objects'
+                                path key value, if the labelName variable equals
+                                an empty string, a Tab is returned
+                                for the Home (/) path. The renderNavIcon recieves 
+                                // the m.icon value and returns the matching material-ui component
+                                // stored in the switch case.
+
                             */}
-                        {navList.map((m) => {
-                            const labelName = m.replace('/', '');
+                        {newNavList.map((m) => {
+                            const labelName = m.path.replace('/', '');
+                            const labelIcon = m.icon
                             if (labelName === "") {
-                                return <Tab key="home" label="home" />
+                                return <Tab key="home" icon={renderNavIcon(labelIcon)} label="home" />
                             } else {
-                                return <Tab key={labelName} label={labelName} />
+                                return <Tab key={labelName} icon={renderNavIcon(labelIcon)} label={labelName} />
                             }
                         })}
                         </Tabs>
