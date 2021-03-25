@@ -1,6 +1,5 @@
-import React, { useState , useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Grid, Typography, Paper } from "@material-ui/core";
-import { Favorite, Search, Shuffle, LocalLibrary } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { LibraryContext } from "./LibraryProvider";
 import { LibraryCard } from "./LibraryCard";
@@ -69,9 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-export const truncate = (str, n) => {
-    return (str.length > n) ? <span>{(str.substr(0, n-1 ))}&hellip;</span> : str;
-};
+// Library header banner Component
 
 export const LibraryBanner = () => {
     const classes = useStyles();
@@ -99,21 +96,21 @@ export const LibraryBanner = () => {
     )
 };
 
+// Library list component 
+
 export const LibraryList = () => {
+    // API provider and data returned is accessed via useContext
     const { allGames , getArcadeTitles } = useContext(LibraryContext)
     const classes = useStyles();
-    const [ open, setOpen ] = useState(false);
 
-    const handleCardDetails = () => {
-        setOpen(!open);
-    };
-
+    // Use effect envokes API call
     useEffect(() => {
         getArcadeTitles()
     }, [])
 
-    // console.log(allGames);
-
+    // Return statement renders the cardContainer element and 
+    // maps through each result and renders the child LibraryCard element,
+    // game details are passed through the compenent's props.
     return (
         <>
         <div className={classes.cardContainer}>
