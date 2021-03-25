@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContainer: {
         // Styles for div which holds all rendered game cards
-        width: theme.spacing(175),
+        minWidth: '50vw',
+        maxWidth: '95vw',
         margin: theme.spacing(6),
         display: 'flex',
         flexWrap: 'wrap',
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardStyle: {
         // Primary theme for rendered game cards
-        width: theme.spacing(35),
+        width: theme.spacing(40),
         height: 600,
         margin: theme.spacing(2),
         backgroundColor: theme.palette.primary.light,
@@ -32,19 +33,26 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     cardHeaderSpan: {
-        margin: theme.spacing(1),
+        // Set default height for card header
+        marginTop: theme.spacing(1),
         height: theme.spacing(10),
+        textAlign: 'center',
     },
     cardHeader: {
         fontWeight: "bold",
     },
 
     cardMedia: {
+        // Default styles for card images 
         paddingTop: "15.5%",
         height: 160,
         width: '100%',
     },
     cardButtonContainer: {
+        // Container to anchor card buttons to bottom
+        display: 'grid',
+        height: theme.spacing(12),
+        alignContent: 'end',
         alignItems: 'end',
     },
     cardDivider: {
@@ -53,27 +61,48 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(2),
     },
+    genreContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+    },
     genreTag: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'start',
         alignItems: 'center',
         minHeight: theme.spacing(5),
-        minWidth: theme.spacing(15),
-        maxWidth: theme.spacing(30),
+        minWidth: '40%',
+        maxWidth: '100%',
         border: `.1rem solid #f5f5f5`,
-        backgroundColor: theme.palette.primary.dark,
-        borderRadius: '.8rem',
+        backgroundColor: theme.palette.secondary.light,
+        borderRadius: '.5rem',
         fontWeight: 300,
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(1),
+    },
+    uncategorizedTag: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'start',
+        alignItems: 'center',
+        minHeight: theme.spacing(5),
+        width: theme.spacing(20),
+        border: `.1rem solid #f5f5f5`,
+        backgroundColor: theme.palette.secondary.light,
+        borderRadius: '.5rem',
+        fontWeight: 300,
+        marginBottom: theme.spacing(1),
     },
     tagText: {
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(2),
         fontSize: 15,
+        textAlign: 'left',
     },
     tagIcon: {
         marginLeft: theme.spacing(2),
         fontSize: 20,
+        textAlign: 'left',
     },
     paper: {
         // Rectanglar blue-gray div
@@ -87,13 +116,6 @@ const useStyles = makeStyles((theme) => ({
     nested: {
         paddingLeft: theme.spacing(4),
     },
-    iconSpan: {
-        // Style set to align icon and text
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: theme.spacing(1)
-    },
     iconText: {
         // Alternate text alignment
         display: 'flex-wrap',
@@ -101,14 +123,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'stretch',
         justifyContent: 'center',
         textAlign: 'center'
-    },
-    iconStyle: {
-        // Basic color styles to border material-ui in blue-grey circular bubble
-        fontSize: '1.5rem',
-        padding: theme.spacing(.5),
-        borderRadius: '50%',
-        border: 'solid',
-        backgroundColor: theme.palette.secondary.light,
     },
     redIcon: {
         // Create red circular bubble for material-ui icons
@@ -121,7 +135,6 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             color: theme.palette.error.main,
         }
-
     },
     yellowIcon: {
         // Create yellow circular bubble for material-ui icons
@@ -143,6 +156,10 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }))
+
+export const truncate = (str, n) => {
+    return (str.length > n) ? <span>{(str.substr(0, n-1 ))}&hellip;</span> : str;
+};
 
 export const LibraryBanner = () => {
     const classes = useStyles();
@@ -190,26 +207,32 @@ export const LibraryList = () => {
         <div className={classes.cardContainer}>
 
         {allGames.map(game => {
-                const cardTitle = game.title.replace(/ *\([^)]*\) */g, '').replace('Internet Arcade:', '')
+                // const cardTitle = game.title.replace(/ *\([^)]*\) */g, '').replace('Internet Arcade:', '')
+                const cardTitle = (title, length) => {
+                    let editedTitle = title.replace(/ *\([^)]*\) */g, '').replace('Internet Arcade:', '')
+                    return truncate(editedTitle, length)
+                };
                 return <>
                 <Card className={classes.cardStyle}>
                     <CardMedia
                     className={classes.cardMedia}
                     image={`https://archive.org/services/img/${game.identifier}`}
-                    title={game.title}
+                    title={cardTitle(game.title, 44)}
                     />
                     <CardContent>
                         <div className={classes.cardHeaderSpan}>
                             <Typography className={classes.cardHeader}  variant="h5" component="h2" gutterBottom>
-                                {cardTitle}
+                                {cardTitle(game.title, 41)}
                             </Typography>
                         </div>
-                        {!game.genre ? <div className={classes.genreTag}>
-                            <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">Uncategorized</Typography>
-                        </div>:<div className={classes.genreTag}>
-                            <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">{game.genre}</Typography>
-                        </div>}
-                        
+                        <div className={classes.genreContainer}>
+                            {!game.genre ? <div className={classes.uncategorizedTag}>
+                                <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">Uncategorized</Typography>
+                            </div>:<div className={classes.genreTag}>
+                                <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">{truncate(game.genre, 22)}</Typography>
+                            </div>}
+                        </div>
+                        <Divider className={classes.cardDivider} />
                         <List component="nav" disablePadding>
                             <ListItem button onClick={handleCardDetails}>
                                 <ListItemIcon>
