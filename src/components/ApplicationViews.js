@@ -1,7 +1,9 @@
 import React from "react"
+import { Route } from "react-router-dom";
 import { Home } from "./Home";
 import { NavBar } from "./nav/NavBar";
-import { Route } from "react-router-dom";
+import { LibraryBanner, LibraryList } from "./library/Library";
+import { LibraryProvider } from "./library/LibraryProvider";
 
 export const ApplicationViews = () => {
     return (
@@ -10,9 +12,13 @@ export const ApplicationViews = () => {
                 <NavBar />
                 <Home />
             </Route>
-            <Route exact path="/library">
-                <NavBar />
-            </Route>
+            <LibraryProvider>
+                <Route exact path="/library">
+                    <NavBar />
+                    <LibraryBanner />
+                    <LibraryList />
+                </Route>
+            </LibraryProvider>
             <Route exact path="/favorites">
                 <NavBar />
             </Route>
