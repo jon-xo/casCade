@@ -1,4 +1,5 @@
 import React, { useState , useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
 import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
@@ -9,7 +10,7 @@ import clsx from "clsx";
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: theme.spacing(1),
-        color: '#f5f5f5',
+        color: theme.palette.secondary.dark,
     },
     cardContainer: {
         // Styles for div which holds all rendered game cards
@@ -25,8 +26,9 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(40),
         height: 700,
         margin: theme.spacing(2),
-        backgroundColor: theme.palette.primary.light,
-        color: '#f5f5f5',
+        background: 'linear-gradient (-45deg,rgba(0, 0, 0, 0.2),rgba(255, 255, 255, 0.3))',
+        backgroundColor: '#e0e0e0',
+        color: theme.palette.secondary.dark,
         transition: "0.3s",
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
         "&:hover": {
@@ -91,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.light,
         borderRadius: '.5rem',
         fontWeight: 300,
+        color: '#f5f5f5',
         marginBottom: theme.spacing(1),
     },
     uncategorizedTag: {
@@ -105,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.light,
         borderRadius: '.5rem',
         fontWeight: 300,
+        color: '#f5f5f5',
         marginBottom: theme.spacing(1),
     },
     tagText: {
@@ -126,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
         // Create red theme for material-ui icons
         fontSize: '1.5rem',
         padding: theme.spacing(.5),
-        color: '#f5f5f5',
+        color: theme.palette.secondary.dark,
         "&:hover": {
             color: theme.palette.error.main,
         }
@@ -220,13 +224,32 @@ export const LibraryCard = ({ game }) => {
                             <IconButton>
                                 <Favorite className={classes.redIcon}/>
                             </IconButton>
-                            <Button
-                                variant="contained"
-                                className={classes.greenButton}
-                                startIcon={<SportsEsports />}
-                            >
-                                Play
-                            </Button>
+                            <Link to={() => {
+                                const gameTitle = cardTitle(game.title);
+                                const gameDate = () => {
+                                  return !game.date ? "N/A" : parseInt(releaseDate(game.date)); 
+                                }    
+                                const gameGenre = () => {
+                                    return !game.genre ? "Undefined" : game.genre;
+                                }
+                                const routerLink = {
+                                    pathname: `/player/${game.identifier}`,
+                                    gameId: game.identifier,
+                                    title: gameTitle,
+                                    releaseDate: gameDate,
+                                    genre: gameGenre,
+                                    imgPath: `https://archive.org/services/img/${game.identifier}`,
+                                }
+                                return routerLink
+                            }}>
+                                <Button
+                                    variant="contained"
+                                    className={classes.greenButton}
+                                    startIcon={<SportsEsports />}
+                                >
+                                    Play
+                                </Button>
+                            </Link>
                         </div>
                     </CardActions>
                 </Card>

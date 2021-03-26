@@ -114,9 +114,9 @@ export const NavBar = () => {
                 <LogoLarge gutterBottom/>
             </Paper>
         </Grid>
-        <Grid item sm={12} md={12} lg={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
             <Grid container justify="center">
-                <Grid item sm={12} md={12} lg={12}>                   
+                <Grid item xs={12} sm={12} md={12} lg={12}>                   
                     <Paper elevation={2} className={clsx(classes.navPaper)}>
                         <Tabs
                         value={value}

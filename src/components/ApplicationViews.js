@@ -4,6 +4,7 @@ import { Home } from "./Home";
 import { NavBar } from "./nav/NavBar";
 import { LibraryBanner, LibraryList } from "./library/Library";
 import { LibraryProvider } from "./library/LibraryProvider";
+import { GameContainer } from "./player/Player";
 
 export const ApplicationViews = () => {
     return (
@@ -17,6 +18,7 @@ export const ApplicationViews = () => {
                     <NavBar />
                     <LibraryBanner />
                     <LibraryList />
+                    <Route path='/player/:gameData' component={GameContainer} />
                 </Route>
             </LibraryProvider>
             <Route exact path="/favorites">
@@ -25,7 +27,10 @@ export const ApplicationViews = () => {
             <Route exact path="/search">
                 <NavBar />
             </Route>
-        
+            {/* <Route exact path="/player">
+                <NavBar />
+                <GameContainer />
+            </Route> */}
         </>
     )
 };
