@@ -1,8 +1,10 @@
-import React, { useHistory } from "react"
+import React from "react"
+import { useParams, useHistory } from "react-router-dom";
 import { Grid, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { BuildEmbed } from "./EmbedPlayer";
 import "../Cascade.css"
+import clsx from "clsx";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 
@@ -15,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
     },
     gameContainer: {
-        backgroundColor: 'var(--xiketic)',
         color: '#f5f5f5',
-        height: '50vh',
+        height: '60vh',
+        minHeight: '45rem',
         minWidth: '52rem',
         marginTop: theme.spacing(10),
         zIndex: 1,
@@ -26,11 +28,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const GameContainer = ({ gameProp }) => {
     const classes = useStyles();
+    const params = useParams();
 
-    const gameData = this.props.location;
-    const gameId = this.props.location.gameId;
+    // const gameData = this.props.location;
+    // const gameId = this.props.location.gameId;
 
-    console.log({gameData, gameId});
+
+    console.log(params);
 
     return (
         <>
@@ -43,9 +47,9 @@ export const GameContainer = ({ gameProp }) => {
             spacing={3}
             >
                 <Grid item xs={10}>
-                    <Paper elevation={0} variant="outlined" className={classes.gameContainer}>
+                    <Paper elevation={0} variant="outlined" className={clsx(classes.gameContainer, 'gameContainer')}>
                         <Typography variant="h4" component="h2" align="center">Player</Typography>
-                        <BuildEmbed gameIdentifer={ gameId }/>
+                        <BuildEmbed gameIdentifer={params}/>
                     </Paper>
                 </Grid>
             </Grid>

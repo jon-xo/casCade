@@ -4,6 +4,7 @@
 * {
 	/* CSS HSL */
 --xiketic: hsla(231, 82%, 6%, 1);
+--raisin-black: hsl(233, 13, 12);
 --dark-sienna: hsla(339, 80%, 12%, 1);
 --rosewood: hsla(354, 93%, 22%, 1);
 --dark-red: hsla(358, 97%, 31%, 1);
@@ -13,6 +14,14 @@
 --carrot-orange: hsla(34, 95%, 49%, 1);
 --orange-web: hsla(39, 96%, 50%, 1);
 --selective-yellow: hsla(43, 100%, 52%, 1);
+}
+
+.gameContainer {
+    background: hsla(233, 13%, 12%, 1);
+    background: linear-gradient(45deg, hsla(233, 13%, 12%, 1) 29%, hsla(208, 68%, 14%, 1) 66%, hsla(207, 74%, 14%, 1) 77%, hsla(209, 42%, 40%, 1) 100%);
+    background: -moz-linear-gradient(45deg, hsla(233, 13%, 12%, 1) 29%, hsla(208, 68%, 14%, 1) 66%, hsla(207, 74%, 14%, 1) 77%, hsla(209, 42%, 40%, 1) 100%);
+    background: -webkit-linear-gradient(45deg, hsla(233, 13%, 12%, 1) 29%, hsla(208, 68%, 14%, 1) 66%, hsla(207, 74%, 14%, 1) 77%, hsla(209, 42%, 40%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#1B1C23", endColorstr="#0B243A", GradientType=1 );
 }
 
 .paperBanner {

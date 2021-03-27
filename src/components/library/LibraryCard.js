@@ -146,6 +146,9 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.success.light,
             color: theme.palette.secondary.main,
         }
+    },
+    playLink: {
+        textDecoration: 'none',
     }
 }))
 
@@ -224,7 +227,7 @@ export const LibraryCard = ({ game }) => {
                             <IconButton>
                                 <Favorite className={classes.redIcon}/>
                             </IconButton>
-                            <Link to={() => {
+                            <Link className={classes.playLink} to={() => {
                                 const gameTitle = cardTitle(game.title);
                                 const gameDate = () => {
                                   return !game.date ? "N/A" : parseInt(releaseDate(game.date)); 
@@ -233,7 +236,7 @@ export const LibraryCard = ({ game }) => {
                                     return !game.genre ? "Undefined" : game.genre;
                                 }
                                 const routerLink = {
-                                    pathname: `/player/${game.identifier}`,
+                                    pathname: `/library/player/${game.identifier}`,
                                     gameId: game.identifier,
                                     title: gameTitle,
                                     releaseDate: gameDate,
