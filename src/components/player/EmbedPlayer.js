@@ -1,5 +1,4 @@
 import React from "react"
-import { Grid, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "../Cascade.css"
 import clsx from "clsx";
@@ -12,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     gameHeader: {
         fontWeight: "bold",
     },
+    // embedContainer for applying flexbox to child element
     embedContainer: {
         display: 'flex',
         alignContent: 'center',
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2)
     },
     embedSpan: {
+        // Span to hold the iframe element
         backgroundColor: 'var(--xiketic)',
         display: 'flex',
         justifyContent: 'center',
@@ -43,13 +44,10 @@ export const BuildEmbed = ({ gameIdentifer }) => {
     
     // Create URL using component prop
 
-    // console.log(gameIdentifer.gameData);
-
     const playerId = gameIdentifer.gameData
-    
     const queryURL = `https://archive.org/embed/${playerId}`
 
-    // Build embedded iFrame element with  src attribute = queryURL
+    // Build embedded iFrame element with src attribute = queryURL
     const embedURL = `<iframe src="${queryURL}" width="640" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>`
 
 
@@ -57,6 +55,7 @@ export const BuildEmbed = ({ gameIdentifer }) => {
         <>
         <div className={classes.embedContainer}>
             <div className={clsx(classes.root, classes.embedSpan)}>
+                {/* Instruct React to trust the iframe source stored in embedURL. [***] */}
                 <div dangerouslySetInnerHTML={{ __html: embedURL }} />
             </div>
         </div>

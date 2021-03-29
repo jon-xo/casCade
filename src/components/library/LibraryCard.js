@@ -227,6 +227,8 @@ export const LibraryCard = ({ game }) => {
                             <IconButton>
                                 <Favorite className={classes.redIcon}/>
                             </IconButton>
+                            {/* react-router-dom Link is passed the routerLink object via state,
+                             which combines API game data for each individual card    */}
                             <Link className={classes.playLink} to={() => {
                                 const gameTitle = cardTitle(game.title);
                                 const routerLink = {

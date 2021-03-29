@@ -41,10 +41,6 @@ export const ApplicationViews = () => {
             <Route exact path="/search">
                 <NavBar />
             </Route>
-            {/* <Route exact path="/player">
-                <NavBar />
-                <GameContainer />
-            </Route> */}
         </>
     )
 };
