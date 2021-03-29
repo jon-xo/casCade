@@ -6,16 +6,16 @@ import { LibraryBanner, LibraryList } from "./library/Library";
 import { LibraryProvider } from "./library/LibraryProvider";
 import { GameContainer } from "./player/Player";
 
-const gameRouter = ({gameContainer: GameContainer, ...rest}) => {
-    return <Route {...rest}    
-        render={routeProps => (
-            <>
-                <NavBar />
-                <GameContainer {...routeProps} />
-            </>
-        )}
-        />
-};
+// const gameRouter = ({gameContainer: GameContainer, ...rest}) => {
+//     return <Route {...rest}    
+//         render={routeProps => (
+//             <>
+//                 <NavBar />
+//                 <GameContainer {...routeProps} />
+//             </>
+//         )}
+//         />
+// };
 
 export const ApplicationViews = () => {
     return (
@@ -30,7 +30,7 @@ export const ApplicationViews = () => {
                     <LibraryBanner />
                     <LibraryList />
                 </Route>
-                <Route path='/library/player/:gameData'>
+                <Route exact path='/library/player/:gameData'>
                     <NavBar />
                     <GameContainer />
                 </Route>

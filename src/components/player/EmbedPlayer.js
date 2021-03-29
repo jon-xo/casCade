@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'stetch',
         justifyContent: 'center',
         justifyItems: 'stretch',
-        height: '90%',
+        height: '40rem',
         maxWidth: '100%',
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2)
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         color: '#f5f5f5',
-        height: '90%',
+        height: '40rem',
         width: '90%',
         marginTop: theme.spacing(2),
         zIndex: 2,
@@ -42,7 +42,7 @@ export const BuildEmbed = ({ gameIdentifer }) => {
     
     // Create URL using component prop
 
-    console.log(gameIdentifer.gameData);
+    // console.log(gameIdentifer.gameData);
 
     const playerId = gameIdentifer.gameData
     
@@ -50,12 +50,6 @@ export const BuildEmbed = ({ gameIdentifer }) => {
 
     // Build embedded iFrame element with  src attribute = queryURL
     const embedURL = `<iframe src="${queryURL}" width="640" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>`
-
-    // const fullEmbed = () => {
-    //     return (
-    //         <>{embedURL}</>
-    //     )
-    // };
 
 
     return (

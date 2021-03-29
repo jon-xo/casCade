@@ -195,8 +195,8 @@ export const LibraryCard = ({ game }) => {
                             </div>
                             <Divider className={classes.cardDivider} />
                             <div className={classes.detailsContainer}>
-                                <List component="nav" disablePadding disableRipple={true}>
-                                    <ListItem button onClick={handleCardDetails} disableRipple={true}>
+                                <List component="nav" disablePadding >
+                                    <ListItem button onClick={handleCardDetails} >
                                         {/* ListItem component is rendered as button */}
                                         <ListItemIcon>
                                             <Subject className={classes.root}/>
@@ -229,19 +229,16 @@ export const LibraryCard = ({ game }) => {
                             </IconButton>
                             <Link className={classes.playLink} to={() => {
                                 const gameTitle = cardTitle(game.title);
-                                const gameDate = () => {
-                                  return !game.date ? "N/A" : parseInt(releaseDate(game.date)); 
-                                }    
-                                const gameGenre = () => {
-                                    return !game.genre ? "Undefined" : game.genre;
-                                }
                                 const routerLink = {
                                     pathname: `/library/player/${game.identifier}`,
-                                    gameId: game.identifier,
-                                    title: gameTitle,
-                                    releaseDate: gameDate,
-                                    genre: gameGenre,
-                                    imgPath: `https://archive.org/services/img/${game.identifier}`,
+                                    state: {
+                                        gameId: game.identifier,
+                                        title: gameTitle,
+                                        releaseDate: game.date,
+                                        genre: game.genre,
+                                        imgPath: `https://archive.org/services/img/${game.identifier}`,
+                                    },
+                                    
                                 }
                                 return routerLink
                             }}>
