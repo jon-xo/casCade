@@ -1,7 +1,8 @@
-import React, { useEffect, useContext } from "react"
-import { Grid, Typography, Paper, AppBar, Toolbar, IconButton, InputBase } from "@material-ui/core";
+import React, { useEffect, useContext, useState } from "react"
+import { Grid, Typography, Paper, AppBar, Toolbar, IconButton, InputBase, Button } from "@material-ui/core";
 import { fade , makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
+import { SearchFormatter } from "../StrManipulation";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +66,19 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const SearchBar = () => {
+    const [ queryEvent, setQueryEvent ] = useState("");
+
+    const handleSearchChange = (event) => {    
+        setQueryEvent(event.target.value)
+        const formattedQuery = SearchFormatter(queryEvent);
+        
+    };
+
+    const handleSearchEvent = (event) => {
+        console.log(event);
+        
+    }
+
     const classes = useStyles();
 
     return (
@@ -84,9 +98,13 @@ export const SearchBar = () => {
                                 root: classes.inputRoot,
                                 input: classes.inputText,
                             }}
-                            inputProps={""}
+                            // inputProps={""}
+                            onChange={handleSearchChange}
                         />
                     </div>
+                    <Button variant="contained" color="primary" onClick={handleSearchEvent} className={classes.inputText}>
+                        Search
+                    </Button>
                 </Toolbar>   
             </AppBar>
         </div>
