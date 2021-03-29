@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { useParams, useHistory, useLocation } from "react-router-dom";
-import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse } from "@material-ui/core";
+import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { BuildEmbed } from "./EmbedPlayer";
+import { Subject } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 import "../Cascade.css"
 import clsx from "clsx";
@@ -18,11 +19,14 @@ const useStyles = makeStyles((theme) => ({
     gameHeader: {
         fontWeight: "bold",
         marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
     },
     gameContainer: {
         color: '#f5f5f5',
         height: '60vh',
         minHeight: '45rem',
+        height: '60%',
         minWidth: '52rem',
         marginTop: theme.spacing(10),
         zIndex: 1,
@@ -30,12 +34,32 @@ const useStyles = makeStyles((theme) => ({
     listSpan: {
         marginTop: theme.spacing(5),
         overflow: 'auto',
-        maxHeight: '10rem',
+        height: theme.spacing(16),
+    },
+    detailsListHeader: {
+        fontWeight: 400,
+        color: '#f5f5f5',
+
+    },
+    nestedDetails: {
+        marginLeft: theme.spacing(6),
+        maxWidth: '90%'
+    },
+    nestedText: {
+        fontWeight: 200,
+        color: '#f5f5f5'
+    },
+    nestedDetailChild: {
+        marginLeft: theme.spacing(12),
+        maxWidth: '80%'
+    },
+    nestedDetailChildText: {
+        color: '#f5f5f5'
     }
 }))
 
 const GameData = ( gameProps ) => { 
-    console.log(gameProps);
+    // console.log(gameProps);
     
     const gameDate = () => {
         if(!gameProps.releaseDate) {
@@ -74,18 +98,49 @@ const DetailListItems = ( {detailObject} ) => {
         }
     };
 
+    const [ open, setOpen ] = useState(false);
+
+    // Function is envoked by Details button event listner
+    const handleDetails = () => {
+        setOpen(!open);
+    };
+
+    const listTextSwitch = (text) => {
+        switch (text) {
+            case 'title':
+                return 'Title';
+            case 'releaseDate':
+                return 'Release Date';
+            case 'genre':
+                return 'Genre';
+            case 'note':
+                return 'Notes';
+            default:
+                break;
+        }
+    };
+
     return (
         <List
             component="nav"
             className={classes.listSpan}
-            subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
-                    Details
-                </ListSubheader>
-            }
         >
-            {Object.keys(detailObject).map((key, index) => {
-                console.log(key, index);                            
+            <ListItem
+                key={ListSubheader}
+                button
+                onClick={handleDetails}            
+            >
+                <ListItemIcon className={classes.detailsListHeader}>
+                    <Subject />
+                </ListItemIcon>
+                <ListItemText primary="Details"  className={classes.detailsListHeader}/>
+                {open ? <ExpandMore /> : <ExpandLess />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+
+            
+            {Object.keys(detailObject).filter(detail => detail === "title" || detail === "releaseDate" || detail === "genre").map((key, index) => {
+                      
                 return  (
                     <List>
                         <ListItem
@@ -94,14 +149,15 @@ const DetailListItems = ( {detailObject} ) => {
                           onClick={() => {
                             expandListItem(index)
                           }}
+                          className={classes.nestedDetails}
                         >
-                        <ListItemText primary={key} key={index} />
+                        <ListItemText primary={listTextSwitch(key)} key={index} />
                             {index === selectedDetail ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
                         <Collapse in={index === selectedDetail} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
-                                <ListItem>
-                                    <ListItemText primary={detailObject.key}/>
+                                <ListItem className={classes.nestedDetailChild}>
+                                    <ListItemText className={classes.nestedDetailChildText} primary={detailObject[key]}/>                                    
                                 </ListItem>
                             </List>
                         </Collapse>
@@ -109,6 +165,7 @@ const DetailListItems = ( {detailObject} ) => {
                 )
 
             })}
+            </Collapse>
         </List>
     )
 };
@@ -124,7 +181,7 @@ export const GameContainer = ( props ) => {
 
     const activeGameData = GameData(location.state)
 
-    console.log(activeGameData);
+    // console.log(activeGameData);
     
 
     return (

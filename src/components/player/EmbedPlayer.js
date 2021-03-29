@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'stetch',
         justifyContent: 'center',
         justifyItems: 'stretch',
-        height: '40rem',
+        height: '42rem',
         maxWidth: '100%',
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2)
@@ -29,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         color: '#f5f5f5',
-        height: '40rem',
+        minHeight: '42rem',
         width: '90%',
         marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
         zIndex: 2,
     }
 }))
