@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Tabs, Tab } from "@material-ui/core";
-import { Home, Favorite, Search, Shuffle, LocalLibrary } from "@material-ui/icons";
+import { Home, Favorite, Search, LocalLibrary } from "@material-ui/icons";
 import { LogoLarge } from "../Logo";
 import clsx from "clsx";
 
@@ -60,8 +60,17 @@ const ActiveTab = () => {
     const location = useLocation();
     const currentLocation = location.pathname;
     const locationIndex = matchNavObject(currentLocation);
+
+    const shortLocation = location.pathname.split("/")    
+
+    if (shortLocation.includes("player")) {
+        const modifiedLocation = `/${shortLocation[1]}`
     
-    return locationIndex;
+        return matchNavObject(modifiedLocation)
+    } else {        
+        return locationIndex;
+    }
+    
 };
 
 // Function uses switch case to match the string value of the icon key
@@ -114,9 +123,9 @@ export const NavBar = () => {
                 <LogoLarge gutterBottom/>
             </Paper>
         </Grid>
-        <Grid item sm={12} md={12} lg={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
             <Grid container justify="center">
-                <Grid item sm={12} md={12} lg={12}>                   
+                <Grid item xs={12} sm={12} md={12} lg={12}>                   
                     <Paper elevation={2} className={clsx(classes.navPaper)}>
                         <Tabs
                         value={value}

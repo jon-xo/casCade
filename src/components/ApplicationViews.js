@@ -4,6 +4,18 @@ import { Home } from "./Home";
 import { NavBar } from "./nav/NavBar";
 import { LibraryBanner, LibraryList } from "./library/Library";
 import { LibraryProvider } from "./library/LibraryProvider";
+import { GameContainer } from "./player/Player";
+
+// const gameRouter = ({gameContainer: GameContainer, ...rest}) => {
+//     return <Route {...rest}    
+//         render={routeProps => (
+//             <>
+//                 <NavBar />
+//                 <GameContainer {...routeProps} />
+//             </>
+//         )}
+//         />
+// };
 
 export const ApplicationViews = () => {
     return (
@@ -18,6 +30,10 @@ export const ApplicationViews = () => {
                     <LibraryBanner />
                     <LibraryList />
                 </Route>
+                <Route exact path='/library/player/:gameData'>
+                    <NavBar />
+                    <GameContainer />
+                </Route>
             </LibraryProvider>
             <Route exact path="/favorites">
                 <NavBar />
@@ -25,7 +41,6 @@ export const ApplicationViews = () => {
             <Route exact path="/search">
                 <NavBar />
             </Route>
-        
         </>
     )
 };

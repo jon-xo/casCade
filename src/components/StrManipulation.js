@@ -11,5 +11,9 @@ export const cardTitle = (title, length) => {
 
 export const releaseDate = (date) => {
     const editedDate = date.replace('-01-01T00:00:00Z', '')
-    return editedDate
+    if (editedDate.includes('19')) {
+        return parseInt(editedDate)
+    } else {
+        return editedDate
+    }
 };
