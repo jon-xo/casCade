@@ -5,6 +5,8 @@ import { NavBar } from "./nav/NavBar";
 import { LibraryBanner, LibraryList } from "./library/Library";
 import { LibraryProvider } from "./library/LibraryProvider";
 import { GameContainer } from "./player/Player";
+import { SearchProvider } from "./search/SearchProvider";
+import { Search } from "./search/Search";
 
 // const gameRouter = ({gameContainer: GameContainer, ...rest}) => {
 //     return <Route {...rest}    
@@ -38,9 +40,12 @@ export const ApplicationViews = () => {
             <Route exact path="/favorites">
                 <NavBar />
             </Route>
-            <Route exact path="/search">
-                <NavBar />
-            </Route>
+            <SearchProvider>
+                <Route exact path="/search">
+                    <NavBar />
+                    <Search />
+                </Route>
+            </SearchProvider>
         </>
     )
 };
