@@ -60,8 +60,17 @@ const ActiveTab = () => {
     const location = useLocation();
     const currentLocation = location.pathname;
     const locationIndex = matchNavObject(currentLocation);
+
+    const shortLocation = location.pathname.split("/")    
+
+    if (shortLocation.includes("player")) {
+        const modifiedLocation = `/${shortLocation[1]}`
     
-    return locationIndex;
+        return matchNavObject(modifiedLocation)
+    } else {        
+        return locationIndex;
+    }
+    
 };
 
 // Function uses switch case to match the string value of the icon key
