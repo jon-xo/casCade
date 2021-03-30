@@ -1,8 +1,10 @@
-import React, { useEffect, useContext, useState } from "react"
+import React, { useEffect, useContext, useState, useRef } from "react"
 import { Grid, Typography, Paper, AppBar, Toolbar, IconButton, InputBase, Button } from "@material-ui/core";
 import { fade , makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
 import { SearchFormatter } from "../StrManipulation";
+import { SearchContext } from "./SearchProvider";
+import { useHistory } from "react-router";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -65,19 +67,39 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export const SearchBar = () => {
+export const SearchBar = (props) => {
+    const { getSearchResults } = useContext(SearchContext)
     const [ queryEvent, setQueryEvent ] = useState("");
+    const [ outgoing, setOutgoing ] = useState(false)
+    const [ results, setResults ] = useState([]);
+    const searchRouter = useRef();
 
+    const history = useHistory();
+
+    useEffect(() => {
+        if(outgoing === true) {
+            getSearchResults(queryEvent)
+            .then(() => {
+                setResults(results)                
+            })
+            .then(() => {
+                searchRouter.current.location = {
+                pathname: `/search/results?_${queryEvent}`,
+                state: results
+            }})            
+            .then(() => {
+                debugger
+                console.log(searchRouter);                
+                history.push(searchRouter.current)})
+            .then(setOutgoing(false))
+        }
+    }, [outgoing])
+    
     const handleSearchChange = (event) => {    
-        setQueryEvent(event.target.value)
-        const formattedQuery = SearchFormatter(queryEvent);
-        
+        // setQueryEvent(event.target.value)
+        let formattedQuery = encodeURIComponent(event.target.value);
+        setQueryEvent(formattedQuery)
     };
-
-    const handleSearchEvent = (event) => {
-        console.log(event);
-        
-    }
 
     const classes = useStyles();
 
@@ -102,7 +124,15 @@ export const SearchBar = () => {
                             onChange={handleSearchChange}
                         />
                     </div>
-                    <Button variant="contained" color="primary" onClick={handleSearchEvent} className={classes.inputText}>
+                    <Button 
+                        variant="contained"
+                        id="searchSubmit"
+                        color="primary" 
+                        onClick={() => {
+                            setOutgoing(true)
+                        }} 
+                        className={classes.inputText}
+                    >
                         Search
                     </Button>
                 </Toolbar>   

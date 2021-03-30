@@ -21,39 +21,25 @@ export const releaseDate = (date) => {
 export const SearchFormatter = ( originalQuery ) => {
     
     const createQueryArray = (uneditedQuery) => {
-        if (originalQuery !== "" && originalQuery.indexOf(' ') >= 0) {
-            const replaceSpaces = originalQuery.split(" ")
-            return replaceSpaces
+        if (uneditedQuery !== "" && uneditedQuery.indexOf(' ') >= 0) {
+            const replaceSpaces = uneditedQuery.split(" ")
+            return replaceSpaces.join("%20")
         }        
     };
 
-    const queryArray = createQueryArray(originalQuery)
+    const queryString = createQueryArray(originalQuery)
 
 
-    const createQueryString = (uneditedArray) => {
-        if (queryArray !== undefined && queryArray.length > 0) {
-            return queryArray.join("%20")
-        }
-    }
-    
-    const finalQuery = createQueryString(queryArray);
-    
-    if (finalQuery !== undefined) {
-        return finalQuery;
-    }
-
-    // if (queryArray !== undefined && queryArray.length) {
-    //     let unicodeArray = queryArray.forEach(word => {
-    //         if(queryArray.includes('-')) {
-    //             const hyphenIndex = queryArray.indexOf('-');
-    //             queryArray[hyphenIndex] = "\u2010";
-    //         }
-    //         if(queryArray.includes(':')) {
-    //             const colonIndex = queryArray.indexOf(':');
-    //             queryArray[colonIndex] = "\x3a";
-    //         } 
-    //     });
-    //     return unicodeArray
+    // const createQueryString = (uneditedArray) => {
+    //     if (queryArray !== undefined && queryArray.length > 0) {
+    //         return queryArray.join("%20")
+    //     }
     // }
+    
+    // const finalQuery = createQueryString(queryArray);
+    
+    if (queryString !== undefined) {
+        return queryString;
+    }
     
 };
