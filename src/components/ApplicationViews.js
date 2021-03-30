@@ -6,7 +6,8 @@ import { LibraryBanner, LibraryList } from "./library/Library";
 import { LibraryProvider } from "./library/LibraryProvider";
 import { GameContainer } from "./player/Player";
 import { SearchProvider } from "./search/SearchProvider";
-import { Search, SearchList } from "./search/Search";
+import { Search } from "./search/Search";
+import { SearchList } from "./search/SearchList";
 
 // const gameRouter = ({gameContainer: GameContainer, ...rest}) => {
 //     return <Route {...rest}    
@@ -44,6 +45,7 @@ export const ApplicationViews = () => {
                 <Route exact path="/search">
                     <NavBar />
                     <Search />
+                    <SearchList />
                 </Route>
                 <Route exact path="/search/results?_:query">
                     <NavBar />

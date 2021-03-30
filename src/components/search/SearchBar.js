@@ -14,25 +14,31 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         backgroundColor: theme.palette.secondary.main,
+        width: '80vw'
     },
     title: {
         flexGrow: 1,
         display: 'none',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('xs')]: {
+            display: 'none',
+        },
+        [theme.breakpoints.up('md')]: {
             display: 'block',
-            width: '30%',
+            width: '20%',
         }
     },
+    searchContainer: {
+        width: '95vw'
+    },
     search: {
-        position: 'flex',
+        display: 'flex',
         marginLeft: 0,
-        marginRight: '15vw',
-        justifyContent: 'center',
-        justifyItems: 'center',
-        // alignContent: 'center',
+        justifyContent: 'start',
+        justifyItems: 'space-evenly',
+        width: '100%',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
-            width: 'auto',
+            width: '100%',
         },
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -57,13 +63,42 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
-        width: '100%',
+        // width: '45%',
         [theme.breakpoints.up('sm')]: {
-            width: '40vw',
+            width: '30vw',
             '&:focus': {
-                width: '65vw',
+                width: '48vw',
+            }
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '30vw',
+            '&:focus': {
+                width: '58vw',
+            }
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '30vw',
+            '&:focus': {
+                width: '64vw',
             }
         }
+    },
+    searchButton: {
+        flexGrow: theme.spacing(1),
+        padding: theme.spacing(1),
+        position: 'relative',
+        minWidth: '7rem',
+        '&:focus': {
+            fontWeight: 500,
+        },
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(1),
+            minWidth: '5rem',
+        },
+        [theme.breakpoints.up('md')]: {
+            marginLeft: theme.spacing(2),
+            minWidth: '7rem',
+        },
     }
 }))
 
@@ -71,7 +106,6 @@ export const SearchBar = (props) => {
     const { getSearchResults } = useContext(SearchContext)
     const [ queryEvent, setQueryEvent ] = useState("");
     const [ outgoing, setOutgoing ] = useState(false)
-    const [ results, setResults ] = useState([]);
     const searchRouter = useRef();
 
     const history = useHistory();
@@ -79,18 +113,17 @@ export const SearchBar = (props) => {
     useEffect(() => {
         if(outgoing === true) {
             getSearchResults(queryEvent)
-            .then(() => {
-                setResults(results)                
-            })
-            .then(() => {
-                searchRouter.current.location = {
-                pathname: `/search/results?_${queryEvent}`,
-                state: results
-            }})            
-            .then(() => {
-                debugger
-                console.log(searchRouter);                
-                history.push(searchRouter.current)})
+            // .then(() => {
+                // setResults(results)                
+            // })
+            // .then(() => {
+            //     searchRouter.current.location = {
+            //     pathname: `/search/results?_${queryEvent}`,
+            //     state: results
+            // }})            
+            // .then(() => {                
+            //     console.log(searchRouter);                
+            //     history.push(searchRouter.current)})
             .then(setOutgoing(false))
         }
     }, [outgoing])
@@ -131,7 +164,7 @@ export const SearchBar = (props) => {
                         onClick={() => {
                             setOutgoing(true)
                         }} 
-                        className={classes.inputText}
+                        className={classes.searchButton}
                     >
                         Search
                     </Button>

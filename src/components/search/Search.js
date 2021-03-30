@@ -67,16 +67,3 @@ export const Search = () => {
         </>
     )
 };
-
-export const SearchList = () => {
-    const location = useLocation();
-    const history = useHistory();
-    const classes = useStyles();
-
-    if(location.path.includes("results?_")) {
-        const resultArray = location.state
-
-        console.log(resultArray);
-        
-    }
-};
