@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from "react";
-import { Grid, Typography, Paper } from "@material-ui/core";
+import React, { useContext } from "react";
+import { Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import { SearchCard } from "./SearchCards";
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     paperContainer: {
+        marginTop: theme.spacing(2),
         display: 'flex',
         justifyContent: 'center',
     },
@@ -45,24 +46,29 @@ const useStyles = makeStyles((theme) => ({
         color: '#f5f5f5',
         fontWeight: 500,
     },
+    strong: {
+        fontWeight: '600',
+    },
+    typeOffset: {
+        marginRight: theme.spacing(1),
+    }
 }))
 
+// Search list renders a div element which displays a Paper component
+//  that contains the number of matches returned by search provider,
+// aking with the SearchCard component which receives the individual result,
+// mapped as gameQuery as a prop.
+
 export const SearchList = () => {
-    const location = useLocation();
-    const history = useHistory();
+
     const classes = useStyles();
 
     const { results } = useContext(SearchContext)
-    
 
-    let i = 1
-    const quickKey = () => {
-        return `ptag${i++}`
-    };
     
     return (
         <>  <div className={classes.paperContainer}>
-                {results.length > 0 ? <Paper elevation={4} className={classes.paper}><Typography variant="body1">{results.length} matches found.</Typography></Paper>: <Typography></Typography>}                            
+                {results.length > 0 ? <Paper elevation={4} className={classes.paper}><Typography variant="body1" className={clsx(classes.strong, classes.typeOffset)}>{results.length }</Typography><Typography variant="body1"> matches found.</Typography></Paper>: <Typography></Typography>}                            
             </div>
             <div className={classes.cardContainer}>
                 {results.map((gameQuery) => {                 
@@ -72,10 +78,4 @@ export const SearchList = () => {
         </>
     )
 
-    // if(location.path.includes("results?_")) {
-    //     const resultArray = location.state
-
-    //     console.log(resultArray);
-        
-    // }
 };

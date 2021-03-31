@@ -117,7 +117,7 @@ export const LibraryList = () => {
             {allGames.map(game => {
                 
                 return  <>
-                            <LibraryCard key={`${game.indentifier}--card`} game={game}/>
+                            <LibraryCard key={`${game.identifier}--card`} game={game}/>
                         </>         
             })}
         </div>

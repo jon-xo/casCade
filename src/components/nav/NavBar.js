@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react"
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Paper, Tabs, Tab } from "@material-ui/core";
-import { Home, Favorite, Search, LocalLibrary, InsertEmoticon } from "@material-ui/icons";
+import { Grid, Paper, Tabs, Tab } from "@material-ui/core";
+import { Home, Favorite, Search, LocalLibrary } from "@material-ui/icons";
 import { LogoLarge } from "../Logo";
 import clsx from "clsx";
 

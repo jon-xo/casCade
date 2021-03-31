@@ -1,12 +1,9 @@
-import React, { useEffect, useContext, useState } from "react"
-import { Grid, Typography, Paper } from "@material-ui/core";
-import { fade , makeStyles } from "@material-ui/core/styles";
-import { truncate , cardTitle, releaseDate } from "../StrManipulation";
+import React, { useState } from "react"
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { SearchBar } from "./SearchBar";
-import { SearchContext } from "./SearchProvider";
-import clsx from "clsx";
 import "../Cascade.css";
-import { useHistory, useLocation } from "react-router-dom";
+
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -19,14 +16,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         }
-    },
-    searchContainer: {
-        width: '50rem',        
     }
 }))
 
+// Search component is the parent container for SearchBar and provides Grid layout to position element.
 export const Search = () => {
-    const [ results, setResults ] = useState([]);
     const classes = useStyles();
     
     return (
@@ -40,28 +34,8 @@ export const Search = () => {
                     spacing={3}
                 >
                     <Grid item xs={10}>
-                        <SearchBar 
-                            props={results} 
-                            onClick={(event) => {
-                                console.log(event);                                
-                                if(event.target.id === "searchSubmit") {
-                                    console.log('Search Submit clicked.')
-                                }
-                            }}/>
+                        <SearchBar />
                     </Grid>
-                </Grid>
-                <Grid item xs={10}>
-                    <div>
-                        {/* {results.response.docs.map(game => {
-                            return <SearchCard 
-                                    key={() => {
-                                        let int = 1
-                                        return `result_0${int++}`
-                                    }}
-                                    game={game}
-                                />
-                        })} */}
-                    </div>
                 </Grid>
             </div>
         </>

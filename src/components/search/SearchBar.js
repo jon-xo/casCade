@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState, useRef } from "react"
 import { Typography, AppBar, Toolbar, InputBase, Button, Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import { fade , makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
-import { SearchFormatter } from "../StrManipulation";
 import { SearchContext } from "./SearchProvider";
 import { useHistory, useLocation } from "react-router";
 
@@ -12,10 +11,18 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         margin: theme.spacing(2),
     },
+    // Parent container for appBar
+    searchContainer: {
+        width: '95vw'
+    },
+    // Div element used to build SearchBar
     appBar: {
         backgroundColor: theme.palette.secondary.main,
         width: '80vw'
     },
+    // Left justified title for SearchBar
+    // Breakpoint sets title block to hidden when
+    // SearchBar is minimized.
     title: {
         flexGrow: 1,
         display: 'none',
@@ -27,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
             width: '20%',
         }
     },
-    searchContainer: {
-        width: '95vw'
-    },
+    // SearchBar class provides positioning and colors
     search: {
         display: 'flex',
         marginLeft: 0,
@@ -46,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.secondary.dark, 0.25),
         }
     },
+    // SearchIcon dislayed in Iput field
     searchIcon: {
         margin: theme.spacing(-1.8, 0),
         padding: theme.spacing(0, 2),
@@ -59,6 +65,8 @@ const useStyles = makeStyles((theme) => ({
     inputRoot: {
         color: 'inherit',
     },
+    // InputText field dynamically resizes inherit of
+    // current breakpoint.
     inputText: {
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
@@ -83,11 +91,16 @@ const useStyles = makeStyles((theme) => ({
             }
         }
     },
+    // searchButton styles set position, color, and breakpoint sizing
     searchButton: {
         flexGrow: theme.spacing(1),
         padding: theme.spacing(1),
         position: 'relative',
         minWidth: '7rem',
+        backgroundColor: fade(theme.palette.success.light, 0.75),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.success.main, 0.75),
+        },
         '&:focus': {
             fontWeight: 500,
         },
@@ -104,10 +117,14 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '7.5rem',
         },
     },
+    // Class used to align modal text
     modalText: {
         textAlign: 'center',
     }
 }))
+
+// QueryAlert component returns modal and 
+// contains open/close state received from props
 
 const QueryAlert = (props) => {
     const { onClose, open } = props;
@@ -130,58 +147,82 @@ const QueryAlert = (props) => {
 
 
 export const SearchBar = (props) => {
+    // API provider is received via useContext
+    // and imported as deconstructed object.
     const { getSearchResults } = useContext(SearchContext)
+    
+    // queryEvent state used for search string is declared
+    // as an empty string
     const [ queryEvent, setQueryEvent ] = useState("");
+    // outgoing state used with useEffect is declared
+    // the initital value of false
     const [ outgoing, setOutgoing ] = useState(false)
+
+    // SearchRouter component is stored with useRef.
     const searchRouter = useRef();
+
     const classes = useStyles();
-
     const history = useHistory();
-    const location = useLocation();
+    // const location = useLocation();
 
+    // API Call
     useEffect(() => {
+        // outgoing state prevents useEffect from accessing
+        // the API on initial page load. 
         if(outgoing === true) {
             getSearchResults(queryEvent)
-            .then(() => {
+            .then(() => {   
+                // SearchRouter stores current path object
+                // via useRef 
                 searchRouter.current = {
-                pathname: `/search/results?_${queryEvent}`,
-                
+                pathname: `/search/results?_${queryEvent}`,                
             }})            
-            .then(() => {                           
+            .then(() => {
+                // searchRouter path is pusheded as URL
+                // as search results are rendered
                 history.push(searchRouter.current)})
+            // Function then returns outgoing state back
+            // to false via setOutgoing
             .then(setOutgoing(false))
         }
     }, [outgoing])
     
+    // On input change, the input value is passed to the encodeURIcomponent method
+    // and recives URL encoding before it is used in API call.
     const handleSearchChange = (event) => {    
-        // setQueryEvent(event.target.value)
         let formattedQuery = encodeURIComponent(event.target.value);
         setQueryEvent(formattedQuery)
     };
 
-    const searchValueCheck = (locale) => {
-        if (locale.includes("results?_")) {
-            const valueArray = locale.split("results?_")
-            return decodeURI(valueArray[0]) 
-        }
-    };
+    // const searchValueCheck = (locale) => {
+    //     if (locale.includes("results?_")) {
+    //         const valueArray = locale.split("results?_")
+    //         return decodeURI(valueArray[0]) 
+    //     }
+    // };
 
-    // Declare state variable open as false
-    const [ open , setOpen] = useState(false);
+    // Declare  state variable open as false
+    const [ modalOpen , setModalOpen] = useState(false);
     
-    // Function to update open boolean to true
+    // Function to update modalOpen boolean to true
     const handleOpenConditional = () => {
-        setOpen(true)
+        setModalOpen(true)
     };
 
-    // Function to update open boolean to false
+    // Function to update modalOpen boolean to false
     const handleAlertClose = () => {
-        setOpen(false);
+        setModalOpen(false);
     }
 
+    // Render searchbar with the handleSearchChange listner on InputBase 
+    // and an annoymous function attached to the Button event listner
+    // which envokes the model if the queryEvent string is empty.
+    // If queryEvent listner is not equal to an event listner,
+    // useEffect is envoked by setting outgoing variable in state to true.
+    
     return (
         <div className={classes.root}>
-            <QueryAlert open={open} onClose={handleAlertClose} />
+            <QueryAlert open={modalOpen} onClose={handleAlertClose} />
             <AppBar position="relative" className={classes.appBar}>
                 <Toolbar>
                     <Typography className={classes.title} variant="h5" noWrap>

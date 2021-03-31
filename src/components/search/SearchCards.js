@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
 import { Favorite, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
@@ -145,8 +145,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.success.main,
         color: '#f5f5f5',
         "&:hover": {
-            backgroundColor: theme.palette.success.light,
-            color: theme.palette.secondary.main,
+            backgroundColor: theme.palette.primary.dark,
+            color: '#f5f5f5',
         }
     },
     playLink: {
