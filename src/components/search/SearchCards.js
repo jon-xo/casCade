@@ -1,9 +1,9 @@
 import React, { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
-import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Favorite, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
-import { makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx"
 
 
@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
         height: 700,
         margin: theme.spacing(2),
         background: 'linear-gradient (-45deg,rgba(0, 0, 0, 0.2),rgba(255, 255, 255, 0.3))',
-        backgroundColor: '#e0e0e0',
+        backgroundColor: fade(theme.palette.primary.main, 0.25),
         color: theme.palette.secondary.dark,
         transition: "0.3s",
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
         "&:hover": {
-            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+            backgroundColor: fade(theme.palette.primary.main, 0.35),
         },
     },
     cardHeaderSpan: {
@@ -232,7 +233,7 @@ export const SearchCard = ({ game }) => {
                             <Link className={classes.playLink} to={() => {
                                 const gameTitle = cardTitle(game.title);
                                 const routerLink = {
-                                    pathname: `/library/player/${game.identifier}`,
+                                    pathname: `/search/player/${game.identifier}`,
                                     state: {
                                         gameId: game.identifier,
                                         title: gameTitle,

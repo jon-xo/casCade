@@ -28,6 +28,23 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
+    paperContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    paper: {
+        // Rectanglar blue-gray div
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: theme.spacing(50),
+        height: theme.spacing(5),
+        padding: theme.spacing(1),
+        margin: theme.spacing(3),
+        backgroundColor: theme.palette.secondary.light,
+        color: '#f5f5f5',
+        fontWeight: 500,
+    },
 }))
 
 export const SearchList = () => {
@@ -36,8 +53,6 @@ export const SearchList = () => {
     const classes = useStyles();
 
     const { results } = useContext(SearchContext)
-
-    console.log(results);
     
 
     let i = 1
@@ -46,10 +61,12 @@ export const SearchList = () => {
     };
     
     return (
-        <>
-            <div className={classes.cardContainer}>                
-                {results.map((gameQuery) => {
-                    return <SearchCard game={gameQuery} />
+        <>  <div className={classes.paperContainer}>
+                {results.length > 0 ? <Paper elevation={4} className={classes.paper}><Typography variant="body1">{results.length} matches found.</Typography></Paper>: <Typography></Typography>}                            
+            </div>
+            <div className={classes.cardContainer}>
+                {results.map((gameQuery) => {                 
+                    return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery} />
                 })}
             </div>
         </>

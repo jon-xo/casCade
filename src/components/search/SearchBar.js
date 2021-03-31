@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState, useRef } from "react"
-import { Grid, Typography, Paper, AppBar, Toolbar, IconButton, InputBase, Button } from "@material-ui/core";
+import { Typography, AppBar, Toolbar, InputBase, Button, Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import { fade , makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
 import { SearchFormatter } from "../StrManipulation";
 import { SearchContext } from "./SearchProvider";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -73,13 +73,13 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             width: '30vw',
             '&:focus': {
-                width: '58vw',
+                width: '54vw',
             }
         },
         [theme.breakpoints.up('lg')]: {
             width: '30vw',
             '&:focus': {
-                width: '64vw',
+                width: '62vw',
             }
         }
     },
@@ -99,31 +99,56 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(2),
             minWidth: '7rem',
         },
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: theme.spacing(1),
+            minWidth: '7.5rem',
+        },
+    },
+    modalText: {
+        textAlign: 'center',
     }
 }))
+
+const QueryAlert = (props) => {
+    const { onClose, open } = props;
+    const classes = useStyles();
+
+    const handleClose = () => {
+        onClose();
+    };
+
+    return (
+        <Dialog onClose={handleClose} open={open}>
+            <DialogTitle className={classes.modalText}>Search</DialogTitle>
+            <DialogContent dividers>
+                <Typography className={classes.modalText} gutterBottom>Please enter a game title to search.</Typography>
+            </DialogContent>
+            <DialogContent dividers><Button variant="contained" color="secondary" onClick={handleClose} fullWidth>Close</Button></DialogContent>
+        </Dialog>
+    )
+};
+
 
 export const SearchBar = (props) => {
     const { getSearchResults } = useContext(SearchContext)
     const [ queryEvent, setQueryEvent ] = useState("");
     const [ outgoing, setOutgoing ] = useState(false)
     const searchRouter = useRef();
+    const classes = useStyles();
 
     const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         if(outgoing === true) {
             getSearchResults(queryEvent)
-            // .then(() => {
-                // setResults(results)                
-            // })
-            // .then(() => {
-            //     searchRouter.current.location = {
-            //     pathname: `/search/results?_${queryEvent}`,
-            //     state: results
-            // }})            
-            // .then(() => {                
-            //     console.log(searchRouter);                
-            //     history.push(searchRouter.current)})
+            .then(() => {
+                searchRouter.current = {
+                pathname: `/search/results?_${queryEvent}`,
+                
+            }})            
+            .then(() => {                           
+                history.push(searchRouter.current)})
             .then(setOutgoing(false))
         }
     }, [outgoing])
@@ -134,10 +159,29 @@ export const SearchBar = (props) => {
         setQueryEvent(formattedQuery)
     };
 
-    const classes = useStyles();
+    const searchValueCheck = (locale) => {
+        if (locale.includes("results?_")) {
+            const valueArray = locale.split("results?_")
+            return decodeURI(valueArray[0]) 
+        }
+    };
+
+    // Declare state variable open as false
+    const [ open , setOpen] = useState(false);
+    
+    // Function to update open boolean to true
+    const handleOpenConditional = () => {
+        setOpen(true)
+    };
+
+    // Function to update open boolean to false
+    const handleAlertClose = () => {
+        setOpen(false);
+    }
 
     return (
         <div className={classes.root}>
+            <QueryAlert open={open} onClose={handleAlertClose} />
             <AppBar position="relative" className={classes.appBar}>
                 <Toolbar>
                     <Typography className={classes.title} variant="h5" noWrap>
@@ -161,8 +205,12 @@ export const SearchBar = (props) => {
                         variant="contained"
                         id="searchSubmit"
                         color="primary" 
-                        onClick={() => {
-                            setOutgoing(true)
+                        onClick={(e) => {
+                            if(queryEvent === "") {
+                                handleOpenConditional()
+                            } else {
+                                setOutgoing(true)
+                            }                            
                         }} 
                         className={classes.searchButton}
                     >
