@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Paper, Tabs, Tab } from "@material-ui/core";
+import { Grid, Paper, Tabs, Tab } from "@material-ui/core";
 import { Home, Favorite, Search, LocalLibrary } from "@material-ui/icons";
 import { LogoLarge } from "../Logo";
 import clsx from "clsx";
@@ -50,6 +50,7 @@ const newNavList = [
 // Function finds and returns the index of the path key stored in the newNavList array.
 
 const matchNavObject = (location) => {
+    
     return newNavList.findIndex(n => n.path === location)
 };
 
@@ -59,19 +60,43 @@ const matchNavObject = (location) => {
 const ActiveTab = () => {
     const location = useLocation();
     const currentLocation = location.pathname;
-    const locationIndex = matchNavObject(currentLocation);
 
-    const shortLocation = location.pathname.split("/")    
+    const modifiedNavArray = useRef();
+    const arrayMatch = useRef();
 
-    if (shortLocation.includes("player")) {
-        const modifiedLocation = `/${shortLocation[1]}`
+    const updateRootPath = () => {
+        const workingNavList = newNavList.slice();
+        const rootIndex = workingNavList.findIndex(nm => nm.path === "/")
+        const newRoot = {
+            path: "/root",
+            icon: "Home",
+        }
+
+        workingNavList.splice(rootIndex, 1)
+        workingNavList.splice(0, 0, newRoot)
+        modifiedNavArray.current = workingNavList
+
+    };
+    updateRootPath();
     
-        return matchNavObject(modifiedLocation)
-    } else {        
-        return locationIndex;
+    const navFilter = (array) => {
+        array.forEach(item => {
+            if(currentLocation.includes(item.path)) {                
+                arrayMatch.current = matchNavObject(item.path)
+            }
+        });
+
+    };
+    
+    navFilter(modifiedNavArray.current)
+    if (arrayMatch.current === undefined) {
+        return 0
+    } else {
+        return arrayMatch.current
     }
     
 };
+
 
 // Function uses switch case to match the string value of the icon key
 // and returns the matching material-ui icon component. The second paramater

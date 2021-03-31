@@ -17,3 +17,29 @@ export const releaseDate = (date) => {
         return editedDate
     }
 };
+
+export const SearchFormatter = ( originalQuery ) => {
+    
+    const createQueryArray = (uneditedQuery) => {
+        if (uneditedQuery !== "" && uneditedQuery.indexOf(' ') >= 0) {
+            const replaceSpaces = uneditedQuery.split(" ")
+            return replaceSpaces.join("%20")
+        }        
+    };
+
+    const queryString = createQueryArray(originalQuery)
+
+
+    // const createQueryString = (uneditedArray) => {
+    //     if (queryArray !== undefined && queryArray.length > 0) {
+    //         return queryArray.join("%20")
+    //     }
+    // }
+    
+    // const finalQuery = createQueryString(queryArray);
+    
+    if (queryString !== undefined) {
+        return queryString;
+    }
+    
+};
