@@ -4,6 +4,7 @@ export const FavoritesContext = createContext();
 
 export const FavortiesProvider = (props) => {
     const [favorites, setFavorites] = useState([]);
+    const [favoriteStatus, setFavoriteStatus] = useState(false);
 
     const getFavorites = () => {
         return fetch("http://localhost:8088/favorites")
@@ -22,16 +23,16 @@ export const FavortiesProvider = (props) => {
         .then(getFavorites)
     };
 
-    const updateFavorite = (favorite) => {
-        return fetch(`http://localhost:8088/favorites/${favorite.id}`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(favorite)
-        })
-        .then(getFavorites)
-    };
+    // const updateFavorite = (favorite) => {
+    //     return fetch(`http://localhost:8088/favorites/${favorite.id}`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(favorite)
+    //     })
+    //     .then(getFavorites)
+    // };
 
     const deleteFavorite = (favoriteId) => {
         return fetch(`http://localhost:8088/animals/${favoriteId}`, {
@@ -42,7 +43,7 @@ export const FavortiesProvider = (props) => {
 
     return (
         <FavoritesContext.Provider value={{
-            favorites, setFavorites, getFavorites, addFavorite, updateFavorite, deleteFavorite
+            favorites, setFavorites, getFavorites, addFavorite, deleteFavorite, favoriteStatus, setFavoriteStatus
         }}>
             {props.children}
         </FavoritesContext.Provider>

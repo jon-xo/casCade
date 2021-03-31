@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
 import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
+import { FavoriteButton } from "../favorites/FavoritesHandler";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
@@ -147,7 +148,7 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.secondary.main,
         }
     },
-    playLink: {
+    buttonLink: {
         textDecoration: 'none',
     }
 }))
@@ -223,13 +224,13 @@ export const LibraryCard = ({ game }) => {
                     </CardActionArea>
                     <CardActions>
                         <div className={classes.cardButtonContainer}>
-                            {/* Container holds the Favorite and Play buttons aligned and anchored to the bottom of the card */}
-                            <IconButton>
-                                <Favorite className={classes.redIcon}/>
-                            </IconButton>
+                            {/* Container holds thvoritee Favorite and Play buttons aligned and anchored to the bottom of the card */}
+    
+                            <FavoriteButton className={classes.redIcon} object={{game}}/>
+
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
-                            <Link className={classes.playLink} to={() => {
+                            <Link className={classes.buttonLink} to={() => {
                                 const gameTitle = cardTitle(game.title);
                                 const routerLink = {
                                     pathname: `/library/player/${game.identifier}`,
