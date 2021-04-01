@@ -8,17 +8,8 @@ import { GameContainer } from "./player/Player";
 import { SearchProvider } from "./search/SearchProvider";
 import { Search } from "./search/Search";
 import { SearchList } from "./search/SearchList";
-
-// const gameRouter = ({gameContainer: GameContainer, ...rest}) => {
-//     return <Route {...rest}    
-//         render={routeProps => (
-//             <>
-//                 <NavBar />
-//                 <GameContainer {...routeProps} />
-//             </>
-//         )}
-//         />
-// };
+import { FavortiesProvider } from "./favorites/FavoritesProvider";
+import { Favorites } from "./favorites/Favorites";
 
 export const ApplicationViews = () => {
     return (
@@ -27,35 +18,46 @@ export const ApplicationViews = () => {
                 <NavBar />
                 <Home />
             </Route>
-            <LibraryProvider>
-                <Route exact path="/library">
+            <FavortiesProvider>
+                <LibraryProvider>
+                        <Route exact path="/library">
+                            <NavBar />
+                            <LibraryBanner />
+                            <LibraryList />
+                        </Route>
+                        <Route exact path='/library/player/:gameData'>
+                            <NavBar />
+                            <GameContainer />
+                        </Route>
+                </LibraryProvider>
+            </FavortiesProvider>
+            <FavortiesProvider>
+                <Route exact path="/favorites">
                     <NavBar />
-                    <LibraryBanner />
-                    <LibraryList />
+                    <Favorites />
                 </Route>
-                <Route exact path='/library/player/:gameData'>
-                    <NavBar />
-                    <GameContainer />
+                <Route exact path='/favorites/player/:gameData'>
+                        <NavBar />
+                        <GameContainer />
                 </Route>
-            </LibraryProvider>
-            <Route exact path="/favorites">
-                <NavBar />
-            </Route>
-            <SearchProvider>
-                <Route exact path="/search">
-                    <NavBar />
-                    <Search />
-                </Route>
-                <Route exact path="/search/results?_:query">
-                    <NavBar />
-                    <Search />
-                    <SearchList />
-                </Route>
-                <Route exact path="/search/player/:gameData">
-                    <NavBar />
-                    <GameContainer />
-                </Route>
-            </SearchProvider>
+            </FavortiesProvider>
+            <FavortiesProvider>
+                <SearchProvider>
+                    <Route exact path="/search">
+                        <NavBar />
+                        <Search />
+                    </Route>
+                    <Route exact path="/search/results?_:query">
+                        <NavBar />
+                        <Search />
+                        <SearchList />
+                    </Route>
+                    <Route exact path="/search/player/:gameData">
+                        <NavBar />
+                        <GameContainer />
+                    </Route>
+                </SearchProvider>
+            </FavortiesProvider>
         </>
     )
 };

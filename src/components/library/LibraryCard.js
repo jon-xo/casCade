@@ -1,8 +1,12 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
+import { HashLink } from 'react-router-hash-link';
+import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
 import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
+import { FavoritesContext } from "../favorites/FavoritesProvider";
+import { HandleAddFavorite } from "../favorites/FavoritesHandler";
+import { useSnackbar } from 'notistack';
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
@@ -126,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
         // Indentation for nested list items
         paddingLeft: theme.spacing(4),
     },
-    redIcon: {
+    favIcon: {
         // Create red theme for material-ui icons
         fontSize: '1.5rem',
         padding: theme.spacing(.5),
@@ -134,6 +138,12 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             color: theme.palette.error.main,
         }
+    },
+    myFav: {
+        // Create red theme for material-ui icons
+        fontSize: '1.5rem',
+        padding: theme.spacing(.5),
+        color: theme.palette.error.main,
     },
     greenButton: {
         // Create green button for material-ui icons
@@ -147,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.secondary.main,
         }
     },
-    playLink: {
+    buttonLink: {
         textDecoration: 'none',
     }
 }))
@@ -157,10 +167,37 @@ export const LibraryCard = ({ game }) => {
     // Unique state is declared for each card
     const [ open, setOpen ] = useState(false);
 
+    // Boolean stored to detect when a game is added
+    // to Favorites table in local server
+    const [ favHeart, setFavHeart ] = useState(true)
+
+    const { addFavorite, getFavorites, favorites } = useContext(FavoritesContext);
+
+    // API call to fetch Favorites, conditional allows...
+    // for useEffect to initiate on page load, and
+    // prevents API call until favHeart boolean is manipulated on save
+
+    useEffect(() => {
+        if(favHeart === true){
+            getFavorites()
+            .then(setFavHeart(false));
+        }
+    }, [])
+    
     // Function is envoked by Details button event listner
     const handleCardDetails = () => {
         setOpen(!open);
     };
+
+    // Store deconstructed snackbar react hooks
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+    // Function to display Snackbar on successful add to favorites,
+    // must be envoked as a callback function.
+    const handleSnacks = (variant, { title }) => () => {  
+            const snackTitle = cardTitle(title);            
+            enqueueSnackbar(`${snackTitle} was added to your favorites!`, { variant });
+    }
     
     const classes = useStyles();
 
@@ -175,7 +212,7 @@ export const LibraryCard = ({ game }) => {
                     // and replaces remaining characters with an ellipsis
                     title={cardTitle(game.title, 44)}
                     />
-                    <CardActionArea>
+                    <CardActionArea disableRipple={true}>
                         <CardContent>
                             <div className={classes.cardHeaderSpan}>
                                 <Typography className={classes.cardHeader}  variant="h5" component="h2" gutterBottom>
@@ -222,36 +259,58 @@ export const LibraryCard = ({ game }) => {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
+                        {/* Container holds the Favorite and Play buttons,
+                         aligned and anchored to the bottom of the card */}
                         <div className={classes.cardButtonContainer}>
-                            {/* Container holds the Favorite and Play buttons aligned and anchored to the bottom of the card */}
-                            <IconButton>
-                                <Favorite className={classes.redIcon}/>
+                            {/* Favorite button includes ternary operator to match the current card's
+                                game title to the favorites database, and displays a filled,
+                                disabled button to visualize favorites.
+                             */}
+                            { favorites.some(f => f.title === game.title) ? 
+                            <HashLink className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>                                
+                                <Tooltip title="Open favorites" placement="top" arrow>
+                                    <IconButton>                            
+                                        <Favorite className={classes.myFav}/>
+                                    </IconButton>
+                                </Tooltip>
+                            </HashLink>
+                            :
+                            <IconButton onClick={() => {
+                                HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                                                  
+                                setFavHeart(true);
+                            }}>                                            
+                                <Tooltip title="Add to favorites" placement="top" arrow>
+                                    <Favorite className={classes.favIcon}/>                                    
+                                </Tooltip>                                                
                             </IconButton>
+                            }
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
-                            <Link className={classes.playLink} to={() => {
-                                const gameTitle = cardTitle(game.title);
-                                const routerLink = {
-                                    pathname: `/library/player/${game.identifier}`,
-                                    state: {
-                                        gameId: game.identifier,
-                                        title: gameTitle,
-                                        releaseDate: game.date,
-                                        genre: game.genre,
-                                        imgPath: `https://archive.org/services/img/${game.identifier}`,
-                                    },
-                                    
-                                }
-                                return routerLink
-                            }}>
-                                <Button
-                                    variant="contained"
-                                    className={classes.greenButton}
-                                    startIcon={<SportsEsports />}
-                                >
-                                    Play
-                                </Button>
-                            </Link>
+                            <Tooltip title="Open game player" placement="top" arrow>
+                                <Link className={classes.buttonLink} to={() => {
+                                    const gameTitle = cardTitle(game.title);
+                                    const routerLink = {
+                                        pathname: `/library/player/${game.identifier}`,
+                                        state: {
+                                            gameId: game.identifier,
+                                            title: gameTitle,
+                                            releaseDate: game.date,
+                                            genre: game.genre,
+                                            imgPath: `https://archive.org/services/img/${game.identifier}`,
+                                        },
+                                        
+                                    }
+                                    return routerLink
+                                }}>
+                                    <Button
+                                        variant="contained"
+                                        className={classes.greenButton}
+                                        startIcon={<SportsEsports />}
+                                    >
+                                        Play
+                                    </Button>
+                                </Link>
+                            </Tooltip>
                         </div>
                     </CardActions>
                 </Card>

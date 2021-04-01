@@ -3,6 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
 import { ApplicationViews } from "./ApplicationViews";
+import { SnackbarProvider } from "notistack";
+import { Slide } from '@material-ui/core';
 import "./Cascade.css"
 
 export const Cascade = () => (
@@ -13,7 +15,16 @@ export const Cascade = () => (
             if (localStorage.getItem("cascade_user")) {
                 return (
                     <>
-                        <ApplicationViews />
+                        <SnackbarProvider 
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right'
+                              }}
+                              TransitionComponent={Slide}
+                              maxSnack={3}
+                              >
+                            <ApplicationViews />
+                        </SnackbarProvider>
                     </>
                 )
             } else {
