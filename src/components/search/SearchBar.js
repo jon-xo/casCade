@@ -163,13 +163,16 @@ export const SearchBar = (props) => {
 
     const classes = useStyles();
     const history = useHistory();
-    // const location = useLocation();
+    const location = useLocation();
 
     // API Call
     useEffect(() => {
         // outgoing state prevents useEffect from accessing
-        // the API on initial page load. 
-        if(outgoing === true) {
+        // the API on initial page load.
+        console.log(location.pathname);
+        const locationQuery = location.pathname.split("results?_", 2)
+        
+        if (outgoing === true) {
             getSearchResults(queryEvent)
             .then(() => {   
                 // SearchRouter stores current path object
@@ -184,7 +187,9 @@ export const SearchBar = (props) => {
             // Function then returns outgoing state back
             // to false via setOutgoing
             .then(setOutgoing(false))
-        }
+        } else if (location.pathname.includes("results?_") && locationQuery[1] !== queryEvent){
+            getSearchResults(encodeURIComponent(locationQuery[1]))        
+        } 
     }, [outgoing])
     
     // On input change, the input value is passed to the encodeURIcomponent method

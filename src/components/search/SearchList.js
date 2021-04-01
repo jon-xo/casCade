@@ -64,8 +64,7 @@ export const SearchList = () => {
     const classes = useStyles();
 
     const { results } = useContext(SearchContext)
-
-    
+      
     return (
         <>  <div className={classes.paperContainer}>
                 {results.length > 0 ? <Paper elevation={4} className={classes.paper}><Typography variant="body1" className={clsx(classes.strong, classes.typeOffset)}>{results.length }</Typography><Typography variant="body1"> matches found.</Typography></Paper>: <Typography></Typography>}                            
