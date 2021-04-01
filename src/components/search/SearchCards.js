@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
+import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
 import { Favorite, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 import { fade, makeStyles } from "@material-ui/core/styles";
@@ -267,42 +267,50 @@ export const SearchCard = ({ game }) => {
                                 disabled button to visualize favorites.
                              */}
                             { favorites.some(f => f.title === game.title) ? 
-                            <IconButton disabled>                            
-                                <Favorite className={classes.myFav}/>
-                            </IconButton>
+                            <Link className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>
+                                <Tooltip title="Open favorites" placement="top">
+                                    <IconButton>
+                                        <Favorite className={classes.myFav}/>
+                                    </IconButton>
+                                </Tooltip>
+                            </Link>
                             :
-                            <IconButton onClick={() => {
-                                HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                                                  
-                                setFavHeart(true);
-                            }}>                            
-                                <Favorite className={classes.favIcon}/>
-                            </IconButton>
+                            <Tooltip title="Add to favorites" placement="top">
+                                <IconButton onClick={() => {
+                                    HandleAddFavorite(game, addFavorite, handleSnacks);
+                                    setFavHeart(true);
+                                }}>
+                                    <Favorite className={classes.favIcon}/>
+                                </IconButton>
+                            </Tooltip>
                             }
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
-                            <Link className={classes.playLink} to={() => {
-                                const gameTitle = cardTitle(game.title);
-                                const routerLink = {
-                                    pathname: `/search/player/${game.identifier}`,
-                                    state: {
-                                        gameId: game.identifier,
-                                        title: gameTitle,
-                                        releaseDate: game.date,
-                                        genre: game.genre,
-                                        imgPath: `https://archive.org/services/img/${game.identifier}`,
-                                    },
-                                    
-                                }
-                                return routerLink
-                            }}>
-                                <Button
-                                    variant="contained"
-                                    className={classes.greenButton}
-                                    startIcon={<SportsEsports />}
-                                >
-                                    Play
-                                </Button>
-                            </Link>
+                            <Tooltip title="Open game player" placement="top">
+                                <Link className={classes.playLink} to={() => {
+                                    const gameTitle = cardTitle(game.title);
+                                    const routerLink = {
+                                        pathname: `/search/player/${game.identifier}`,
+                                        state: {
+                                            gameId: game.identifier,
+                                            title: gameTitle,
+                                            releaseDate: game.date,
+                                            genre: game.genre,
+                                            imgPath: `https://archive.org/services/img/${game.identifier}`,
+                                        },
+                                        
+                                    }
+                                    return routerLink
+                                }}>
+                                    <Button
+                                        variant="contained"
+                                        className={classes.greenButton}
+                                        startIcon={<SportsEsports />}
+                                    >
+                                        Play
+                                    </Button>
+                                </Link>                            
+                            </Tooltip>
                         </div>
                     </CardActions>
                 </Card>

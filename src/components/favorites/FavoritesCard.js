@@ -217,7 +217,7 @@ export const FavoriteCard = ({ game }) => {
     const classes = useStyles();     
     
     return  <>
-            <Card className={classes.cardStyle} key={game.gameId}>
+            <Card className={classes.cardStyle} key={game.gameId} id={`${game.gameId}--card`}>
                     <CardMedia
                     className={classes.cardMedia}
                     image={`${game.imgPath}`}
