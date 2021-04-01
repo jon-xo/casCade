@@ -1,9 +1,11 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
 import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
-import { FavoriteButton } from "../favorites/FavoritesHandler";
+import { FavoritesContext } from "../favorites/FavoritesProvider";
+import { HandleAddFavorite, handleSnacks } from "../favorites/FavoritesHandler";
+import { useSnackbar } from 'notistack';
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
@@ -158,10 +160,19 @@ export const LibraryCard = ({ game }) => {
     // Unique state is declared for each card
     const [ open, setOpen ] = useState(false);
 
+    const { addFavorite, favoriteStatus, setFavoriteStatus } = useContext(FavoritesContext);
+
     // Function is envoked by Details button event listner
     const handleCardDetails = () => {
         setOpen(!open);
     };
+
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+    const handleSnacks = (variant, { title }) => () => {  
+            const snackTitle = cardTitle(title);            
+            enqueueSnackbar(`${snackTitle} was added to your favorites!`, { variant });
+    }
     
     const classes = useStyles();
 
@@ -224,10 +235,14 @@ export const LibraryCard = ({ game }) => {
                     </CardActionArea>
                     <CardActions>
                         <div className={classes.cardButtonContainer}>
-                            {/* Container holds thvoritee Favorite and Play buttons aligned and anchored to the bottom of the card */}
+                            {/* Container holds the Favorite and Play buttons aligned and anchored to the bottom of the card */}
     
-                            <FavoriteButton className={classes.redIcon} object={{game}}/>
-
+                            <IconButton onClick={() => {
+                                HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                        
+                                setFavoriteStatus(false);                                
+                                }}>                            
+                                <Favorite className={classes.redIcon}/>
+                            </IconButton>
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
                             <Link className={classes.buttonLink} to={() => {

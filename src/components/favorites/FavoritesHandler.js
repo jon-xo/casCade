@@ -5,8 +5,8 @@ import { Favorite } from "@material-ui/icons";
 import { FavoritesContext } from "./FavoritesProvider";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 
-const stageAddFavorite = (favoriteObject, func, StateHandler) => {
-
+export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
+    
     if(favoriteObject !== undefined) {
         const newFavorite = {
             gameId: favoriteObject.identifier,
@@ -14,22 +14,23 @@ const stageAddFavorite = (favoriteObject, func, StateHandler) => {
             releaseDate: favoriteObject.date,
             genre: favoriteObject.genre,
             imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`
-        }
-        console.log(favoriteObject);        
+        }      
         console.log(newFavorite);
         
         func(newFavorite)
-        .then(StateHandler(true))
+        .then(SnackHandler("success", newFavorite))
+    } else {
+        console.log("favoriteObject = undefined");        
     }
     
 };
 
-export const FavoriteButton = ({props}, object) => {
-    const { addFavorite, setFavoriteStatus } = useContext(FavoritesContext);
+// export const FavoriteButton = ({props}, object) => {
+//     const { addFavorite, setFavoriteStatus } = useContext(FavoritesContext);
 
-    return (
-    <IconButton onClick={stageAddFavorite(object, addFavorite, setFavoriteStatus)}>
-        <Favorite {...props}/>
-    </IconButton>
-    )
-};
+//     return (
+//     <IconButton onClick={handleAddFavorite(object, addFavorite, setFavoriteStatus)}>
+//         <Favorite {...props}/>
+//     </IconButton>
+//     )
+// };

@@ -8,8 +8,8 @@ import theme from './theme';
 
 ReactDOM.render(
   <Router>
-    <ThemeProvider theme={theme}>
-      <Cascade />
+    <ThemeProvider theme={theme}>      
+      <Cascade />      
     </ThemeProvider>
   </Router>,
   document.getElementById('root')
