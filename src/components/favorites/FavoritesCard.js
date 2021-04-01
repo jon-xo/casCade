@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
         "&:hover": {
             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-            backgroundColor: fade(theme.palette.error.main, 0.65),
+            backgroundColor: fade(theme.palette.error.light, 0.65),
         },
     },
     cardHeaderSpan: {
@@ -69,6 +69,18 @@ const useStyles = makeStyles((theme) => ({
         // Container which holds the Details list
         height: theme.spacing(25),
         overflowX: 'hidden',
+    },
+    cardAccordian: {
+        backgroundColor: fade(theme.palette.secondary.dark, 0.15),
+        color: '#f5f5f5',
+    },
+    accordianInputContainer: {
+        padding: theme.spacing(1),
+        backgroundColor: '#f5f5f5',
+        borderRadius: '.5rem',
+    },
+    cardAccordianInput: {
+        backgroundColor: '#f5f5f5',
     },
     cardButtonContainer: {
         // Container to anchor card buttons to bottom
@@ -216,7 +228,7 @@ export const FavoriteCard = ({ game }) => {
     // event handler for accordian change
 
     const handleAccChange = (panel) => (event, isExpanded) => {      
-        console.log(panel, event, isExpanded);
+        // console.log(panel, event, isExpanded);
         if(expanded === panel) {
             setExpanded("")
         } else if (expanded !== panel) {
@@ -308,7 +320,7 @@ export const FavoriteCard = ({ game }) => {
                             </div>
                             <Divider className={classes.cardDivider} />
                             <div className={classes.detailsContainer}>
-                                <Accordion expanded={expanded === 'panel1'} onChange={handleAccChange('panel1')}>
+                                <Accordion expanded={expanded === 'panel1'} onChange={handleAccChange('panel1')} className={classes.cardAccordian}>
                                     <AccordionSummary
                                       expandIcon={<ExpandMore />}                                      
                                       id="panel1bh-header"
@@ -328,7 +340,7 @@ export const FavoriteCard = ({ game }) => {
                                         </List>
                                     </AccordionDetails>
                                 </Accordion>
-                                <Accordion expanded={expanded === 'panel2'} onChange={handleAccChange('panel2')}>
+                                <Accordion expanded={expanded === 'panel2'} onChange={handleAccChange('panel2')} className={classes.cardAccordian}>
                                     <AccordionSummary
                                       expandIcon={<ExpandMore />}                                      
                                       id="panel2bh-header"
@@ -338,16 +350,19 @@ export const FavoriteCard = ({ game }) => {
                                     <AccordionDetails>
                                         <div className={classes.paperContainer}>
                                             { editOpen  ?
-                                                <TextField
-                                                    id="outlined-textarea"
-                                                    label="Edit"
-                                                    multiline
-                                                    rows={4}
-                                                    defaultValue={game.notes}
-                                                    variant="outlined"
-                                                    fullWidth={true}
-                                                    onChange={handleCardNote}
-                                                />
+                                                <div className={classes.accordianInputContainer}>
+                                                    <TextField
+                                                        id="outlined-textarea"
+                                                        label="Edit"
+                                                        multiline
+                                                        rows={4}
+                                                        defaultValue={game.notes}
+                                                        variant="outlined"
+                                                        fullWidth={true}
+                                                        onChange={handleCardNote}
+                                                        className={classes.cardAccordianInput}
+                                                    />
+                                                </div>
                                                 :
                                                 game.notes === "" ?
                                                     <Paper variant={'outlined'} elevation={4} className={classes.smallPaper}>
@@ -368,7 +383,7 @@ export const FavoriteCard = ({ game }) => {
                         {/* Container holds the Favorite and Play buttons,
                         aligned and anchored to the bottom of the card */}
                         <div className={classes.cardButtonContainer}>                                       
-                                <Tooltip title="Delete" placement="top">
+                                <Tooltip title="Delete" placement="top" arrow>
                                     <IconButton className={classes.deleteIcon} onClick={()=> {
                                             HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
                                         }}>
@@ -376,13 +391,13 @@ export const FavoriteCard = ({ game }) => {
                                     </IconButton>
                                 </Tooltip>                                
                                 { !editOpen  ? 
-                                    <Tooltip title="Edit" placement="top">
+                                    <Tooltip title="Edit" placement="top" arrow>
                                         <IconButton className={classes.settingIcon} onClick={handleCardDetails}>
                                             <Edit />
                                         </IconButton>
                                     </Tooltip>
                                     :
-                                    <Tooltip title="Save" placement="top">
+                                    <Tooltip title="Save" placement="top" arrow>
                                         <IconButton className={classes.settingIcon} onClick={() => {
                                             handleCardDetails()
                                             HandleUpdateFavorite(game, cardNote, updateFavorite, handleSnacks)
@@ -394,7 +409,7 @@ export const FavoriteCard = ({ game }) => {
    
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
-                            <Tooltip title="Open game player" placement="top">
+                            <Tooltip title="Open game player" placement="top" arrow>
                                 <Link className={classes.playLink} to={() => {
                                     const gameTitle = cardTitle(game.title);
                                     const routerLink = {

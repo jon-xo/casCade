@@ -211,7 +211,7 @@ export const LibraryCard = ({ game }) => {
                     // and replaces remaining characters with an ellipsis
                     title={cardTitle(game.title, 44)}
                     />
-                    <CardActionArea disableRipple={"true"}>
+                    <CardActionArea disableRipple={true}>
                         <CardContent>
                             <div className={classes.cardHeaderSpan}>
                                 <Typography className={classes.cardHeader}  variant="h5" component="h2" gutterBottom>
@@ -266,24 +266,26 @@ export const LibraryCard = ({ game }) => {
                                 disabled button to visualize favorites.
                              */}
                             { favorites.some(f => f.title === game.title) ? 
-                            <Tooltip title="Open favorites" placement="top">
-                                <IconButton>                            
-                                    <Favorite className={classes.myFav}/>
-                                </IconButton>
-                            </Tooltip>
+                            <Link className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>                                
+                                <Tooltip title="Open favorites" placement="top" arrow>
+                                    <IconButton>                            
+                                        <Favorite className={classes.myFav}/>
+                                    </IconButton>
+                                </Tooltip>
+                            </Link>
                             :
-                            <Tooltip title="Add to favorites" placement="top">
-                                <IconButton onClick={() => {
-                                    HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                                                  
-                                    setFavHeart(true);
-                                }}>                            
-                                    <Favorite className={classes.favIcon}/>
-                                </IconButton>
-                            </Tooltip>
+                            <IconButton onClick={() => {
+                                HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                                                  
+                                setFavHeart(true);
+                            }}>                                            
+                                <Tooltip title="Add to favorites" placement="top" arrow>
+                                    <Favorite className={classes.favIcon}/>                                    
+                                </Tooltip>                                                
+                            </IconButton>
                             }
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
-                            <Tooltip title="Open game player" placement="top">
+                            <Tooltip title="Open game player" placement="top" arrow>
                                 <Link className={classes.buttonLink} to={() => {
                                     const gameTitle = cardTitle(game.title);
                                     const routerLink = {

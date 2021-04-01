@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
 import { Favorite, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
-import { truncate , cardTitle, releaseDate } from "../StrManipulation";
+import { truncate, cardTitle, releaseDate } from "../StrManipulation";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { FavoritesContext } from "../favorites/FavoritesProvider";
 import { HandleAddFavorite } from "../favorites/FavoritesHandler";
@@ -165,22 +165,22 @@ const useStyles = makeStyles((theme) => ({
 
 export const SearchCard = ({ game }) => {
     // Unique state is declared for each card
-    const [ open, setOpen ] = useState(false);
+    const [open, setOpen] = useState(false);
 
     // Boolean stored to detect when a game is added
     // to Favorites table in local server
-    const [ favHeart, setFavHeart ] = useState(true)
+    const [favHeart, setFavHeart] = useState(true)
 
     const { addFavorite, getFavorites, favorites } = useContext(FavoritesContext);
 
     // API call to fetch Favorites, conditional allows...
     // for useEffect to initiate on page load, and
     // prevents API call until favHeart boolean is manipulated on save
-    
+
     useEffect(() => {
-        if(favHeart === true){
+        if (favHeart === true) {
             getFavorites()
-            .then(setFavHeart(false));
+                .then(setFavHeart(false));
         }
     }, [])
 
@@ -194,126 +194,126 @@ export const SearchCard = ({ game }) => {
 
     // Function to display Snackbar on successful add to favorites,
     // must be envoked as a callback function.
-    const handleSnacks = (variant, { title }) => () => {  
-            const snackTitle = cardTitle(title);            
-            enqueueSnackbar(`${snackTitle} was added to your favorites!`, { variant });
+    const handleSnacks = (variant, { title }) => () => {
+        const snackTitle = cardTitle(title);
+        enqueueSnackbar(`${snackTitle} was added to your favorites!`, { variant });
     }
-    
+
     const classes = useStyles();
 
     // Rendered Card
-    return  <>
+    return <>
 
-            <Card className={classes.cardStyle} key={game.identifier}>
-                    <CardMedia
-                    className={classes.cardMedia}
-                    image={`https://archive.org/services/img/${game.identifier}`}
-                    // cardTitle function truncates game titles over 41 characters 
-                    // and replaces remaining characters with an ellipsis
-                    title={cardTitle(game.title, 44)}
-                    />
-                    <CardActionArea disableRipple={"true"}>
-                        <CardContent>
-                            <div className={classes.cardHeaderSpan}>
-                                <Typography className={classes.cardHeader}  variant="h5" component="h2" gutterBottom>
-                                    {/* cardTitle function truncates game titles over 41 characters 
+        <Card className={classes.cardStyle} key={game.identifier}>
+            <CardMedia
+                className={classes.cardMedia}
+                image={`https://archive.org/services/img/${game.identifier}`}
+                // cardTitle function truncates game titles over 41 characters 
+                // and replaces remaining characters with an ellipsis
+                title={cardTitle(game.title, 44)}
+            />
+            <CardActionArea disableRipple={true}>
+                <CardContent>
+                    <div className={classes.cardHeaderSpan}>
+                        <Typography className={classes.cardHeader} variant="h5" component="h2" gutterBottom>
+                            {/* cardTitle function truncates game titles over 41 characters 
                                     and replaces remaining characters with an ellipsis */}
-                                    {cardTitle(game.title, 41)}
-                                </Typography>
-                            </div>
-                            <div className={classes.genreContainer}>
-                                {/* Turnary checks if game.genre is null and displays the Uncategorized tag if true,
+                            {cardTitle(game.title, 41)}
+                        </Typography>
+                    </div>
+                    <div className={classes.genreContainer}>
+                        {/* Turnary checks if game.genre is null and displays the Uncategorized tag if true,
                                 else it displays the genre provided by the API truncated to 22 characters */}
-                                {!game.genre ? <div className={classes.uncategorizedTag}>
-                                    <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">Uncategorized</Typography>
-                                </div>:<div className={classes.genreTag}>
-                                    <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">{truncate(game.genre, 22)}</Typography>
-                                </div>}
-                            </div>
-                            <Divider className={classes.cardDivider} />
-                            <div className={classes.detailsContainer}>
-                                <List component="nav" disablePadding >
-                                    <ListItem button onClick={handleCardDetails} >
-                                        {/* ListItem component is rendered as button */}
-                                        <ListItemIcon>
-                                            <Subject className={classes.root}/>
-                                        </ListItemIcon>
-                                        <ListItemText primary="Details" />
-                                        {/* Turnary checks for inital value of open and diplays the ExpandMore button, else displays ExpandLess */}
-                                        {open ? <ExpandMore /> : <ExpandLess />}
-                                    </ListItem>
-                                    <Collapse in={open} timeout="auto" unmountOnExit >
-                                        <List component="div" disablePadding>
-                                            {/* Game Year List Item includes a turnary to display a string if game.data is undefined,
+                        {!game.genre ? <div className={classes.uncategorizedTag}>
+                            <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">Uncategorized</Typography>
+                        </div> : <div className={classes.genreTag}>
+                            <Label className={classes.tagIcon} /><Typography className={classes.tagText} variant="body1" component="p">{truncate(game.genre, 22)}</Typography>
+                        </div>}
+                    </div>
+                    <Divider className={classes.cardDivider} />
+                    <div className={classes.detailsContainer}>
+                        <List component="nav" disablePadding >
+                            <ListItem button onClick={handleCardDetails} >
+                                {/* ListItem component is rendered as button */}
+                                <ListItemIcon>
+                                    <Subject className={classes.root} />
+                                </ListItemIcon>
+                                <ListItemText primary="Details" />
+                                {/* Turnary checks for inital value of open and diplays the ExpandMore button, else displays ExpandLess */}
+                                {open ? <ExpandMore /> : <ExpandLess />}
+                            </ListItem>
+                            <Collapse in={open} timeout="auto" unmountOnExit >
+                                <List component="div" disablePadding>
+                                    {/* Game Year List Item includes a turnary to display a string if game.data is undefined,
                                             else passes the game.date value to the releaseDate function to shorten string.  */}
-                                            <ListItem key={`${game.identifier}--year-header`} className={classes.nested}>
-                                                { !game.date ?  <ListItemText primary="Release Year" secondary="N/A" />:<ListItemText primary="Release Year" secondary={releaseDate(game.date)} />}
-                                            </ListItem>
-                                            <ListItem key={`${game.identifier}--publisher-header`} className={clsx(classes.nested, {secondary: classes.secondaryText})}>
-                                                <ListItemText primary="Publisher" secondary={game.creator} />
-                                            </ListItem>
-                                        </List>
-                                    </Collapse>
+                                    <ListItem key={`${game.identifier}--year-header`} className={classes.nested}>
+                                        {!game.date ? <ListItemText primary="Release Year" secondary="N/A" /> : <ListItemText primary="Release Year" secondary={releaseDate(game.date)} />}
+                                    </ListItem>
+                                    <ListItem key={`${game.identifier}--publisher-header`} className={clsx(classes.nested, { secondary: classes.secondaryText })}>
+                                        <ListItemText primary="Publisher" secondary={game.creator} />
+                                    </ListItem>
                                 </List>
-                            </div>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        {/* Container holds the Favorite and Play buttons,
+                            </Collapse>
+                        </List>
+                    </div>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                {/* Container holds the Favorite and Play buttons,
                         aligned and anchored to the bottom of the card */}
-                        <div className={classes.cardButtonContainer}>
-                            {/* Favorite button includes ternary operator to match the current card's
+                <div className={classes.cardButtonContainer}>
+                    {/* Favorite button includes ternary operator to match the current card's
                                 game title to the favorites database, and displays a filled,
                                 disabled button to visualize favorites.
                              */}
-                            { favorites.some(f => f.title === game.title) ? 
-                            <Link className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>
-                                <Tooltip title="Open favorites" placement="top">
-                                    <IconButton>
-                                        <Favorite className={classes.myFav}/>
-                                    </IconButton>
-                                </Tooltip>
-                            </Link>
-                            :
-                            <Tooltip title="Add to favorites" placement="top">
-                                <IconButton onClick={() => {
-                                    HandleAddFavorite(game, addFavorite, handleSnacks);
-                                    setFavHeart(true);
-                                }}>
-                                    <Favorite className={classes.favIcon}/>
+                    {favorites.some(f => f.title === game.title) ?
+                        <Link className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>
+                            <Tooltip title="Open favorites" placement="top" arrow>
+                                <IconButton>
+                                    <Favorite className={classes.myFav} />
                                 </IconButton>
                             </Tooltip>
-                            }
-                            {/* react-router-dom Link is passed the routerLink object via state,
+                        </Link>
+                        :
+                        <Tooltip title="Add to favorites" placement="top" arrow>
+                            <IconButton onClick={() => {
+                                HandleAddFavorite(game, addFavorite, handleSnacks);
+                                setFavHeart(true);
+                            }}>
+                                <Favorite className={classes.favIcon} />
+                            </IconButton>
+                        </Tooltip>
+                    }
+                    {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
-                            <Tooltip title="Open game player" placement="top">
-                                <Link className={classes.playLink} to={() => {
-                                    const gameTitle = cardTitle(game.title);
-                                    const routerLink = {
-                                        pathname: `/search/player/${game.identifier}`,
-                                        state: {
-                                            gameId: game.identifier,
-                                            title: gameTitle,
-                                            releaseDate: game.date,
-                                            genre: game.genre,
-                                            imgPath: `https://archive.org/services/img/${game.identifier}`,
-                                        },
-                                        
-                                    }
-                                    return routerLink
-                                }}>
-                                    <Button
-                                        variant="contained"
-                                        className={classes.greenButton}
-                                        startIcon={<SportsEsports />}
-                                    >
-                                        Play
-                                    </Button>
-                                </Link>                            
-                            </Tooltip>
-                        </div>
-                    </CardActions>
-                </Card>
-                
-            </>
+                    <Tooltip title="Open game player" placement="top" arrow>
+                        <Link className={classes.playLink} to={() => {
+                            const gameTitle = cardTitle(game.title);
+                            const routerLink = {
+                                pathname: `/search/player/${game.identifier}`,
+                                state: {
+                                    gameId: game.identifier,
+                                    title: gameTitle,
+                                    releaseDate: game.date,
+                                    genre: game.genre,
+                                    imgPath: `https://archive.org/services/img/${game.identifier}`,
+                                },
+
+                            }
+                            return routerLink
+                        }}>
+                            <Button
+                                variant="contained"
+                                className={classes.greenButton}
+                                startIcon={<SportsEsports />}
+                            >
+                                Play
+                            </Button>
+                        </Link>
+                    </Tooltip>
+                </div>
+            </CardActions>
+        </Card>
+
+    </>
 };
