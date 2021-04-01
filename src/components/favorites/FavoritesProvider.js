@@ -37,7 +37,7 @@ export const FavortiesProvider = (props) => {
     // };
 
     const deleteFavorite = (favoriteId) => {
-        return fetch(`http://localhost:8088/animals/${favoriteId}`, {
+        return fetch(`http://localhost:8088/favorites/${favoriteId}`, {
             method: "DELETE"
         })
         .then(getFavorites)

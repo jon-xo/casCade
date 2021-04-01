@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
-import { Settings, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
+import { Settings, SportsEsports, Subject, Label, ExpandLess, ExpandMore, DeleteForever, Edit, Save } from "@material-ui/icons";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { useSnackbar } from 'notistack';
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
-import { SettingsDial } from "./FavoritesHandler";
+import { HandleDeleteFavorite, SettingsDial } from "./FavoritesHandler";
+import { FavoritesContext } from "./FavoritesProvider";
 import clsx from "clsx"
 
 // Declare variable to import material-ui components and specify local theme overrides 
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
         // Container to anchor card buttons to bottom
         display: 'flex',
         width: '100%',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         height: theme.spacing(7),
         alignContent: 'flex-end',
         alignItems: 'flex-end',
@@ -135,10 +136,19 @@ const useStyles = makeStyles((theme) => ({
         // Indentation for nested list items
         paddingLeft: theme.spacing(4),
     },
+    deleteIcon: {
+        // Create red theme for material-ui icons
+        marginBottom: theme.spacing(1),
+        width: theme.spacing(6),
+        color: theme.palette.secondary.dark,
+        "&:hover": {
+            color: theme.palette.error.dark,
+        }
+    },
     settingIcon: {
         // Create red theme for material-ui icons
         marginBottom: theme.spacing(1),
-        width: theme.spacing(10),
+        width: theme.spacing(6),
         color: theme.palette.secondary.dark,
         "&:hover": {
             color: theme.palette.warning.light,
@@ -166,24 +176,42 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const FavoriteCard = ({ game }) => {
-     // Unique state is declared for each card
-     const [ open, setOpen ] = useState(false);
+    const { deleteFavorite }  = useContext(FavoritesContext);
+
+    // Unique state is declared for each card
+    const [ open, setOpen ] = useState(false);
 
     // Function is envoked by Details button event listner
     const handleCardDetails = () => {
         setOpen(!open);
     };
 
-    const [dialOpen, setDialOpen] = useState(false);
+     // Store deconstructed snackbar react hooks
+     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const handleDialClose = () => {
-        setDialOpen(false);
-      };
+     // Function to display Snackbar on successful add to favorites,
+     // must be envoked as a callback function.
+     const handleSnacks = (variant, { title }) => () => {  
+             const snackTitle = cardTitle(title);
+             if(variant === "error") {
+                 enqueueSnackbar(`${snackTitle} was deleted from your favorites!`, { variant });
+             } else if(variant === "primary") {
+                enqueueSnackbar(`${snackTitle} note updated!`, { variant });
+             }
+     }
+
+    // const [dialOpen, setDialOpen] = useState(false);
+
+    // const handleDialClose = () => {
+    //     setDialOpen(false);
+    // };
     
-      const handleDialOpen = () => {
-        setDialOpen(true);
-      };
+    // const handleDialOpen = () => {
+    //   setDialOpen(true);
+    // };
       
+
+    
     
     // Declare useStyles function in classes variable 
     const classes = useStyles();     
@@ -246,19 +274,19 @@ export const FavoriteCard = ({ game }) => {
                     <CardActions>
                         {/* Container holds the Favorite and Play buttons,
                         aligned and anchored to the bottom of the card */}
-                        <div className={classes.cardButtonContainer}>                    
-                   
-                                <SettingsDial
-                                    ariaLabel="Card settings" 
-                                    onClose={handleDialClose}
-                                    onOpen={handleDialOpen}
-                                    open={dialOpen}
-                                    direction={"up"}
-                                    className={clsx(classes.settingIcon, classes.root)}
-                                    onClick={handleDialClose}
-                                    icon={<Settings className={classes.settingsInner}/>}
-                                />
-
+                        <div className={classes.cardButtonContainer}>                                       
+                                <Tooltip title="Delete" placement="top">
+                                    <IconButton className={classes.deleteIcon} onClick={()=> {
+                                            HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
+                                        }}>
+                                        <DeleteForever />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Edit" placement="top">
+                                    <IconButton className={classes.settingIcon}>
+                                        <Edit />
+                                    </IconButton>
+                                </Tooltip>
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
                             <Link className={classes.playLink} to={() => {

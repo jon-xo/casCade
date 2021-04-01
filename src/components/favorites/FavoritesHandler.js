@@ -26,6 +26,17 @@ const useStyles = makeStyles((theme) => ({
 
 const currentUser = localStorage.getItem('cascade_user')
 
+export const HandleDeleteFavorite = (favoriteObject, func, SnackHandler) => {
+
+    // Import delete favorite function from FavoritesContext
+    const favoriteId = favoriteObject.id;
+    
+    if(favoriteId && favoriteId !== undefined) {
+        func(favoriteId)
+        .then(SnackHandler("error", favoriteObject))
+    }
+};
+
 export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
     
     if(favoriteObject !== undefined) {
