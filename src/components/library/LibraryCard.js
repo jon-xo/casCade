@@ -175,7 +175,7 @@ export const LibraryCard = ({ game }) => {
     // API call to fetch Favorites, conditional allows...
     // for useEffect to initiate on page load, and
     // prevents API call until favHeart boolean is manipulated on save
-    
+
     useEffect(() => {
         if(favHeart === true){
             getFavorites()
@@ -188,8 +188,11 @@ export const LibraryCard = ({ game }) => {
         setOpen(!open);
     };
 
+    // Store deconstructed snackbar react hooks
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+    // Function to display Snackbar on successful add to favorites,
+    // must be envoked as a callback function.
     const handleSnacks = (variant, { title }) => () => {  
             const snackTitle = cardTitle(title);            
             enqueueSnackbar(`${snackTitle} was added to your favorites!`, { variant });
@@ -255,8 +258,13 @@ export const LibraryCard = ({ game }) => {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
+                        {/* Container holds the Favorite and Play buttons,
+                         aligned and anchored to the bottom of the card */}
                         <div className={classes.cardButtonContainer}>
-                            {/* Container holds the Favorite and Play buttons aligned and anchored to the bottom of the card */}
+                            {/* Favorite button includes ternary operator to match the current card's
+                                game title to the favorites database, and displays a filled,
+                                disabled button to visualize favorites.
+                             */}
                             { favorites.some(f => f.title === game.title) ? 
                             <IconButton disabled>                            
                                 <Favorite className={classes.myFav}/>

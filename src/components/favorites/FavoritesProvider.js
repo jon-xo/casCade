@@ -6,8 +6,10 @@ export const FavortiesProvider = (props) => {
     const [favorites, setFavorites] = useState([]);
     const [favoriteStatus, setFavoriteStatus] = useState(false);
 
+    const activeUserId = localStorage.getItem("cascade_user")
+
     const getFavorites = () => {
-        return fetch("http://localhost:8088/favorites")
+        return fetch(`http://localhost:8088/favorites?userId=${activeUserId}`)
         .then(r => r.json())
         .then(setFavorites)
     };

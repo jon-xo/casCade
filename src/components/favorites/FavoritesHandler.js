@@ -5,6 +5,8 @@ import { Favorite } from "@material-ui/icons";
 import { FavoritesContext } from "./FavoritesProvider";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 
+const currentUser = localStorage.getItem('cascade_user')
+
 export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
     
     if(favoriteObject !== undefined) {
@@ -13,7 +15,8 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
             title: favoriteObject.title,
             releaseDate: favoriteObject.date,
             genre: favoriteObject.genre,
-            imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`
+            imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`,
+            user: currentUser
         }      
         console.log(newFavorite);
         

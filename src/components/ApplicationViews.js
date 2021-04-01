@@ -35,21 +35,23 @@ export const ApplicationViews = () => {
                     <NavBar />
                 </Route>
             </FavortiesProvider>
-            <SearchProvider>
-                <Route exact path="/search">
-                    <NavBar />
-                    <Search />
-                </Route>
-                <Route exact path="/search/results?_:query">
-                    <NavBar />
-                    <Search />
-                    <SearchList />
-                </Route>
-                <Route exact path="/search/player/:gameData">
-                    <NavBar />
-                    <GameContainer />
-                </Route>
-            </SearchProvider>
+            <FavortiesProvider>
+                <SearchProvider>
+                    <Route exact path="/search">
+                        <NavBar />
+                        <Search />
+                    </Route>
+                    <Route exact path="/search/results?_:query">
+                        <NavBar />
+                        <Search />
+                        <SearchList />
+                    </Route>
+                    <Route exact path="/search/player/:gameData">
+                        <NavBar />
+                        <GameContainer />
+                    </Route>
+                </SearchProvider>
+            </FavortiesProvider>
         </>
     )
 };
