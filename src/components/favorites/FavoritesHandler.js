@@ -37,6 +37,25 @@ export const HandleDeleteFavorite = (favoriteObject, func, SnackHandler) => {
     }
 };
 
+export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) => {
+
+    // Import delete favorite function from FavoritesContext
+    const favoriteId = favoriteObject.id;
+    
+    if(favoriteId && favoriteId !== undefined) {
+        func({
+            gameId: favoriteObject.gameId,
+            title: favoriteObject.title,
+            releaseDate: favoriteObject.releaseDate,
+            imgPath: favoriteObject.imgPath,
+            notes: value,
+            user: currentUser,
+            id: favoriteId,
+        })
+        .then(SnackHandler("info", favoriteObject))
+    }
+};
+
 export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
     
     if(favoriteObject !== undefined) {

@@ -211,7 +211,7 @@ export const LibraryCard = ({ game }) => {
                     // and replaces remaining characters with an ellipsis
                     title={cardTitle(game.title, 44)}
                     />
-                    <CardActionArea>
+                    <CardActionArea disableRipple={"true"}>
                         <CardContent>
                             <div className={classes.cardHeaderSpan}>
                                 <Typography className={classes.cardHeader}  variant="h5" component="h2" gutterBottom>
