@@ -4,7 +4,7 @@ import { Typography, IconButton, Button, Card, CardActionArea, CardActions, Card
 import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 import { FavoritesContext } from "../favorites/FavoritesProvider";
-import { HandleAddFavorite, handleSnacks } from "../favorites/FavoritesHandler";
+import { HandleAddFavorite } from "../favorites/FavoritesHandler";
 import { useSnackbar } from 'notistack';
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
         // Indentation for nested list items
         paddingLeft: theme.spacing(4),
     },
-    redIcon: {
+    favIcon: {
         // Create red theme for material-ui icons
         fontSize: '1.5rem',
         padding: theme.spacing(.5),
@@ -137,6 +137,12 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             color: theme.palette.error.main,
         }
+    },
+    myFav: {
+        // Create red theme for material-ui icons
+        fontSize: '1.5rem',
+        padding: theme.spacing(.5),
+        color: theme.palette.error.main,
     },
     greenButton: {
         // Create green button for material-ui icons
@@ -160,8 +166,23 @@ export const LibraryCard = ({ game }) => {
     // Unique state is declared for each card
     const [ open, setOpen ] = useState(false);
 
-    const { addFavorite, favoriteStatus, setFavoriteStatus } = useContext(FavoritesContext);
+    // Boolean stored to detect when a game is added
+    // to Favorites table in local server
+    const [ favHeart, setFavHeart ] = useState(true)
 
+    const { addFavorite, getFavorites, favorites } = useContext(FavoritesContext);
+
+    // API call to fetch Favorites, conditional allows...
+    // for useEffect to initiate on page load, and
+    // prevents API call until favHeart boolean is manipulated on save
+    
+    useEffect(() => {
+        if(favHeart === true){
+            getFavorites()
+            .then(setFavHeart(false));
+        }
+    }, [])
+    
     // Function is envoked by Details button event listner
     const handleCardDetails = () => {
         setOpen(!open);
@@ -236,13 +257,18 @@ export const LibraryCard = ({ game }) => {
                     <CardActions>
                         <div className={classes.cardButtonContainer}>
                             {/* Container holds the Favorite and Play buttons aligned and anchored to the bottom of the card */}
-    
-                            <IconButton onClick={() => {
-                                HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                        
-                                setFavoriteStatus(false);                                
-                                }}>                            
-                                <Favorite className={classes.redIcon}/>
+                            { favorites.some(f => f.title === game.title) ? 
+                            <IconButton disabled>                            
+                                <Favorite className={classes.myFav}/>
                             </IconButton>
+                            :
+                            <IconButton onClick={() => {
+                                HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                                                  
+                                setFavHeart(true);
+                            }}>                            
+                                <Favorite className={classes.favIcon}/>
+                            </IconButton>
+                            }
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
                             <Link className={classes.buttonLink} to={() => {
