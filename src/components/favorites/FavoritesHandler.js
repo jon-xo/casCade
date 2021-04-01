@@ -15,6 +15,7 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
             title: favoriteObject.title,
             releaseDate: favoriteObject.date,
             genre: favoriteObject.genre,
+            publisher: favoriteObject.creator,
             imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`,
             user: currentUser
         }      
