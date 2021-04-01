@@ -1,5 +1,6 @@
 import React, { useState , useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
 import { Favorite, Search, Shuffle, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
@@ -266,13 +267,13 @@ export const LibraryCard = ({ game }) => {
                                 disabled button to visualize favorites.
                              */}
                             { favorites.some(f => f.title === game.title) ? 
-                            <Link className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>                                
+                            <HashLink className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>                                
                                 <Tooltip title="Open favorites" placement="top" arrow>
                                     <IconButton>                            
                                         <Favorite className={classes.myFav}/>
                                     </IconButton>
                                 </Tooltip>
-                            </Link>
+                            </HashLink>
                             :
                             <IconButton onClick={() => {
                                 HandleAddFavorite(game, addFavorite, handleSnacks);                                                                                                                                  

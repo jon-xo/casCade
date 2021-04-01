@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
 import { Favorite, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
-import { truncate, cardTitle, releaseDate } from "../StrManipulation";
+import { truncate, cardTitle, releaseDate, anchorLink } from "../StrManipulation";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { FavoritesContext } from "../favorites/FavoritesProvider";
 import { HandleAddFavorite } from "../favorites/FavoritesHandler";
@@ -266,14 +267,14 @@ export const SearchCard = ({ game }) => {
                                 game title to the favorites database, and displays a filled,
                                 disabled button to visualize favorites.
                              */}
-                    {favorites.some(f => f.title === game.title) ?
-                        <Link className={classes.playLink} to={`/favorites/#${game.identifier}--card`}>
+                    {favorites.some(f => f.title === game.title) ?                        
+                        <HashLink className={classes.playLink} smooth to={anchorLink(game.identifier)}>
                             <Tooltip title="Open favorites" placement="top" arrow>
                                 <IconButton>
                                     <Favorite className={classes.myFav} />
                                 </IconButton>
                             </Tooltip>
-                        </Link>
+                        </HashLink>
                         :
                         <Tooltip title="Add to favorites" placement="top" arrow>
                             <IconButton onClick={() => {

@@ -18,6 +18,11 @@ export const releaseDate = (date) => {
     }
 };
 
+export const anchorLink = (gameIdentifier) => {
+    const newAnchor = `/favorites#${gameIdentifier}--card`
+    return newAnchor
+}
+
 export const SearchFormatter = ( originalQuery ) => {
     
     const createQueryArray = (uneditedQuery) => {
