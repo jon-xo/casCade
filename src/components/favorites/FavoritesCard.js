@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse } from "@material-ui/core";
 import { Settings, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
-import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { useSnackbar } from 'notistack';
+import { truncate , cardTitle, releaseDate } from "../StrManipulation";
+import { SettingsDial } from "./FavoritesHandler";
 import clsx from "clsx"
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
     root: {
+        "&.MuiFab-base": {
+            width: '2.5rem',
+            height: '2.5rem',
+        },
+    },
+    base: {
         margin: theme.spacing(1),
         color: theme.palette.secondary.dark,
     },
@@ -130,12 +137,16 @@ const useStyles = makeStyles((theme) => ({
     },
     settingIcon: {
         // Create red theme for material-ui icons
-        fontSize: '1.5rem',
-        padding: theme.spacing(.5),
+        marginBottom: theme.spacing(1),
+        width: theme.spacing(10),
         color: theme.palette.secondary.dark,
         "&:hover": {
             color: theme.palette.warning.light,
         }
+    },
+    settingsInner: {
+        width: '1.5rem',
+        height: '1.5rem',
     },
     greenButton: {
         // Create green button for material-ui icons
@@ -162,9 +173,21 @@ export const FavoriteCard = ({ game }) => {
     const handleCardDetails = () => {
         setOpen(!open);
     };
+
+    const [dialOpen, setDialOpen] = useState(false);
+
+    const handleDialClose = () => {
+        setDialOpen(false);
+      };
+    
+      const handleDialOpen = () => {
+        setDialOpen(true);
+      };
+      
+    
     // Declare useStyles function in classes variable 
     const classes = useStyles();     
-
+    
     return  <>
             <Card className={classes.cardStyle} key={game.gameId}>
                     <CardMedia
@@ -198,7 +221,7 @@ export const FavoriteCard = ({ game }) => {
                                     <ListItem button onClick={handleCardDetails} >
                                         {/* ListItem component is rendered as button */}
                                         <ListItemIcon>
-                                            <Subject className={classes.root}/>
+                                            <Subject className={classes.base}/>
                                         </ListItemIcon>
                                         <ListItemText primary="Details" />
                                         {/* Turnary checks for inital value of open and diplays the ExpandMore button, else displays ExpandLess */}
@@ -224,9 +247,18 @@ export const FavoriteCard = ({ game }) => {
                         {/* Container holds the Favorite and Play buttons,
                         aligned and anchored to the bottom of the card */}
                         <div className={classes.cardButtonContainer}>                    
-                            <IconButton>                            
-                                <Settings className={classes.settingIcon}/>
-                            </IconButton>
+                   
+                                <SettingsDial
+                                    ariaLabel="Card settings" 
+                                    onClose={handleDialClose}
+                                    onOpen={handleDialOpen}
+                                    open={dialOpen}
+                                    direction={"up"}
+                                    className={clsx(classes.settingIcon, classes.root)}
+                                    onClick={handleDialClose}
+                                    icon={<Settings className={classes.settingsInner}/>}
+                                />
+
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
                             <Link className={classes.playLink} to={() => {

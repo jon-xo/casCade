@@ -1,9 +1,28 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { IconButton } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons";
+// import { FormLabel, FormControlLabel, Radio, RadioGroup, Switch } from "@material-ui/core";
+import { SpeedDial, SpeedDialAction } from "@material-ui/lab";
+import { Settings, DeleteForever, Edit, Save } from "@material-ui/icons";
 import { FavoritesContext } from "./FavoritesProvider";
-import { truncate , cardTitle, releaseDate } from "../StrManipulation";
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      transform: 'translateZ(0px)',
+      flexGrow: 1,
+    },
+    speedDial: {
+      position: 'absolute',
+      '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
+      },
+      '&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight': {
+        top: theme.spacing(2),
+        left: theme.spacing(2),
+      },
+    }
+  }));
 
 const currentUser = localStorage.getItem('cascade_user')
 
@@ -29,12 +48,40 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
     
 };
 
-// export const FavoriteButton = ({props}, object) => {
-//     const { addFavorite, setFavoriteStatus } = useContext(FavoritesContext);
+const actions = [
+    { 
+        icon: <DeleteForever />, 
+        name: 'Delete' 
+    },
+    { 
+        icon: <Edit />, 
+        name: 'Edit' 
+    },
+    { 
+        icon: <Save />, 
+        name: 'Save' 
+    },
+];
 
-//     return (
-//     <IconButton onClick={handleAddFavorite(object, addFavorite, setFavoriteStatus)}>
-//         <Favorite {...props}/>
-//     </IconButton>
-//     )
-// };
+export const SettingsDial = (props) => {
+
+      return (
+          <>
+            <SpeedDial {...props}>
+                {actions.map((action) => (
+                    <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                        tooltipPlacement={'right-end'}
+                        onClick={(e) => {
+                            console.log(e);                            
+                        }}                 
+                    />
+                ))}
+            </SpeedDial>
+
+          
+          </>
+      )
+};
