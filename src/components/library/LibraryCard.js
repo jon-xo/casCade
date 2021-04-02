@@ -2,7 +2,7 @@ import React, { useState , useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
 import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip, Accordion, AccordionDetails, AccordionSummary, Paper } from "@material-ui/core";
-import { Favorite, Search, Shuffle, SportsEsports, Subject, Note, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Favorite, SportsEsports, Subject, Note, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
 import { FavoritesContext } from "../favorites/FavoritesProvider";
 import { HandleAddFavorite } from "../favorites/FavoritesHandler";
@@ -254,7 +254,7 @@ export const LibraryCard = ({ game }) => {
    }      
 
     // Store deconstructed snackbar react hooks
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     // Function to display Snackbar on successful add to favorites,
     // must be envoked as a callback function.

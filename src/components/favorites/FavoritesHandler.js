@@ -1,27 +1,6 @@
-import React, { useContext, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import React from "react";
 // import { FormLabel, FormControlLabel, Radio, RadioGroup, Switch } from "@material-ui/core";
-import { Settings, DeleteForever, Edit, Save } from "@material-ui/icons";
-import { FavoritesContext } from "./FavoritesProvider";
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      transform: 'translateZ(0px)',
-      flexGrow: 1,
-    },
-    speedDial: {
-      position: 'absolute',
-      '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
-        bottom: theme.spacing(2),
-        right: theme.spacing(2),
-      },
-      '&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight': {
-        top: theme.spacing(2),
-        left: theme.spacing(2),
-      },
-    }
-  }));
+// import { FavoritesContext } from "./FavoritesProvider";
 
 const currentUser = localStorage.getItem('cascade_user')
 
