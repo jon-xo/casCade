@@ -46,6 +46,19 @@ const useStyles = makeStyles((theme) => ({
         color: '#f5f5f5',
         fontWeight: 500,
     },
+    bluePaper: {
+        // Rectanglar ligt blue div
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: theme.spacing(50),
+        height: theme.spacing(5),
+        padding: theme.spacing(1),
+        margin: theme.spacing(3),
+        backgroundColor: theme.palette.primary.light,
+        color: '#f5f5f5',
+        fontWeight: 500,
+    },
     strong: {
         fontWeight: '600',
     },
@@ -63,16 +76,38 @@ export const SearchList = () => {
 
     const classes = useStyles();
 
-    const { results } = useContext(SearchContext)
-
+    const { results, responseHeaders } = useContext(SearchContext)
     
     return (
         <>  <div className={classes.paperContainer}>
-                {results.length > 0 ? <Paper elevation={4} className={classes.paper}><Typography variant="body1" className={clsx(classes.strong, classes.typeOffset)}>{results.length }</Typography><Typography variant="body1"> matches found.</Typography></Paper>: <Typography></Typography>}                            
+                {results.length > 0 ? 
+                    <Paper elevation={4} className={classes.paper}>
+                        <Typography variant="body1" className={clsx(classes.strong, classes.typeOffset)}>{results.length }</Typography><Typography variant="body1"> matches found.</Typography>
+                    </Paper>
+                    : 
+                    <Typography></Typography>
+                }
+                { results.length === 0 ?
+                    responseHeaders.QTime > 1 ?
+                    <Paper elevation={4} className={classes.paper}>
+                        <Typography variant="body1" className={clsx(classes.strong)}>No matches found.</Typography>
+                    </Paper>: 
+                    <Typography></Typography>
+                    :
+                    <Typography></Typography>
+                }
+                {
+                    results === [] && responseHeaders === [] ? 
+                    <Paper elevation={4} className={classes.bluePaper}>
+                        <Typography variant="body1" className={clsx(classes.strong)}>Find a game!</Typography>
+                    </Paper>
+                    :
+                    <Typography></Typography>
+                }                            
             </div>
             <div className={classes.cardContainer}>
                 {results.map((gameQuery) => {                 
-                    return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery} />
+                    return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery}/>
                 })}
             </div>
         </>

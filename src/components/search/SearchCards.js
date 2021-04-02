@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
-import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip } from "@material-ui/core";
-import { Favorite, SportsEsports, Subject, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip, Accordion, AccordionDetails, AccordionSummary, Paper } from "@material-ui/core";
+import { Favorite, SportsEsports, Subject, Note, Label, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { truncate, cardTitle, releaseDate, anchorLink } from "../StrManipulation";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { FavoritesContext } from "../favorites/FavoritesProvider";
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         margin: theme.spacing(1),
         color: theme.palette.secondary.dark,
+    },
+    heading: {
+        fontWeight: 500,
     },
     cardContainer: {
         // Styles for div which holds all rendered game cards
@@ -64,6 +67,32 @@ const useStyles = makeStyles((theme) => ({
     detailsContainer: {
         // Container which holds the Details list
         height: theme.spacing(25),
+        overflowX: 'hidden',
+    },
+    cardAccordian: {
+        backgroundColor: fade(theme.palette.secondary.dark, 0.15),
+        width: '98%',
+    },
+    accordianInputContainer: {
+        padding: theme.spacing(1),
+        backgroundColor: '#f5f5f5',
+        borderRadius: '.5rem',
+    },
+    cardAccordianInput: {
+        backgroundColor: '#f5f5f5',
+    },
+    cardAccordianIcon: {
+        marginTop: theme.spacing(.1),
+        marginRight: theme.spacing(1),
+        width: '1.3rem',
+        height: '1.3rem',
+    },
+    cardSuccessIcon: {
+        color: theme.palette.success.main,
+        marginTop: theme.spacing(.1),
+        marginRight: theme.spacing(1),
+        width: '1.3rem',
+        height: '1.3rem',
     },
     cardButtonContainer: {
         // Container to anchor card buttons to bottom
@@ -79,6 +108,25 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: {
         margin: theme.spacing(2),
+    },
+    paperContainer: {        
+        display: 'flex',
+        width: '100%',
+        minHeight: '3rem',
+        justifyContent: 'center',
+        alignContent: 'flex-start',
+    },
+    smallPaper: {
+        // Small Rectanglar blue-gray div
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '75%',
+        height: theme.spacing(3),
+        padding: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.light,
+        color: '#f5f5f5',
+        fontWeight: 500,
     },
     genreContainer: {
         // Container for the genre tag element
@@ -164,7 +212,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export const SearchCard = ({ game }) => {
+export const SearchCard = ({ game }, { favorite }) => {
     // Unique state is declared for each card
     const [open, setOpen] = useState(false);
 
@@ -190,6 +238,21 @@ export const SearchCard = ({ game }) => {
         setOpen(!open);
     };
 
+   // Initial state read by material-ui accordian
+   const [expanded, setExpanded] = useState("");
+
+
+   // event handler for accordian change
+
+   const handleAccChange = (panel) => (event, isExpanded) => {      
+       // console.log(panel, event, isExpanded);
+       if(expanded === panel) {
+           setExpanded("")
+       } else if (expanded !== panel) {
+           setExpanded(isExpanded ? panel : false);
+       }
+   }      
+
     // Store deconstructed snackbar react hooks
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -199,6 +262,15 @@ export const SearchCard = ({ game }) => {
         const snackTitle = cardTitle(title);
         enqueueSnackbar(`${snackTitle} was added to your favorites!`, { variant });
     }
+    
+    const findNote = favorites.find(f => f.title === game.title)
+
+    // const findNote = () => {
+    //     const foundNote = favorites.find(f => f.title === game.title)
+    //     console.log(foundNote);        
+    //     const newNote = {...foundNote}
+    //     return newNote
+    // };
 
     const classes = useStyles();
 
@@ -216,11 +288,21 @@ export const SearchCard = ({ game }) => {
             <CardActionArea disableRipple={true}>
                 <CardContent>
                     <div className={classes.cardHeaderSpan}>
+                        {cardTitle(game.title).length > 37 ? 
+                        <Tooltip title={cardTitle(game.title)}>
+                            <Typography className={classes.cardHeader} variant="h5" component="h2" gutterBottom>
+                                {/* cardTitle function truncates game titles over 41 characters
+                                        and replaces remaining characters with an ellipsis */}
+                                {cardTitle(game.title, 37)}
+                            </Typography>
+                        </Tooltip>
+                        :
                         <Typography className={classes.cardHeader} variant="h5" component="h2" gutterBottom>
-                            {/* cardTitle function truncates game titles over 41 characters 
+                            {/* cardTitle function truncates game titles over 41 characters
                                     and replaces remaining characters with an ellipsis */}
-                            {cardTitle(game.title, 41)}
+                            {cardTitle(game.title, 37)}
                         </Typography>
+                        }
                     </div>
                     <div className={classes.genreContainer}>
                         {/* Turnary checks if game.genre is null and displays the Uncategorized tag if true,
@@ -233,6 +315,58 @@ export const SearchCard = ({ game }) => {
                     </div>
                     <Divider className={classes.cardDivider} />
                     <div className={classes.detailsContainer}>
+                        {favorites.some(f => f.title === game.title) ?
+                            <> 
+                            <Accordion expanded={expanded === 'panel1'} onChange={handleAccChange('panel1')} className={classes.cardAccordian}>
+                            <AccordionSummary
+                              expandIcon={<ExpandMore />}                                      
+                              id="panel1bh-header"
+                            >
+                                <Subject className={classes.cardAccordianIcon} />
+                                <Typography className={classes.heading}>Details</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <List component="div" disablePadding>
+                                    {/* Game Year List Item includes a turnary to display a string if game.data is undefined,
+                                    else passes the game.date value to the releaseDate function to shorten string.  */}
+                                    <ListItem key={`${game.gameId}--year-header`} className={classes.nested}>
+                                        { !game.releaseDate ?  <ListItemText primary="Release Year" secondary="N/A" />:<ListItemText primary="Release Year" secondary={releaseDate(game.releaseDate)} />}
+                                    </ListItem>
+                                    <ListItem key={`${game.gameId}--publisher-header`} className={clsx(classes.nested, {secondary: classes.secondaryText})}>
+                                        <ListItemText primary="Publisher" secondary={game.publisher} />
+                                    </ListItem>
+                                </List>
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion expanded={expanded === 'panel2'} onChange={handleAccChange('panel2')} className={classes.cardAccordian}>
+                            <AccordionSummary
+                              expandIcon={<ExpandMore />}                                      
+                              id="panel2bh-header"
+                            >
+                                {findNote.notes !== "" ? 
+                                    <Note className={classes.cardSuccessIcon} />
+                                    :
+                                    <Note className={classes.cardAccordianIcon} />
+                                }                                
+                                <Typography className={classes.heading}>Notes</Typography>                                                                                                                            
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className={classes.paperContainer}>
+                                    { 
+                                        findNote.notes === "" ?
+                                            <Paper variant={'outlined'} elevation={4} className={classes.smallPaper}>
+                                                No notes
+                                            </Paper>
+                                            :
+                                            <Typography variant="body1" component="p">
+                                            {findNote.notes}
+                                            </Typography>
+                                    }
+                                </div>
+                            </AccordionDetails>
+                        </Accordion>
+                        </>
+                        :
                         <List component="nav" disablePadding >
                             <ListItem button onClick={handleCardDetails} >
                                 {/* ListItem component is rendered as button */}
@@ -241,7 +375,7 @@ export const SearchCard = ({ game }) => {
                                 </ListItemIcon>
                                 <ListItemText primary="Details" />
                                 {/* Turnary checks for inital value of open and diplays the ExpandMore button, else displays ExpandLess */}
-                                {open ? <ExpandMore /> : <ExpandLess />}
+                                {open ? <ExpandLess /> : <ExpandMore />}
                             </ListItem>
                             <Collapse in={open} timeout="auto" unmountOnExit >
                                 <List component="div" disablePadding>
@@ -255,7 +389,8 @@ export const SearchCard = ({ game }) => {
                                     </ListItem>
                                 </List>
                             </Collapse>
-                        </List>
+                        </List>                                                                
+                        }
                     </div>
                 </CardContent>
             </CardActionArea>

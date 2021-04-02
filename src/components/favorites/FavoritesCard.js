@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip, Accordion, AccordionDetails, AccordionSummary, TextField, Paper  } from "@material-ui/core";
-import { Settings, SportsEsports, Subject, Label, ExpandLess, ExpandMore, DeleteForever, Edit, Save} from "@material-ui/icons";
+import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip, Accordion, AccordionDetails, AccordionSummary, TextField, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide  } from "@material-ui/core";
+import { Settings, SportsEsports, Subject, Note, Label, ExpandMore, DeleteForever, Edit, Save} from "@material-ui/icons";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { useSnackbar } from 'notistack';
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     base: {
         margin: theme.spacing(1),
         color: theme.palette.secondary.dark,
+    },
+    heading: {
+        fontWeight: 500,
     },
     cardContainer: {
         // Styles for div which holds all rendered game cards
@@ -72,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardAccordian: {
         backgroundColor: fade(theme.palette.secondary.dark, 0.15),
-        color: '#f5f5f5',
+        color: theme.palette.secondary.dark,
     },
     accordianInputContainer: {
         padding: theme.spacing(1),
@@ -81,6 +84,19 @@ const useStyles = makeStyles((theme) => ({
     },
     cardAccordianInput: {
         backgroundColor: '#f5f5f5',
+    },
+    cardAccordianIcon: {
+        marginTop: theme.spacing(.1),
+        marginRight: theme.spacing(1),
+        width: '1.3rem',
+        height: '1.3rem',
+    },
+    cardSuccessIcon: {
+        color: theme.palette.success.main,
+        marginTop: theme.spacing(.1),
+        marginRight: theme.spacing(1),
+        width: '1.3rem',
+        height: '1.3rem',
     },
     cardButtonContainer: {
         // Container to anchor card buttons to bottom
@@ -210,6 +226,10 @@ const useStyles = makeStyles((theme) => ({
 export const FavoriteCard = ({ game }) => {
     const { deleteFavorite, updateFavorite }  = useContext(FavoritesContext);
 
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+      });
+    
     // Unique state declared to open notes edit for individual cards
     const [ editOpen, seteditOpen ] = useState(false);
 
@@ -236,8 +256,10 @@ export const FavoriteCard = ({ game }) => {
         }
     }  
 
+    // State Variable and function to update card note text
     const [cardNote , setCardNote ] = useState("");
 
+    // Event handler to update new note to state
     const handleCardNote = (event) => {
         const newNote = event.target.value;
 
@@ -245,13 +267,50 @@ export const FavoriteCard = ({ game }) => {
         setCardNote(newNote);
     };
 
+    // Delete modal state
+    const [ showDeleteModal, setShowDeleteModal ] = useState(false)
+
+    // Delete modal event handler
+    const handleDeleteShow = () => {
+        setShowDeleteModal(true);
+      };
     
-    // const handleAccChange = (panel) => (event, isExpanded) => {
-    //     console.log(event.target.value);
-    //     console.log(panel);        
-    //     console.log(isExpanded);        
-    //     setExpanded(isExpanded ? panel : false);
-    //   };
+      const handleDeleteDismiss = () => {
+        setShowDeleteModal(false);
+      };
+
+
+    
+    //   const deleteModal = (game, deleteFunction, snackHandler) => {
+    //     return (
+    //         <>
+    //         <Dialog
+    //             open={showDeleteModal}
+    //             TransitionComponent={Transition}
+    //             keepMounted
+    //             onClose={handleDeleteDismiss}
+    //         >
+    //             <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
+    //             <DialogContent>
+    //                 <DialogContentText id="alert-dialog-slide-description">
+    //                     `{game.title} will be deleted from your favorites.`
+    //                 </DialogContentText>
+    //             </DialogContent>
+    //             <DialogActions>
+    //                 <Button onClick={handleDeleteDismiss} color="primary">
+    //                     Cancel
+    //                 </Button>
+    //                 <Button onClick={() => {
+    //                     HandleDeleteFavorite(game, deleteFunction, snackHandler)
+    //                 }} color="error">
+    //                     Delete
+    //                 </Button>
+    //             </DialogActions>
+    //         </Dialog>        
+    //         </>
+    //     )
+    // };
+    
 
      // Store deconstructed snackbar react hooks
      const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -274,24 +333,36 @@ export const FavoriteCard = ({ game }) => {
             }
         }
      } 
-
-    // const [dialOpen, setDialOpen] = useState(false);
-
-    // const handleDialClose = () => {
-    //     setDialOpen(false);
-    // };
-    
-    // const handleDialOpen = () => {
-    //   setDialOpen(true);
-    // };
-      
-
     
     
     // Declare useStyles function in classes variable 
     const classes = useStyles();     
     
     return  <>
+            <Dialog
+                open={showDeleteModal}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleDeleteDismiss}
+                key={`${game.gameId}--modal`}
+            >
+                <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        {cardTitle(game.title, 37)} will be deleted from your favorites.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDeleteDismiss} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={() => {
+                        HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
+                    }} color="primary">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>   
             <Card className={classes.cardStyle} key={game.gameId} id={`${game.gameId}--card`}>
                     <CardMedia
                     className={classes.cardMedia}
@@ -303,11 +374,21 @@ export const FavoriteCard = ({ game }) => {
                     <CardActionArea disableRipple={true}>
                         <CardContent>
                             <div className={classes.cardHeaderSpan}>
-                                <Typography className={classes.cardHeader}  variant="h5" component="h2" gutterBottom>
-                                    {/* cardTitle function truncates game titles over 41 characters 
-                                    and replaces remaining characters with an ellipsis */}
-                                    {cardTitle(game.title, 41)}
+                            {cardTitle(game.title).length > 37 ? 
+                            <Tooltip title={cardTitle(game.title)}>
+                                <Typography className={classes.cardHeader} variant="h5" component="h2" gutterBottom>
+                                    {/* cardTitle function truncates game titles over 41 characters
+                                            and replaces remaining characters with an ellipsis */}
+                                    {cardTitle(game.title, 37)}
                                 </Typography>
+                            </Tooltip>
+                            :
+                            <Typography className={classes.cardHeader} variant="h5" component="h2" gutterBottom>
+                                {/* cardTitle function truncates game titles over 41 characters
+                                        and replaces remaining characters with an ellipsis */}
+                                {cardTitle(game.title, 37)}
+                            </Typography>
+                            }
                             </div>
                             <div className={classes.genreContainer}>
                                 {/* Turnary checks if game.genre is null and displays the Uncategorized tag if true,
@@ -325,6 +406,7 @@ export const FavoriteCard = ({ game }) => {
                                       expandIcon={<ExpandMore />}                                      
                                       id="panel1bh-header"
                                     >
+                                        <Subject className={classes.cardAccordianIcon} />
                                         <Typography className={classes.heading}>Details</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -345,6 +427,11 @@ export const FavoriteCard = ({ game }) => {
                                       expandIcon={<ExpandMore />}                                      
                                       id="panel2bh-header"
                                     >
+                                    {game.notes !== "" ? 
+                                        <Note className={classes.cardSuccessIcon} />
+                                        :
+                                        <Note className={classes.cardAccordianIcon} />
+                                    }  
                                         <Typography className={classes.heading}>Notes</Typography>                                                                                                                            
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -384,28 +471,26 @@ export const FavoriteCard = ({ game }) => {
                         aligned and anchored to the bottom of the card */}
                         <div className={classes.cardButtonContainer}>                                       
                                 <Tooltip title="Delete" placement="top" arrow>
-                                    <IconButton className={classes.deleteIcon} onClick={()=> {
-                                            HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
-                                        }}>
+                                    <IconButton className={classes.deleteIcon} onClick={handleDeleteShow}>
                                         <DeleteForever />
                                     </IconButton>
                                 </Tooltip>                                
-                                { !editOpen  ? 
-                                    <Tooltip title="Edit" placement="top" arrow>
-                                        <IconButton className={classes.settingIcon} onClick={handleCardDetails}>
-                                            <Edit />
-                                        </IconButton>
-                                    </Tooltip>
-                                    :
-                                    <Tooltip title="Save" placement="top" arrow>
-                                        <IconButton className={classes.settingIcon} onClick={() => {
-                                            handleCardDetails()
-                                            HandleUpdateFavorite(game, cardNote, updateFavorite, handleSnacks)
-                                        }}>
-                                            <Save />
-                                        </IconButton>                            
-                                    </Tooltip>
-                                }
+                            { !editOpen  ? 
+                                <Tooltip title="Edit" placement="top" arrow>
+                                    <IconButton className={classes.settingIcon} onClick={handleCardDetails}>
+                                        <Edit />
+                                    </IconButton>
+                                </Tooltip>
+                                :
+                                <Tooltip title="Save" placement="top" arrow>
+                                    <IconButton className={classes.settingIcon} onClick={() => {
+                                        handleCardDetails()
+                                        HandleUpdateFavorite(game, cardNote, updateFavorite, handleSnacks)
+                                    }}>
+                                        <Save />
+                                    </IconButton>                            
+                                </Tooltip>
+                            }
    
                             {/* react-router-dom Link is passed the routerLink object via state,
                              which combines API game data for each individual card    */}
