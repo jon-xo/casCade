@@ -254,7 +254,7 @@ export const SearchCard = ({ game }, { favorite }) => {
    }      
 
     // Store deconstructed snackbar react hooks
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     // Function to display Snackbar on successful add to favorites,
     // must be envoked as a callback function.

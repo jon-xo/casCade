@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, ListItemIcon, Collapse, Tooltip, Accordion, AccordionDetails, AccordionSummary, TextField, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide  } from "@material-ui/core";
-import { Settings, SportsEsports, Subject, Note, Label, ExpandMore, DeleteForever, Edit, Save} from "@material-ui/icons";
+import { Typography, IconButton, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemText, Tooltip, Accordion, AccordionDetails, AccordionSummary, TextField, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide  } from "@material-ui/core";
+import { SportsEsports, Subject, Note, Label, ExpandMore, DeleteForever, Edit, Save} from "@material-ui/icons";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { useSnackbar } from 'notistack';
 import { truncate , cardTitle, releaseDate } from "../StrManipulation";
@@ -289,7 +289,7 @@ export const FavoriteCard = ({ game }) => {
       };
 
      // Store deconstructed snackbar react hooks
-     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+     const { enqueueSnackbar } = useSnackbar();
 
      // Function to display Snackbar on successful add to favorites,
      // must be envoked as a callback function.
@@ -310,35 +310,40 @@ export const FavoriteCard = ({ game }) => {
         }
      } 
     
+    const DeleteModal = () => {
+        return (
+            <Dialog
+            open={showDeleteModal}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleDeleteDismiss}
+            key={`${game.gameId}--modal`}
+        >
+            <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    {cardTitle(game.title, 37)} will be deleted from your favorites.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleDeleteDismiss} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={() => {
+                    HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
+                }} color="primary">
+                    Delete
+                </Button>
+            </DialogActions>
+        </Dialog> 
+        )
+    };
     
     // Declare useStyles function in classes variable 
     const classes = useStyles();     
     
     return  <>
-            <Dialog
-                open={showDeleteModal}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleDeleteDismiss}
-                key={`${game.gameId}--modal`}
-            >
-                <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        {cardTitle(game.title, 37)} will be deleted from your favorites.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDeleteDismiss} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={() => {
-                        HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
-                    }} color="primary">
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>   
+            <DeleteModal />  
             <Card className={classes.cardStyle} key={`${game.gameId}--favCard`} id={`${game.gameId}--card`}>
                     <CardMedia
                     className={classes.cardMedia}

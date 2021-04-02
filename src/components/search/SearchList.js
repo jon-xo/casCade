@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory, useLocation } from "react-router-dom";
+// import { useHistory, useLocation } from "react-router-dom";
 import { SearchCard } from "./SearchCards";
 import { SearchContext } from "./SearchProvider";
 import clsx from "clsx";

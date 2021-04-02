@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import { Grid, Typography, Paper } from "@material-ui/core";
+// import { Grid, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { FavoritesContext } from "./FavoritesProvider";
 import { FavoriteCard } from "./FavoritesCard";
-import clsx from "clsx";
 import "../Cascade.css";
 
 // Declare variable to import material-ui components and specify local theme overrides 

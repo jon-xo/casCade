@@ -3,7 +3,7 @@ import { Typography, AppBar, Toolbar, InputBase, Button, Dialog, DialogTitle, Di
 import { fade , makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
 import { SearchContext } from "./SearchProvider";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({

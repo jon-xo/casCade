@@ -1,13 +1,14 @@
-import React, { useState } from "react"
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { useParams, useLocation } from "react-router-dom";
 import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
+import { Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import { truncateSimple, releaseDate } from "../StrManipulation";
+import { ControllerListner } from "./ControllerHandler";
 import { BuildEmbed } from "./EmbedPlayer";
-import { Subject } from "@material-ui/icons";
-import { truncate , cardTitle, releaseDate } from "../StrManipulation";
-import "../Cascade.css"
+import { useSnackbar } from 'notistack';
 import clsx from "clsx";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import "../Cascade.css"
 
 // Declare variable to import material-ui components and specify local theme overrides 
 
@@ -205,6 +206,19 @@ export const GameContainer = ( props ) => {
     
     // The Player container is rendered, 
     // BuildEmebed receives the activeGameData object as prop.
+
+    ControllerListner();
+
+    // const [ controllerConnect, setControllerConnect ] = useState(false);
+    
+    // useEffect(() => {
+    //     window.addEventListener('gamepadconnected', (e) => {
+    //             console.log(e);
+    //             enqueueSnackbar(`${e.gamepad.id} connected`, { variant: "info" });
+    //             setControllerConnect(true)                                       
+    //     })
+    // }, [])
+
     return (
         <>
         <div className={classes.root}>

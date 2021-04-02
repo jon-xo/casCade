@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef }  from "react"
+import React, { useContext, useEffect }  from "react"
 import { useHistory } from "react-router-dom";
 import { Grid, Typography, Paper, Button } from "@material-ui/core";
 import { Search, Shuffle, LocalLibrary, } from "@material-ui/icons";
@@ -105,8 +105,6 @@ export const Home = () => {
     // API provider is received via useContext
     // and imported as deconstructed object.
     const { allGames, getArcadeTitles } = useContext(LibraryContext);
-
-    const shuffleRouter = useRef();
 
     const history = useHistory();
 

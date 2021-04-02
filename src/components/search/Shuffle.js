@@ -1,8 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { LibraryContext } from "../library/LibraryProvider";
+import React from "react";
 import { cardTitle } from "../StrManipulation";
-import { makeStyles } from '@material-ui/core/styles';
 
 
 const gameRandomizer = (array) => {
