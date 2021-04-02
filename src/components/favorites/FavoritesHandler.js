@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 // import { FormLabel, FormControlLabel, Radio, RadioGroup, Switch } from "@material-ui/core";
-import { SpeedDial, SpeedDialAction } from "@material-ui/lab";
 import { Settings, DeleteForever, Edit, Save } from "@material-ui/icons";
 import { FavoritesContext } from "./FavoritesProvider";
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,10 +64,10 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
             releaseDate: favoriteObject.date,
             genre: favoriteObject.genre,
             publisher: favoriteObject.creator,
+            notes: null,
             imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`,
             user: currentUser
-        }      
-        console.log(newFavorite);
+        }
         
         func(newFavorite)
         .then(SnackHandler("success", newFavorite))
@@ -76,42 +75,4 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
         console.log("favoriteObject = undefined");        
     }
     
-};
-
-const actions = [
-    { 
-        icon: <DeleteForever />, 
-        name: 'Delete' 
-    },
-    { 
-        icon: <Edit />, 
-        name: 'Edit' 
-    },
-    { 
-        icon: <Save />, 
-        name: 'Save' 
-    },
-];
-
-export const SettingsDial = (props) => {
-
-      return (
-          <>
-            <SpeedDial {...props}>
-                {actions.map((action) => (
-                    <SpeedDialAction
-                        key={action.name}
-                        icon={action.icon}
-                        tooltipTitle={action.name}
-                        tooltipPlacement={'right-end'}
-                        onClick={(e) => {
-                            console.log(e);                            
-                        }}                 
-                    />
-                ))}
-            </SpeedDial>
-
-          
-          </>
-      )
 };

@@ -336,7 +336,7 @@ export const LibraryCard = ({ game }) => {
                                   expandIcon={<ExpandMore />}                                      
                                   id="panel2bh-header"
                                 >
-                                {findNote.notes !== "" ? 
+                                {findNote.notes !== null ? 
                                     <Note className={classes.cardSuccessIcon} />
                                     :
                                     <Note className={classes.cardAccordianIcon} />

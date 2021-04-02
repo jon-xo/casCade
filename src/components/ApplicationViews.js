@@ -14,10 +14,14 @@ import { Favorites } from "./favorites/Favorites";
 export const ApplicationViews = () => {
     return (
         <>
-            <Route exact path="/">
-                <NavBar />
-                <Home />
-            </Route>
+        <LibraryProvider>
+                <SearchProvider>
+                    <Route exact path="/">
+                        <NavBar />
+                        <Home />
+                    </Route>
+                </SearchProvider>
+        </LibraryProvider>
             <FavortiesProvider>
                 <LibraryProvider>
                         <Route exact path="/library">
@@ -46,6 +50,7 @@ export const ApplicationViews = () => {
                     <Route exact path="/search">
                         <NavBar />
                         <Search />
+                        <SearchList />
                     </Route>
                     <Route exact path="/search/results?_:query">
                         <NavBar />
