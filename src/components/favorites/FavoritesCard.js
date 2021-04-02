@@ -310,35 +310,40 @@ export const FavoriteCard = ({ game }) => {
         }
      } 
     
+    const DeleteModal = () => {
+        return (
+            <Dialog
+            open={showDeleteModal}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleDeleteDismiss}
+            key={`${game.gameId}--modal`}
+        >
+            <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    {cardTitle(game.title, 37)} will be deleted from your favorites.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleDeleteDismiss} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={() => {
+                    HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
+                }} color="primary">
+                    Delete
+                </Button>
+            </DialogActions>
+        </Dialog> 
+        )
+    };
     
     // Declare useStyles function in classes variable 
     const classes = useStyles();     
     
     return  <>
-            <Dialog
-                open={showDeleteModal}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleDeleteDismiss}
-                key={`${game.gameId}--modal`}
-            >
-                <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        {cardTitle(game.title, 37)} will be deleted from your favorites.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDeleteDismiss} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={() => {
-                        HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
-                    }} color="primary">
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>   
+            <DeleteModal />  
             <Card className={classes.cardStyle} key={`${game.gameId}--favCard`} id={`${game.gameId}--card`}>
                     <CardMedia
                     className={classes.cardMedia}

@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useParams, useLocation } from "react-router-dom";
 import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
 import { Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import { truncate, releaseDate } from "../StrManipulation";
+import { truncateSimple, releaseDate } from "../StrManipulation";
 import { ControllerListner } from "./ControllerHandler";
 import { BuildEmbed } from "./EmbedPlayer";
 import { useSnackbar } from 'notistack';
@@ -207,29 +207,17 @@ export const GameContainer = ( props ) => {
     // The Player container is rendered, 
     // BuildEmebed receives the activeGameData object as prop.
 
-     // Store deconstructed snackbar react hooks
-     const { enqueueSnackbar } = useSnackbar();
-    
-    // Function to display Snackbar on successful add to favorites,
-    // must be envoked as a callback function.
-    const handleSnacks = (variant, event) => () => {  
-        const gamepadObject = event.gamepad
-        const gamepadState = event.type
-        const gamepadTitle = truncate(gamepadObject.id, 31);
-        console.log(gamepadObject, gamepadState, gamepadTitle);
-        
-        if(gamepadState === "gamepaddisconnected") {
-                debugger
-                enqueueSnackbar(`${gamepadTitle} disconnected`, { variant });
-            } else if (gamepadState === "gamepadconnected"){
-                enqueueSnackbar(`${gamepadTitle} connected`, { variant });
-            }
-    }
+    ControllerListner();
 
-    // Window event listner used to detect game controller
-    ControllerListner(handleSnacks);
-
+    // const [ controllerConnect, setControllerConnect ] = useState(false);
     
+    // useEffect(() => {
+    //     window.addEventListener('gamepadconnected', (e) => {
+    //             console.log(e);
+    //             enqueueSnackbar(`${e.gamepad.id} connected`, { variant: "info" });
+    //             setControllerConnect(true)                                       
+    //     })
+    // }, [])
 
     return (
         <>

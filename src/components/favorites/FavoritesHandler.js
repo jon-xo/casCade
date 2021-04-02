@@ -21,16 +21,28 @@ export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) 
     const favoriteId = favoriteObject.id;
     
     if(favoriteId && favoriteId !== undefined) {
-        func({
-            gameId: favoriteObject.gameId,
-            title: favoriteObject.title,
-            releaseDate: favoriteObject.releaseDate,
-            imgPath: favoriteObject.imgPath,
-            notes: value,
-            user: currentUser,
-            id: favoriteId,
-        })
-        .then(SnackHandler("info", favoriteObject))
+        if (value === "") {
+            func({
+                gameId: favoriteObject.gameId,
+                title: favoriteObject.title,
+                releaseDate: favoriteObject.releaseDate,
+                imgPath: favoriteObject.imgPath,
+                notes: null,
+                user: currentUser,
+                id: favoriteId,
+            })
+        } else {
+            func({
+                gameId: favoriteObject.gameId,
+                title: favoriteObject.title,
+                releaseDate: favoriteObject.releaseDate,
+                imgPath: favoriteObject.imgPath,
+                notes: value,
+                user: currentUser,
+                id: favoriteId,
+            })
+            .then(SnackHandler("info", favoriteObject))
+        }
     }
 };
 
