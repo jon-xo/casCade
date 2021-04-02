@@ -343,7 +343,7 @@ export const SearchCard = ({ game }, { favorite }) => {
                               expandIcon={<ExpandMore />}                                      
                               id="panel2bh-header"
                             >
-                                {findNote.notes !== "" ? 
+                                {findNote.notes !== null ? 
                                     <Note className={classes.cardSuccessIcon} />
                                     :
                                     <Note className={classes.cardAccordianIcon} />

@@ -96,14 +96,15 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignContent: 'start',
         backgroundColor: '#f5f5f5',
-        marginRight: theme.spacing(1),
-        padding: theme.spacing(.43),
-        borderRadius: '50%',
+        marginLeft: theme.spacing(-.5),
+        marginRight: theme.spacing(.9),
+        padding: theme.spacing(.22),
+        borderRadius: '15%',
     },
     cardSuccessIcon: {
         color: theme.palette.success.main,    
         width: '1.3rem',
-        height: '1.3rem',
+        height: '1.4rem',
         marginTop: theme.spacing(-.2)
     },
     cardButtonContainer: {
@@ -402,7 +403,7 @@ export const FavoriteCard = ({ game }) => {
                                       expandIcon={<ExpandMore />}                                      
                                       id="panel2bh-header"
                                     >
-                                    {game.notes !== "" ? 
+                                    {game.notes !== null ? 
                                         <div className={classes.successIconContainer}>
                                             <Note className={classes.cardSuccessIcon} />
                                         </div>
