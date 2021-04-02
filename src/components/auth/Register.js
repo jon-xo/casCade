@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper, Button, Dialog, DialogTitle, DialogContent, FormControl, TextField, InputAdornment } from "@material-ui/core";
 import { AccountCircle, Email } from "@material-ui/icons";
 import { UserAuthToggle } from "./AuthToggle";
+import { LogoLarge } from "../Logo";
 import "./Login.css"
 
 // Declare local variable to declare custom css for material-ui components
@@ -24,8 +25,12 @@ const useStyles = makeStyles((theme) => ({
     },
     dialog: {
         textAlign: 'center',
-    }
-
+    },
+    logoContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+    },
 }))
 
 // Declare local component to display an alert modal when envoked
@@ -140,9 +145,9 @@ export const Register = (props) => {
                 </Grid>
                 <Grid item xs={11} sm={8} md={6}>
                     <form autoComplete="on" onSubmit={handleRegister}>
-                        <Typography variant="h3" gutterBottom>
-                                casCade
-                        </Typography>
+                        <div className={classes.logoContainer}>
+                            <LogoLarge />
+                        </div>
                         <UserAuthToggle gutterBottom/>
                         <Typography variant="h5" gutterBottom>
                         Create your account

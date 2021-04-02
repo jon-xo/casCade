@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { truncateSimple } from "../StrManipulation";
+import { truncateController } from "../StrManipulation";
 import { useSnackbar } from 'notistack';
 
 export const ControllerListner = () => {
@@ -14,19 +14,41 @@ export const ControllerListner = () => {
                 //     console.log(e);
                     const gamepadObject = e.gamepad
                     const gamepadState = e.type
-                    const gamepadTitle = truncateSimple(gamepadObject.id, 32);
+                    const gamepadTitle = truncateController(gamepadObject.id);
 
                 //     console.log(gamepadTitle);
-
-                    if(gamepadState === "gamepaddisconnected") {
-                        enqueueSnackbar(`${gamepadTitle} disconnected`, { variant: "info" });
-                    }
                     
                     if (gamepadState === "gamepadconnected"){
-                        enqueueSnackbar(`${gamepadTitle} connected`, { variant: "info" });
+                        enqueueSnackbar(`${gamepadTitle} connected`, { variant: "info" }, { preventDuplicate: true, });
                     }
-
-                        // setControllerConnect(true)                                       
+                                      
                 })
         }, [])
+};
+
+
+export const DisconnectListner = () => {
+    // const [ controllerConnect, setControllerConnect ] = useState(false);
+
+    // Store deconstructed snackbar react hooks
+    const { enqueueSnackbar } = useSnackbar();      
+    // Function to display Snackbar on successful add to favorites,
+
+
+    useEffect(() => {
+        window.addEventListener('gamepaddisconnected', (e) => {
+            //     console.log(e);
+                const gamepadObject = e.gamepad
+                const gamepadState = e.type
+                const gamepadTitle = truncateController(gamepadObject.id);
+
+            //     console.log(gamepadTitle);
+
+            if(gamepadState === "gamepaddisconnected") {
+                enqueueSnackbar(`${gamepadTitle} disconnected`, { variant: "info" }, { preventDuplicate: true, });
+            }                
+                                  
+            })
+        
+    }, [])
 };
