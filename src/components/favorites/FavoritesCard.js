@@ -91,12 +91,20 @@ const useStyles = makeStyles((theme) => ({
         width: '1.3rem',
         height: '1.3rem',
     },
-    cardSuccessIcon: {
-        color: theme.palette.success.main,
-        marginTop: theme.spacing(.1),
+    successIconContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'start',
+        backgroundColor: '#f5f5f5',
         marginRight: theme.spacing(1),
+        padding: theme.spacing(.43),
+        borderRadius: '50%',
+    },
+    cardSuccessIcon: {
+        color: theme.palette.success.main,    
         width: '1.3rem',
         height: '1.3rem',
+        marginTop: theme.spacing(-.2)
     },
     cardButtonContainer: {
         // Container to anchor card buttons to bottom
@@ -279,39 +287,6 @@ export const FavoriteCard = ({ game }) => {
         setShowDeleteModal(false);
       };
 
-
-    
-    //   const deleteModal = (game, deleteFunction, snackHandler) => {
-    //     return (
-    //         <>
-    //         <Dialog
-    //             open={showDeleteModal}
-    //             TransitionComponent={Transition}
-    //             keepMounted
-    //             onClose={handleDeleteDismiss}
-    //         >
-    //             <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
-    //             <DialogContent>
-    //                 <DialogContentText id="alert-dialog-slide-description">
-    //                     `{game.title} will be deleted from your favorites.`
-    //                 </DialogContentText>
-    //             </DialogContent>
-    //             <DialogActions>
-    //                 <Button onClick={handleDeleteDismiss} color="primary">
-    //                     Cancel
-    //                 </Button>
-    //                 <Button onClick={() => {
-    //                     HandleDeleteFavorite(game, deleteFunction, snackHandler)
-    //                 }} color="error">
-    //                     Delete
-    //                 </Button>
-    //             </DialogActions>
-    //         </Dialog>        
-    //         </>
-    //     )
-    // };
-    
-
      // Store deconstructed snackbar react hooks
      const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -363,7 +338,7 @@ export const FavoriteCard = ({ game }) => {
                     </Button>
                 </DialogActions>
             </Dialog>   
-            <Card className={classes.cardStyle} key={game.gameId} id={`${game.gameId}--card`}>
+            <Card className={classes.cardStyle} key={`${game.gameId}--favCard`} id={`${game.gameId}--card`}>
                     <CardMedia
                     className={classes.cardMedia}
                     image={`${game.imgPath}`}
@@ -428,7 +403,9 @@ export const FavoriteCard = ({ game }) => {
                                       id="panel2bh-header"
                                     >
                                     {game.notes !== "" ? 
-                                        <Note className={classes.cardSuccessIcon} />
+                                        <div className={classes.successIconContainer}>
+                                            <Note className={classes.cardSuccessIcon} />
+                                        </div>
                                         :
                                         <Note className={classes.cardAccordianIcon} />
                                     }  
