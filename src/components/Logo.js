@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     },
     logoText: {
         fontWeight: 300,
+    },
+    logoContainer: {
+        display: 'flex',
+        width: 'auto',
     }
 }))
 
@@ -28,10 +32,12 @@ export const LogoLarge = () => {
 
     return (
         <>
-        <Typography variant="h2" className={classes.logoRed}>c</Typography>
-        <Typography variant="h2" className={classes.logoGreen}>a</Typography>
-        <Typography variant="h2" className={classes.logoYellow}>s</Typography>
-        <Typography variant="h2" className={classes.logoText}>Cade</Typography>
+        <div className={classes.logoContainer}>
+            <Typography variant="h2" className={classes.logoRed}>c</Typography>
+            <Typography variant="h2" className={classes.logoGreen}>a</Typography>
+            <Typography variant="h2" className={classes.logoYellow}>s</Typography>
+            <Typography variant="h2" className={classes.logoText}>Cade</Typography>
+        </div>
         </>
     )
 };

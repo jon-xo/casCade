@@ -105,7 +105,7 @@ export const LibraryList = () => {
 
     // Use effect envokes API call
     useEffect(() => {
-        getArcadeTitles(200)
+        getArcadeTitles(150)
     }, [])
 
     // Return statement renders the cardContainer element and 

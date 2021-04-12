@@ -4,7 +4,7 @@ import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, C
 import { Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { truncateSimple, releaseDate } from "../StrManipulation";
-import { ControllerListner } from "./ControllerHandler";
+import { ControllerListner, DisconnectListner } from "./ControllerHandler";
 import { BuildEmbed } from "./EmbedPlayer";
 import { useSnackbar } from 'notistack';
 import clsx from "clsx";
@@ -208,6 +208,7 @@ export const GameContainer = ( props ) => {
     // BuildEmebed receives the activeGameData object as prop.
 
     ControllerListner();
+    DisconnectListner();
 
     // const [ controllerConnect, setControllerConnect ] = useState(false);
     
