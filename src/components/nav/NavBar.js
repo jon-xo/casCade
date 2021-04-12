@@ -5,6 +5,7 @@ import { Grid, Paper, Tabs, Tab } from "@material-ui/core";
 import { Home, Favorite, Search, LocalLibrary } from "@material-ui/icons";
 import { LogoLarge } from "../Logo";
 import clsx from "clsx";
+import { LogoutButton } from "./Logout";
 
 // Declare local variable to declare custom css for material-ui components
 
@@ -143,10 +144,13 @@ export const NavBar = () => {
             justify="flex-start"
             alignItems="center">
 
-        <Grid item lg={12}>
+        <Grid item lg={11}>
             <Paper elevation={0} className={clsx(classes.root, classes.margin, classes.simplePaper)}>
                 <LogoLarge gutterBottom/>
             </Paper>
+        </Grid>
+        <Grid item lg={1}>
+            <LogoutButton />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
             <Grid container justify="center">
