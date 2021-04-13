@@ -2,7 +2,7 @@ import React from "react";
 // import { FormLabel, FormControlLabel, Radio, RadioGroup, Switch } from "@material-ui/core";
 // import { FavoritesContext } from "./FavoritesProvider";
 
-const currentUser = localStorage.getItem('cascade_user')
+const currentUser = localStorage.getItem('cascade_user');
 
 export const HandleDeleteFavorite = (favoriteObject, func, SnackHandler) => {
 
@@ -28,7 +28,7 @@ export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) 
                 releaseDate: favoriteObject.releaseDate,
                 imgPath: favoriteObject.imgPath,
                 notes: null,
-                user: currentUser,
+                userId: currentUser,
                 id: favoriteId,
             })
         } else {
@@ -38,7 +38,7 @@ export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) 
                 releaseDate: favoriteObject.releaseDate,
                 imgPath: favoriteObject.imgPath,
                 notes: value,
-                user: currentUser,
+                userId: currentUser,
                 id: favoriteId,
             })
             .then(SnackHandler("info", favoriteObject))
@@ -46,8 +46,7 @@ export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) 
     }
 };
 
-export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
-    
+export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => { 
     if(favoriteObject !== undefined) {
         const newFavorite = {
             gameId: favoriteObject.identifier,
@@ -57,13 +56,14 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
             publisher: favoriteObject.creator,
             notes: null,
             imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`,
-            user: currentUser
+            userId: currentUser
         }
-        
+        // console.log(currentUser);        
+        // console.log(newFavorite);        
         func(newFavorite)
         .then(SnackHandler("success", newFavorite))
     } else {
-        console.log("favoriteObject = undefined");        
+        console.log("favoriteObject = undefined");
     }
     
 };
