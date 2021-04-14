@@ -2,8 +2,6 @@ import React from "react";
 // import { FormLabel, FormControlLabel, Radio, RadioGroup, Switch } from "@material-ui/core";
 // import { FavoritesContext } from "./FavoritesProvider";
 
-const currentUser = localStorage.getItem('cascade_user');
-
 export const HandleDeleteFavorite = (favoriteObject, func, SnackHandler) => {
 
     // Import delete favorite function from FavoritesContext
@@ -17,6 +15,8 @@ export const HandleDeleteFavorite = (favoriteObject, func, SnackHandler) => {
 
 export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) => {
 
+    const currentUser = +localStorage.getItem('cascade_user');
+    
     // Import delete favorite function from FavoritesContext
     const favoriteId = favoriteObject.id;
     
@@ -47,6 +47,9 @@ export const HandleUpdateFavorite = (favoriteObject, value, func, SnackHandler) 
 };
 
 export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => { 
+
+    const currentUser = +localStorage.getItem('cascade_user');
+    
     if(favoriteObject !== undefined) {
         const newFavorite = {
             gameId: favoriteObject.identifier,
@@ -58,8 +61,8 @@ export const HandleAddFavorite = (favoriteObject, func, SnackHandler) => {
             imgPath: `https://archive.org/services/img/${favoriteObject.identifier}`,
             userId: currentUser
         }
-        // console.log(currentUser);        
-        // console.log(newFavorite);        
+        console.log(currentUser);        
+        console.log(newFavorite);        
         func(newFavorite)
         .then(SnackHandler("success", newFavorite))
     } else {

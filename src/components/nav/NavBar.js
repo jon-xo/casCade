@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
     simplePaper: {
         border: 0,
+    },
+    uxButton: {
+        margin: theme.spacing(1),
     }
 }))
 
@@ -144,13 +147,13 @@ export const NavBar = () => {
             justify="flex-start"
             alignItems="center">
 
-        <Grid item lg={11}>
+        <Grid item sm={10} lg={11}>
             <Paper elevation={0} className={clsx(classes.root, classes.margin, classes.simplePaper)}>
                 <LogoLarge gutterBottom/>
             </Paper>
         </Grid>
-        <Grid item lg={1}>
-            <LogoutButton />
+        <Grid item sm={2} lg={1}>
+            <LogoutButton className={classes.uxButton}/>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
             <Grid container justify="center">
