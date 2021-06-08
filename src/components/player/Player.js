@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useLocation } from "react-router-dom";
-import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
-import { Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { IconButton, Button, Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
+import { VolumeOff, VolumeUp, Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { truncateSimple, releaseDate } from "../StrManipulation";
 import { ControllerListner, DisconnectListner } from "./ControllerHandler";
@@ -198,7 +198,7 @@ export const GameContainer = ( props ) => {
     const classes = useStyles();
     const params = useParams();
     const location = useLocation();
-
+    const [ soundState, setSoundState ] = useState(false);
 
     // The object passed via react-router-dom in the LibraryCard state
     // is processed by the GameData component and returned to variable.
@@ -220,6 +220,26 @@ export const GameContainer = ( props ) => {
     //     })
     // }, [])
 
+    const checkCookie = (name) => {
+        // Split cookie string and get all individual name=value pairs in an array
+        var cookieArr = document.cookie.split(";");
+        
+        // Loop through the array elements
+        for(var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+            
+            /* Removing whitespace at the beginning of the cookie name
+            and compare it with the given string */
+            if(name == cookiePair[0].trim()) {
+                // If found return true
+                return true;
+            }
+        }
+        
+        // Return null if not found
+        return false;
+    };
+
     return (
         <>
         <div className={classes.root}>
@@ -233,6 +253,62 @@ export const GameContainer = ( props ) => {
                 <Grid item xs={10}>
                     <Paper elevation={0} variant="outlined" className={clsx(classes.gameContainer, 'gameContainer')}>
                         <Typography variant="h4" component="h2" align="center" className={classes.gameHeader}>{activeGameData.title}</Typography>
+                        {!soundState ? 
+                        
+                        <IconButton
+                            variant="contained"
+                            color="secondary"
+                            // className={classes.button}                            
+                            onClick={() => {
+                                
+                                var e = checkCookie("unmute");
+                                // if (this.emulator)
+                                //     this.emulator.setMute(!e);
+                                // else {
+                                //     var n = Object(I.b)("jw6");
+                                //     if (n) {
+                                //         var a = n.getVolume();
+                                //         a ? (t.mute_click_prior_volume = a,
+                                //         n.setVolume(0)) : n.setVolume(void 0 === t.mute_click_prior_volume ? 100 : t.mute_click_prior_volume)
+                                //     }
+                                // }
+                                // return Object(r.a)("#theatre-ia .iconochive-mute, #theatre-ia .iconochive-unmute").toggle(),
+                                e ? document.cookie = "unmute=1; domain=archive.org; path=/; SameSite=None"
+                                : document.cookie = "unmute=; domain=archive.org; path=/; SameSite=None"
+                                // console.log(e);
+                                setSoundState(!soundState);
+                            }}
+                        >
+                            <VolumeOff />
+                        </IconButton>
+                        :
+                        <IconButton
+                            variant="contained"
+                            color="secondary"
+                            // className={classes.button}
+                            onClick={() => {
+                                
+                                var e = checkCookie("unmute");
+                                // if (this.emulator)
+                                //     this.emulator.setMute(!e);
+                                // else {
+                                //     var n = Object(I.b)("jw6");
+                                //     if (n) {
+                                //         var a = n.getVolume();
+                                //         a ? (t.mute_click_prior_volume = a,
+                                //         n.setVolume(0)) : n.setVolume(void 0 === t.mute_click_prior_volume ? 100 : t.mute_click_prior_volume)
+                                //     }
+                                // }
+                                // return Object(r.a)("#theatre-ia .iconochive-mute, #theatre-ia .iconochive-unmute").toggle(),
+                                e ? document.cookie = "unmute=1; domain=archive.org; path=/; SameSite=None"
+                                : document.cookie = "unmute=; domain=archive.org; path=/; SameSite=None"
+                                // console.log(e);
+                                setSoundState(!soundState);
+                            }}
+                        >
+                            <VolumeUp />
+                        </IconButton>
+                        }
                         <BuildEmbed gameIdentifer={params}/>
                         <DetailListItems detailObject={activeGameData} />
                     </Paper>
