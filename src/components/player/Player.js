@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useLocation } from "react-router-dom";
-import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
-import { Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { IconButton, Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@material-ui/core";
+import { Help, Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { truncateSimple, releaseDate } from "../StrManipulation";
 import { ControllerListner, DisconnectListner } from "./ControllerHandler";
 import { BuildEmbed } from "./EmbedPlayer";
+import { HelpDialog } from "./PlayerHelp";
 import { useSnackbar } from 'notistack';
 import clsx from "clsx";
 import "../Cascade.css"
@@ -66,7 +67,13 @@ const useStyles = makeStyles((theme) => ({
     // Nested List > Indent Level 1 text
     nestedDetailChildText: {
         color: '#f5f5f5'
-    }
+    },
+    helpContainer: {
+        display: 'flex',
+        minWidth: '100%',
+        justifyContent: 'flex-end',
+        justifyItems: 'flex-end',
+    },
 }))
 
 // Game Data Function uses functions imported from StrManipulation.js,
@@ -233,6 +240,9 @@ export const GameContainer = ( props ) => {
                 <Grid item xs={10}>
                     <Paper elevation={0} variant="outlined" className={clsx(classes.gameContainer, 'gameContainer')}>
                         <Typography variant="h4" component="h2" align="center" className={classes.gameHeader}>{activeGameData.title}</Typography>
+                        <div className={classes.helpContainer}>
+                            <HelpDialog />
+                        </div>
                         <BuildEmbed gameIdentifer={params}/>
                         <DetailListItems detailObject={activeGameData} />
                     </Paper>
