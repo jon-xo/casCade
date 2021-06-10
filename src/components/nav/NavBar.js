@@ -25,6 +25,22 @@ const useStyles = makeStyles((theme) => ({
     },
     uxButton: {
         margin: theme.spacing(1),
+    },
+    homeNavIcon: {
+        color: theme.palette.success.main,
+        fontWeight: 400,
+    },
+    libraryNavIcon: {
+        color: theme.palette.info.dark,
+        fontWeight: 400,
+    },
+    favoritesNavIcon: {
+        color: theme.palette.error.main,
+        fontWeight: 400,
+    },
+    searchNavIcon: {
+        color: theme.palette.warning.main,
+        fontWeight: 400,
     }
 }))
 
@@ -35,19 +51,23 @@ const newNavList = [
     {
         path: "/",
         icon: "Home",
+        style: "className={classes.homeNavIcon}",
     },
     {
         path: "/library",
         icon: "LocalLibrary",
+        style: "libraryNavIcon",
     },
     {
         path: "/favorites",
         icon: "Favorite",
+        style: "",
 
     },
     {
         path: "/search",
-        icon: "Search"
+        icon: "Search",
+        style: "",
     }
 ]
 
@@ -103,19 +123,21 @@ const ActiveTab = () => {
 
 
 // Function uses switch case to match the string value of the icon key
-// and returns the matching material-ui icon component. The second paramater
-// passes any props to the component once returned.
+// and returns the matching material-ui icon component with the correct style. 
+// The second paramater passes any props to the component once returned.
 
-const renderNavIcon = (icon, props) => {
+const RenderNavIcon = (icon, props) => {
+    const classes = useStyles();
+    
     switch (icon) {
         case 'Home':
-            return(<Home {...props} />);   
+            return(<Home className={classes.homeNavIcon} {...props} />);   
         case 'LocalLibrary':
-            return(<LocalLibrary {...props} />);
+            return(<LocalLibrary className={classes.libraryNavIcon} {...props} />);
         case 'Favorite':
-            return(<Favorite {...props} />);
+            return(<Favorite className={classes.favoritesNavIcon} {...props} />);
         case 'Search':
-            return(<Search {...props} />)
+            return(<Search className={classes.searchNavIcon} {...props} />)
 ;        default:
             return(<Home {...props} />);
     }
@@ -169,18 +191,19 @@ export const NavBar = () => {
                                 The forward slash (/) is removed from each objects'
                                 path key value, if the labelName variable equals
                                 an empty string, a Tab is returned
-                                for the Home (/) path. The renderNavIcon recieves 
+                                for the Home (/) path. The RenderNavIcon recieves 
                                 // the m.icon value and returns the matching material-ui component
                                 // stored in the switch case.
 
                             */}
                         {newNavList.map((m) => {
                             const labelName = m.path.replace('/', '');
-                            const labelIcon = m.icon
+                            const labelIcon = m.icon;
+                            const labelStyle = m.style;
                             if (labelName === "") {
-                                return <Tab key="home" icon={renderNavIcon(labelIcon)} label="home" />
+                                return <Tab key="home" icon={RenderNavIcon(labelIcon)} label="home" />
                             } else {
-                                return <Tab key={labelName} icon={renderNavIcon(labelIcon)} label={labelName} />
+                                return <Tab key={labelName} icon={RenderNavIcon(labelIcon)} label={labelName} />
                             }
                         })}
                         </Tabs>

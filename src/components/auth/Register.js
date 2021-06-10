@@ -83,7 +83,7 @@ export const Register = (props) => {
     // API Call to expand email value from users table
     // and verify that user string has a value
     const existingUserCheck = () => {
-        return fetch(`http://localhost:8088/users?email=${email.current.value}`)
+        return fetch(`https://cascade-app-database.herokuapp.com/users?email=${email.current.value}`)
             .then(res => res.json())
             .then(user => !!user.length)
     }
@@ -106,7 +106,7 @@ export const Register = (props) => {
         existingUserCheck()
             .then((userExists) => {
                 if (!userExists) {
-                    fetch("http://localhost:8088/users", {
+                    fetch("https://cascade-app-database.herokuapp.com/users", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

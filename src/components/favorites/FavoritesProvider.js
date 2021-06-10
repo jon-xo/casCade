@@ -9,13 +9,13 @@ export const FavortiesProvider = (props) => {
     const activeUserId = localStorage.getItem("cascade_user")
 
     const getFavorites = () => {
-        return fetch(`http://localhost:8088/favorites?userId=${activeUserId}`)
+        return fetch(`https://cascade-app-database.herokuapp.com/favorites?userId=${activeUserId}`)
         .then(r => r.json())
         .then(setFavorites)
     };
 
     const addFavorite = (newFavorite) => {
-        return fetch("http://localhost:8088/favorites", {
+        return fetch("https://cascade-app-database.herokuapp.com/favorites", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -26,7 +26,7 @@ export const FavortiesProvider = (props) => {
     };
 
     const updateFavorite = (favorite) => {
-        return fetch(`http://localhost:8088/favorites/${favorite.id}`, {
+        return fetch(`https://cascade-app-database.herokuapp.com/favorites/${favorite.id}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export const FavortiesProvider = (props) => {
     };
 
     const deleteFavorite = (favoriteId) => {
-        return fetch(`http://localhost:8088/favorites/${favoriteId}`, {
+        return fetch(`https://cascade-app-database.herokuapp.com/favorites/${favoriteId}`, {
             method: "DELETE"
         })
         .then(getFavorites)
