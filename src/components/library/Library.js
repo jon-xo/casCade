@@ -1,8 +1,9 @@
-import React, { useEffect, useContext } from "react";
-import { Grid, Typography, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useContext, useState } from "react";
+import { Grid, Typography, Paper, LinearProgress } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { LibraryContext } from "./LibraryProvider";
 import { LibraryCard } from "./LibraryCard";
+import clsx from "clsx";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -64,9 +65,26 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.dark,
         borderRadius: '50%',
         color: '#f5f5f5',
+    },
+    statusContainer: {
+        width: '80%',
+        marginTop: theme.spacing(2)
     }
-
 }))
+
+// Custom styled LinearProgress bar for Library page
+
+const LibraryProgress = withStyles((theme) => ({
+    root: {
+        height: theme.spacing(1.1),
+    },
+    colorPrimary: {
+        backgroundColor: theme.palette.primary.light
+    },
+    barColorPrimary: {
+        backgroundColor: theme.palette.primary.dark
+    }
+}))(LinearProgress)
 
 // Library header banner Component
 
@@ -101,12 +119,18 @@ export const LibraryBanner = () => {
 export const LibraryList = () => {
     // API provider and data returned is accessed via useContext
     const { allGames , getArcadeTitles } = useContext(LibraryContext)
+    const [ libraryReady, setLibraryReady ] = useState(false);
     const classes = useStyles();
 
     // Use effect envokes API call
     useEffect(() => {
         getArcadeTitles(150)
-    }, [])
+        if(allGames.length >= 1 )
+        {
+            setLibraryReady(true);
+        }
+    }, [allGames])
+    
 
     // Return statement renders the cardContainer element and 
     // maps through each result and renders the child LibraryCard element,
@@ -114,12 +138,17 @@ export const LibraryList = () => {
     return (
         <>
         <div className={classes.cardContainer}>
-            {allGames.map(game => {
+            {libraryReady
+                ? allGames.map(game => {
                 
                 return  <>
-                            <LibraryCard key={`${game.identifier}--card`} game={game}/>
-                        </>         
-            })}
+                            <LibraryCard key={`${game.identifier}_libcard`} game={game}/>
+                        </>                    
+                }):
+                <div className={classes.statusContainer}>
+                    <LibraryProgress />                    
+                </div>
+            }
         </div>
         </>
         

@@ -270,7 +270,7 @@ export const LibraryCard = ({ game }) => {
     // Rendered Card
     return  <>
 
-            <Card className={classes.cardStyle} key={game.identifier}>
+            <Card className={classes.cardStyle} key={`${game.identifier}_libcard`}>
                     <CardMedia
                     className={classes.cardMedia}
                     image={`https://archive.org/services/img/${game.identifier}`}
