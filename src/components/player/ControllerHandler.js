@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { truncateController } from "../StrManipulation";
 import { useSnackbar } from 'notistack';
 
@@ -23,7 +23,7 @@ export const ControllerListner = () => {
                     }
                                       
                 })
-        }, [])
+        }, [enqueueSnackbar])
 };
 
 
@@ -50,5 +50,5 @@ export const DisconnectListner = () => {
                                   
             })
         
-    }, [])
+    }, [enqueueSnackbar])
 };

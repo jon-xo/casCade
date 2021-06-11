@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useParams, useLocation } from "react-router-dom";
-import { IconButton, Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@material-ui/core";
-import { Help, Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Grid, Typography, Paper, List, ListSubheader, ListItem, ListItemText, Collapse, ListItemIcon } from "@material-ui/core";
+import { Subject, ExpandLess, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import { truncateSimple, releaseDate } from "../StrManipulation";
+import { releaseDate } from "../StrManipulation";
 import { ControllerListner, DisconnectListner } from "./ControllerHandler";
 import { BuildEmbed } from "./EmbedPlayer";
 import { HelpDialog } from "./PlayerHelp";
-import { useSnackbar } from 'notistack';
 import clsx from "clsx";
 import "../Cascade.css"
 

@@ -111,7 +111,7 @@ export const Home = () => {
     // Use effect envokes API call
     useEffect(() => {
         getArcadeTitles(300)
-    }, [])
+    })
     
     
     const classes = useStyles();

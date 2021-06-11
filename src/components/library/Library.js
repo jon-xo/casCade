@@ -3,7 +3,6 @@ import { Grid, Typography, Paper, LinearProgress } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { LibraryContext } from "./LibraryProvider";
 import { LibraryCard } from "./LibraryCard";
-import clsx from "clsx";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -129,7 +128,7 @@ export const LibraryList = () => {
         {
             setLibraryReady(true);
         }
-    }, [allGames])
+    }, [allGames, getArcadeTitles])
     
 
     // Return statement renders the cardContainer element and 

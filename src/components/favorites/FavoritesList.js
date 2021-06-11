@@ -4,7 +4,6 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { FavoritesContext } from "./FavoritesProvider";
 import { FavoriteCard } from "./FavoritesCard";
 import "../Cascade.css";
-import clsx from "clsx";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +126,7 @@ export const FavoritesList = () => {
         {
             setfavoritesReady(true);
         }
-    }, [favorites])
+    }, [getFavorites, favorites.length])
 
 
     return (

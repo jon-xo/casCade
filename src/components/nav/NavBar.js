@@ -199,7 +199,6 @@ export const NavBar = () => {
                         {newNavList.map((m) => {
                             const labelName = m.path.replace('/', '');
                             const labelIcon = m.icon;
-                            const labelStyle = m.style;
                             if (labelName === "") {
                                 return <Tab key="home" icon={RenderNavIcon(labelIcon)} label="home" />
                             } else {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Button, Typography } from "@material-ui/core";
-import { RadioButtonUnchecked, Close, Stop, Help, ArrowBack, ArrowDownward, ArrowUpward, ArrowForward, Keyboard, KeyboardTab } from "@material-ui/icons";
+import { Box, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, Typography } from "@material-ui/core";
+import { RadioButtonUnchecked, Close, Stop, Help, ArrowBack, ArrowUpward, ArrowForward, Keyboard, KeyboardTab } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import "../Cascade.css"

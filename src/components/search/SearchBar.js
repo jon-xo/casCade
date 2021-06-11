@@ -225,7 +225,7 @@ export const SearchBar = (props) => {
             // to false via setOutgoing
             .then(setOutgoing(false))
         }
-    }, [outgoing])
+    }, [outgoing, getSearchResults, history, queryEvent])
     
     // On input change, the input value is passed to the encodeURIcomponent method
     // and recives URL encoding before it is used in API call.
@@ -313,7 +313,7 @@ export const MiniSearchBar = (props) => {
     const [ outgoing, setOutgoing ] = useState(false)
 
     // SearchRouter component is stored with useRef.
-    const searchRouter = useRef();
+    // const searchRouter = useRef();
 
     const classes = useStyles();
     const history = useHistory();
@@ -333,7 +333,7 @@ export const MiniSearchBar = (props) => {
             // to false via setOutgoing
             .then(setOutgoing(false))
         }
-    }, [outgoing])
+    }, [outgoing, getSearchResults, history, queryEvent])
     
     // On input change, the input value is passed to the encodeURIcomponent method
     // and recives URL encoding before it is used in API call.

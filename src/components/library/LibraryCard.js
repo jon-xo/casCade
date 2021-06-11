@@ -231,7 +231,7 @@ export const LibraryCard = ({ game }) => {
             getFavorites()
             .then(setFavHeart(false));
         }
-    }, [])
+    }, [favHeart, getFavorites])
     
     // Function is envoked by Details button event listner
     const handleCardDetails = () => {
