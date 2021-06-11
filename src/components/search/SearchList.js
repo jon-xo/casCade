@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
-import { Typography, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-// import { useHistory, useLocation } from "react-router-dom";
+import React, { useEffect, useContext, useState } from "react";
+import { Typography, Paper, LinearProgress } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { SearchCard } from "./SearchCards";
 import { SearchContext } from "./SearchProvider";
-import clsx from "clsx";
 import "../Cascade.css";
+import clsx from "clsx";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
@@ -64,8 +63,26 @@ const useStyles = makeStyles((theme) => ({
     },
     typeOffset: {
         marginRight: theme.spacing(1),
+    },
+    statusContainer: {
+        width: '80%',
+        marginTop: theme.spacing(2)
     }
 }))
+
+// Custom styled LinearProgress bar for Search page
+
+const SearchProgress = withStyles((theme) => ({
+    root: {
+        height: theme.spacing(1.1),
+    },
+    colorPrimary: {
+        backgroundColor: theme.palette.warning.light
+    },
+    barColorPrimary: {
+        backgroundColor: theme.palette.warning.dark
+    }
+}))(LinearProgress)
 
 // Search list renders a div element which displays a Paper component
 //  that contains the number of matches returned by search provider,
@@ -74,9 +91,16 @@ const useStyles = makeStyles((theme) => ({
 
 export const SearchList = () => {
 
+    const { results, responseHeaders } = useContext(SearchContext)
+    const [ searchReady, setSearchReady ] = useState(false);
     const classes = useStyles();
 
-    const { results, responseHeaders } = useContext(SearchContext)
+    useEffect(() => {
+        if(!results.length)
+        {
+            setSearchReady(true)
+        }
+    }, [results])
     
     return (
         <>  <div className={classes.paperContainer}>
@@ -106,9 +130,16 @@ export const SearchList = () => {
                 }                            
             </div>
             <div className={classes.cardContainer}>
-                {results.map((gameQuery) => {                 
-                    return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery}/>
-                })}
+                {searchReady
+                    ?
+                    results.map((gameQuery) => {                 
+                        return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery}/>
+                    })
+                    :
+                    <div className={classes.statusContainer}>
+                        <SearchProgress />                   
+                    </div>
+                }
             </div>
         </>
     )
