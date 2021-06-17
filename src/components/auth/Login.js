@@ -119,7 +119,7 @@ export const Login = props => {
                 <Grid item xs={3} sm={4} md={6}>
                     <Paper className={classes.heroImgBackground} elevation={6}>
                         <section className="background-hero--div">
-                            {/* <div className="background-hero"></div> */}
+                            <div className="background-hero"></div>
                         </section>
                     </Paper>
                 </Grid>
