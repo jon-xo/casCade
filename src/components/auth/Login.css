@@ -54,38 +54,35 @@ fieldset {
 
 .background-hero--div {
     width: auto;
-    min-height: calc(99vh + .8rem);
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     background-color: #011703;
     z-index: 0;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .background-hero {
     width: 99vw;
     height: 100vh; 
-    /* background-position-x: left; */
-    /* background-position: center; */
     background-image: url(../../assets/arcade-splash-banner-blur.jpg);
     background-size: 110rem 85rem;
     z-index: 1;
-    /* background-blend-mode: overlay; */
     background-repeat: no-repeat;
+    overflow: hidden;
 
 }
 
-.form--login {
-    background-position-x: right;
-    /* background-image: url(logo.png); */
-    z-index: 1;
-    min-height: 25rem;
-    min-width: 45rem;
+.form--container {
     background-color: hsla(0,0%,100%,0.40);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     overflow: hidden;
+}
+
+.buttonLoginRegister {
+    width: 11.5rem;
+
 }
 
 .buttonLink {
