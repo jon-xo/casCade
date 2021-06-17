@@ -281,11 +281,15 @@ export const FavoriteCard = ({ game }) => {
 
     // Delete modal event handler
     const handleDeleteShow = () => {
-        setShowDeleteModal(true);
+        if(!showDeleteModal){
+            setShowDeleteModal(true);
+        }
       };
     
       const handleDeleteDismiss = () => {
-        setShowDeleteModal(false);
+          if(showDeleteModal){
+              setShowDeleteModal(false);
+          }
       };
 
      // Store deconstructed snackbar react hooks
@@ -318,24 +322,24 @@ export const FavoriteCard = ({ game }) => {
             keepMounted
             onClose={handleDeleteDismiss}
             key={`${game.gameId}--modal`}
-        >
-            <DialogTitle id="alert-dialog-slide-title">{"Delete"}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    {cardTitle(game.title, 37)} will be deleted from your favorites.
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleDeleteDismiss} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={() => {
-                    HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
-                }} color="primary">
-                    Delete
-                </Button>
-            </DialogActions>
-        </Dialog> 
+            >
+                <DialogTitle id={`${game.gameId}-alert-dialog-slide-title`}>{"Delete"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id={`${game.gameId}-alert-dialog-slide-description`}>
+                        {cardTitle(game.title, 37)} will be deleted from your favorites.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDeleteDismiss} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={() => {
+                        HandleDeleteFavorite(game, deleteFavorite, handleSnacks)
+                    }} color="primary">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog> 
         )
     };
     

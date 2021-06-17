@@ -6,9 +6,9 @@ import { LibraryCard } from "./LibraryCard";
 
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        maxWidth: '16rem',
-    },
+    // root: {
+    //     maxWidth: '16rem',
+    // },
     cardContainer: {
         // Styles for div which holds all rendered game cards
         minWidth: '50vw',
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
-    paper: {
+    titlePaper: {
         // Rectanglar blue-gray div
         width: theme.spacing(100),
         height: theme.spacing(15),
@@ -100,7 +100,7 @@ export const LibraryBanner = () => {
                 alignItems="center"
                 >
                     <Grid item>
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.titlePaper}>
                             <Typography variant="h3" className={classes.iconText}>Library</Typography>
                             <Typography variant="body1" className={classes.iconText}>Browse all titles</Typography>
                         </Paper>
@@ -136,19 +136,20 @@ export const LibraryList = () => {
     // game details are passed through the compenent's props.
     return (
         <>
-        <div className={classes.cardContainer}>
-            {libraryReady
-                ? allGames.map(game => {
-                
-                return  <>
-                            <LibraryCard key={`${game.identifier}_libcard`} game={game}/>
-                        </>                    
-                }):
-                <div className={classes.statusContainer}>
-                    <LibraryProgress />                    
-                </div>
-            }
-        </div>
+                    <div className={classes.cardContainer}>
+                        {libraryReady
+                            ? allGames.map(game => {
+                        
+                            return  <>
+                                        <LibraryCard key={`${game.identifier}_libcard`} game={game}/>
+                                    </>
+                            }):
+                            <div className={classes.statusContainer}>
+                                <LibraryProgress />
+                            </div>
+                        }
+                    </div>
+
         </>
         
         

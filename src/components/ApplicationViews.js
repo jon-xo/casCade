@@ -9,7 +9,7 @@ import { SearchProvider } from "./search/SearchProvider";
 import { Search } from "./search/Search";
 import { SearchList } from "./search/SearchList";
 import { FavortiesProvider } from "./favorites/FavoritesProvider";
-import { Favorites } from "./favorites/Favorites";
+import { Favorites, FavBanner } from "./favorites/Favorites";
 
 export const ApplicationViews = () => {
     return (
@@ -37,6 +37,7 @@ export const ApplicationViews = () => {
             <FavortiesProvider>
                 <Route exact path="/favorites">
                     <NavBar />
+                    <FavBanner />
                     <Favorites />
                 </Route>
                 <Route exact path='/favorites/player/:gameData'>

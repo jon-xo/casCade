@@ -167,49 +167,49 @@ export const NavBar = () => {
         <Grid container
             direction="row"
             justify="flex-start"
-            alignItems="center">
+            alignItems="center"
+        >
+            <Grid item sm={10} lg={11} xl={11}>
+                <Paper elevation={0} className={clsx(classes.root, classes.margin, classes.simplePaper)}>
+                    <LogoLarge gutterBottom/>
+                </Paper>
+            </Grid>
+            <Grid item sm={2} lg={1} xl={1}>
+                <LogoutButton className={classes.uxButton}/>
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container justify="center">
+                    <Grid item xs={12}>                   
+                        <Paper elevation={2} className={clsx(classes.navPaper)}>
+                            <Tabs
+                            value={value}
+                            indicatorColor="primary"
+                            onChange={handleNavChange}
+                            centered
+                            >
+                                {/* Map method is called on the NavList array of objects.
+                                    The forward slash (/) is removed from each objects'
+                                    path key value, if the labelName variable equals
+                                    an empty string, a Tab is returned
+                                    for the Home (/) path. The RenderNavIcon recieves 
+                                    // the m.icon value and returns the matching material-ui component
+                                    // stored in the switch case.
 
-        <Grid item sm={10} lg={11}>
-            <Paper elevation={0} className={clsx(classes.root, classes.margin, classes.simplePaper)}>
-                <LogoLarge gutterBottom/>
-            </Paper>
-        </Grid>
-        <Grid item sm={2} lg={1}>
-            <LogoutButton className={classes.uxButton}/>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Grid container justify="center">
-                <Grid item xs={12} sm={12} md={12} lg={12}>                   
-                    <Paper elevation={2} className={clsx(classes.navPaper)}>
-                        <Tabs
-                        value={value}
-                        indicatorColor="primary"
-                        onChange={handleNavChange}
-                        centered
-                        >
-                            {/* Map method is called on the NavList array of objects.
-                                The forward slash (/) is removed from each objects'
-                                path key value, if the labelName variable equals
-                                an empty string, a Tab is returned
-                                for the Home (/) path. The RenderNavIcon recieves 
-                                // the m.icon value and returns the matching material-ui component
-                                // stored in the switch case.
-
-                            */}
-                        {newNavList.map((m) => {
-                            const labelName = m.path.replace('/', '');
-                            const labelIcon = m.icon;
-                            if (labelName === "") {
-                                return <Tab key="home" icon={RenderNavIcon(labelIcon)} label="home" />
-                            } else {
-                                return <Tab key={labelName} icon={RenderNavIcon(labelIcon)} label={labelName} />
-                            }
-                        })}
-                        </Tabs>
-                    </Paper>
+                                */}
+                            {newNavList.map((m) => {
+                                const labelName = m.path.replace('/', '');
+                                const labelIcon = m.icon;
+                                if (labelName === "") {
+                                    return <Tab key="home" icon={RenderNavIcon(labelIcon)} label="home" />
+                                } else {
+                                    return <Tab key={labelName} icon={RenderNavIcon(labelIcon)} label={labelName} />
+                                }
+                            })}
+                            </Tabs>
+                        </Paper>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
         </Grid>
         </>
     )

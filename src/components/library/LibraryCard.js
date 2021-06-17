@@ -13,6 +13,12 @@ import clsx from "clsx";
 // Declare variable to import material-ui components and specify local theme overrides 
 const useStyles = makeStyles((theme) => ({
     root: {
+        "&.MuiFab-base": {
+            width: '2.5rem',
+            height: '2.5rem',
+        },
+    },
+    base: {
         margin: theme.spacing(1),
         color: theme.palette.secondary.dark,
     },
