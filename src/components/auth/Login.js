@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         width: '100%',
     },
+    heroImgBackground: {
+        color: '#011703',
+    }
 }))
 
 // Declare local component to display an alert modal when envoked
@@ -113,13 +116,14 @@ export const Login = props => {
         <main className="container--login">
             <ModalAlert open={open} onClose={handleAlertClose} />
             <Grid container spacing={1} alignItems="center" justify="center">
-                <Grid item xs={1} sm={4} md={6}>
-                    <Paper elevation={6}>
+                <Grid item xs={3} sm={4} md={6}>
+                    <Paper className={classes.heroImgBackground} elevation={6}>
                         <section className="background-hero--div">
+                            <div className="background-hero"></div>
                         </section>
                     </Paper>
                 </Grid>
-                <Grid item xs={1} sm={4} md={6}>
+                <Grid item xs={3} sm={4} md={6}>
                     <section>
                         <form onSubmit={handleLogin}>
                             <div className={classes.logoContainer}>

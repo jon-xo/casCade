@@ -48,17 +48,32 @@ fieldset {
 
 .container--login {
     text-align: center;
+    width: 99vw;
+    overflow: hidden;
 }
 
 .background-hero--div {
     width: auto;
-    height: 100vh;
-    background-position-x: left;
-    background-image: url(../../assets/arcade-splash-banner.jpg);
+    min-height: calc(99vh + .8rem);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #011703;
+    z-index: 0;
+    overflow-x: hidden;
+}
+
+.background-hero {
+    width: 99vw;
+    height: 100vh; 
+    /* background-position-x: left; */
+    /* background-position: center; */
+    background-image: url(../../assets/arcade-splash-banner-blur.jpg);
     background-size: 110rem 85rem;
     z-index: 1;
-    background-blend-mode: overlay;
+    /* background-blend-mode: overlay; */
     background-repeat: no-repeat;
+
 }
 
 .form--login {
@@ -70,6 +85,7 @@ fieldset {
     background-color: hsla(0,0%,100%,0.40);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .buttonLink {

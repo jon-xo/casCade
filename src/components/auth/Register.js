@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         width: '100%',
     },
+    heroImgBackground: {
+        color: '#011703',
+    }
 }))
 
 // Declare local component to display an alert modal when envoked
@@ -133,13 +136,13 @@ export const Register = (props) => {
 
     // Register page is rendered with ModalAlert and ToggleButton components
     return (
-        <main style={{ textAlign: "center" }}>
-
+        <main className="container--login" >
             <UserDupeAlert open={open} onClose={handleAlertClose} />
             <Grid container spacing={1} alignItems="center" justify="center">
-                <Grid item xs={1} sm={4} md={6}>
-                    <Paper elevation={4}>
+                <Grid item xs={3} sm={4} md={6}>
+                    <Paper className={classes.heroImgBackground} elevation={6}>
                         <section className="background-hero--div">
+                            <div className="background-hero"></div>
                         </section>
                     </Paper>
                 </Grid>
