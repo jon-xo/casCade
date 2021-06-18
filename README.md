@@ -56,7 +56,7 @@ Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test
 
 ## Footnotes
 - <b id="f1">[1]</b> Heroku will periodically cycle apps into a [sleep state](https://blog.heroku.com/app_sleeping_on_heroku), please allow an additional moment on first load.  [↩](#a1)
-- <b id="f1">[2]</b> Heroku will reset the `json-server` database to its default state from time to time, expect all demo account data to be removed.
+- <b id="f2">[2]</b> Heroku will reset the `json-server` database to its default state from time to time, expect all demo account data to be removed.  [↩](#a2)
 
 ---
 ...in progress
