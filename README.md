@@ -21,7 +21,7 @@ Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test
 1.  Download and install [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
     - If Node.js and npm are already installed, use `node -v && npm -v` to check the version and verify that both versions are `v10.24.1` & `6.14.13` or greater.
     - If the version is older than the minimum requirement, update to the latest stable version of [node](https://docs.npmjs.com/try-the-latest-stable-version-of-node) & [npm](https://docs.npmjs.com/try-the-latest-stable-version-of-npm).
-2. Use `https` or `SSH` to clone the project folder to a local directory:
+2. Use [https or SSH](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/about-authentication-to-github#authenticating-with-the-command-line) to clone the project folder to a local directory:
     ```Bash
     $ git clone ...
     ```
@@ -37,9 +37,9 @@ Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test
     ```Bash
     $ cd .. && mkdir ./casCade-database && cp ../casCade/api-base/database.json ./casCade-database
     ```
-6. Change to the casCade-database directory and launch JSON Server:
+6. Move qto the casCade-database directory and launch JSON Server:
     ```Bash
-    $ json-server --watch default-entries.json --port 8088
+    $ cd ./casCade-database && json-server --watch default-entries.json --port 8088
     ```
 7.  Use your preferred code editor to find & replace the string `https://cascade-app.herokuapp.com/` with `http://localhost:8088/` in the following files:
     - `./src/components/auth/Login.js`
@@ -51,6 +51,15 @@ Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test
     ```
 9. Once casCade loads in the browser, click the Register tab to sign up for a new account and login.
 
+## Usage
+
+casCade is comprised of four sections:
+- Home
+- Library
+- Favorites
+- Search
+
+### Home
 
 ---
 
@@ -60,3 +69,6 @@ Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test
 
 ---
 ...in progress
+
+
+A classic arcade single-page web application built using React.js, RESTful APIs, and Material-UI.
