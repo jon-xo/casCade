@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         width: '100%',
     },
+    heroImgBackground: {
+        color: '#011703',
+    }
 }))
 
 // Declare local component to display an alert modal when envoked
@@ -133,98 +136,99 @@ export const Register = (props) => {
 
     // Register page is rendered with ModalAlert and ToggleButton components
     return (
-        <main style={{ textAlign: "center" }}>
-
+        <main className="container--login" >
             <UserDupeAlert open={open} onClose={handleAlertClose} />
             <Grid container spacing={1} alignItems="center" justify="center">
                 <Grid item xs={1} sm={4} md={6}>
-                    <Paper elevation={4}>
+                    <Paper className={classes.heroImgBackground} elevation={6}>
                         <section className="background-hero--div">
+                            <div className="background-hero"></div>
                         </section>
                     </Paper>
                 </Grid>
                 <Grid item xs={11} sm={8} md={6}>
-                    <form autoComplete="on" onSubmit={handleRegister}>
-                        <div className={classes.logoContainer}>
-                            <LogoLarge />
-                        </div>
-                        <UserAuthToggle gutterBottom/>
-                        <Typography variant="h5" gutterBottom>
-                        Create your account
-                        </Typography>
-                        <Grid >
-                            <Grid item md={12}>
-                                <FormControl className={clsx(classes.margin, classes.textField)}>
-                                    <fieldset>
-                                        {/* <InputLabel htmlFor="firstName--input"> First Name </InputLabel> */}
-                                        <TextField inputRef={firstName} type="text"
-                                            variant="outlined"
-                                            label="First Name"
-                                            name="firstName"
-                                            id="firstName--input"
-                                            className="form-control form-register-name"
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment className={classes.InputAdornment} position="start">
-                                                        <AccountCircle />
-                                                    </InputAdornment>
-                                                )
-
-                                            }}
-                                            placeholder="First name" required autoFocus />
-                                    </fieldset>
-                                </FormControl>
+                    <span className="form--container">
+                        <form autoComplete="on" onSubmit={handleRegister}>
+                            <div className={classes.logoContainer}>
+                                <LogoLarge />
+                            </div>
+                            <UserAuthToggle gutterBottom/>
+                            <Typography variant="h5" gutterBottom>
+                            Create your account
+                            </Typography>
+                            <Grid >
+                                <Grid item md={12}>
+                                    <FormControl className={clsx(classes.margin, classes.textField)}>
+                                        <fieldset>
+                                            {/* <InputLabel htmlFor="firstName--input"> First Name </InputLabel> */}
+                                            <TextField inputRef={firstName} type="text"
+                                                variant="outlined"
+                                                label="First Name"
+                                                name="firstName"
+                                                id="firstName--input"
+                                                className="form-control form-register-name"
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment className={classes.InputAdornment} position="start">
+                                                            <AccountCircle />
+                                                        </InputAdornment>
+                                                    )
+                                                }}
+                                                placeholder="First name" required autoFocus />
+                                        </fieldset>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item md={12}>
+                                    <FormControl className={clsx(classes.margin, classes.textField)}>
+                                        <fieldset>
+                                            {/* <InputLabel htmlFor="lastName--input"> Last Name </InputLabel> */}
+                                            <TextField inputRef={lastName} type="text"
+                                                variant="outlined"
+                                                label="Last Name"
+                                                name="lastName"
+                                                id="lastName--input"
+                                                className="form-control form-register-name"
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment className={classes.InputAdornment} position="start">
+                                                            <AccountCircle />
+                                                        </InputAdornment>
+                                                    )
+                                                }}
+                        
+                                                placeholder="Last name" required />
+                                        </fieldset>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item md={12}>
+                                    <FormControl className={clsx(classes.margin, classes.textField)}>
+                                        <fieldset>
+                                            {/* <InputLabel htmlFor="inputEmail"> Email address </InputLabel> */}
+                                            <TextField inputRef={email} type="email"
+                                                variant="outlined"
+                                                label="Email address"
+                                                name="email"
+                                                id="inputEmail"
+                                                className="form-control form-register-name"
+                                                placeholder="Email address"
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment className={classes.InputAdornment} position="start">
+                                                            <Email />
+                                                        </InputAdornment>
+                                                    )
+                                                }}
+                                                required />
+                                        </fieldset>
+                                    </FormControl>
+                                </Grid>
+                                <fieldset>
+                                    <Button className="buttonLoginRegister" variant="contained" color="primary" type="submit"> Sign in </Button>
+                                </fieldset>
                             </Grid>
-                            <Grid item md={12}>
-                                <FormControl className={clsx(classes.margin, classes.textField)}>
-                                    <fieldset>
-                                        {/* <InputLabel htmlFor="lastName--input"> Last Name </InputLabel> */}
-                                        <TextField inputRef={lastName} type="text"
-                                            variant="outlined"
-                                            label="Last Name"
-                                            name="lastName"
-                                            id="lastName--input"
-                                            className="form-control form-register-name"
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment className={classes.InputAdornment} position="start">
-                                                        <AccountCircle />
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                            
-                                            placeholder="Last name" required />
-                                    </fieldset>
-                                </FormControl>
-                            </Grid>
-                            <Grid item md={12}>
-                                <FormControl className={clsx(classes.margin, classes.textField)}>
-                                    <fieldset>
-                                        {/* <InputLabel htmlFor="inputEmail"> Email address </InputLabel> */}
-                                        <TextField inputRef={email} type="email"
-                                            variant="outlined"
-                                            label="Email address"
-                                            name="email"
-                                            id="inputEmail"
-                                            className="form-control form-register-name"
-                                            placeholder="Email address"
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment className={classes.InputAdornment} position="start">
-                                                        <Email />
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                            required />
-                                    </fieldset>
-                                </FormControl>
-                            </Grid>
-                            <fieldset>
-                                <Button variant="contained" color="primary" type="submit"> Sign in </Button>
-                            </fieldset>
-                        </Grid>
-                    
-                    </form>
+                        
+                        </form>
+                    </span>
                 </Grid>
             </Grid>
         </main>

@@ -48,28 +48,41 @@ fieldset {
 
 .container--login {
     text-align: center;
+    width: 99vw;
+    overflow: hidden;
 }
 
 .background-hero--div {
     width: auto;
-    height: 100vh;
-    background-position-x: left;
-    background-image: url(../../assets/arcade-splash-banner.jpg);
-    background-size: 110rem 85rem;
-    z-index: 1;
-    background-blend-mode: overlay;
-    background-repeat: no-repeat;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #011703;
+    z-index: 0;
+    overflow: hidden;
 }
 
-.form--login {
-    background-position-x: right;
-    /* background-image: url(logo.png); */
+.background-hero {
+    width: 99vw;
+    height: 100vh; 
+    background-image: url(../../assets/arcade-splash-banner-blur.jpg);
+    background-size: 110rem 85rem;
     z-index: 1;
-    min-height: 25rem;
-    min-width: 45rem;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+}
+
+.form--container {
     background-color: hsla(0,0%,100%,0.40);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.buttonLoginRegister {
+    width: 11.5rem;
+
 }
 
 .buttonLink {

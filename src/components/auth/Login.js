@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         width: '100%',
     },
+    heroImgBackground: {
+        color: '#011703',
+    }
 }))
 
 // Declare local component to display an alert modal when envoked
@@ -113,14 +116,15 @@ export const Login = props => {
         <main className="container--login">
             <ModalAlert open={open} onClose={handleAlertClose} />
             <Grid container spacing={1} alignItems="center" justify="center">
-                <Grid item xs={1} sm={4} md={6}>
-                    <Paper elevation={6}>
+                <Grid item xs={2} sm={4} md={6}>
+                    <Paper className={classes.heroImgBackground} elevation={6}>
                         <section className="background-hero--div">
+                            <div className="background-hero"></div>
                         </section>
                     </Paper>
                 </Grid>
-                <Grid item xs={1} sm={4} md={6}>
-                    <section>
+                <Grid item xs={10} sm={8} md={6}>
+                    <section className="form--container">
                         <form onSubmit={handleLogin}>
                             <div className={classes.logoContainer}>
                                 <LogoLarge />
@@ -149,7 +153,7 @@ export const Login = props => {
                                 </FormControl>
                             </fieldset>
                             <fieldset>
-                                <Button variant="contained" color="primary" type="submit">
+                                <Button className="buttonLoginRegister" variant="contained" color="primary" type="submit">
                                     Sign in
                                 </Button>
                             </fieldset>
@@ -157,7 +161,7 @@ export const Login = props => {
                     </section>
                     <section className="link--register">
                         <Link to="/register" className="buttonLink">
-                            <Button variant="contained" color="secondary">
+                            <Button className="buttonLoginRegister" variant="contained" color="secondary">
                                 Not a member yet?
                             </Button>
                         </Link>
