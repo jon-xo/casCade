@@ -12,9 +12,9 @@ This application offers multiple views to access the game library, including Lib
 
 ### Online Demo
 
-A working demo is available on Heroku at [https://cascade-app.herokuapp.com/](https://cascade-app.herokuapp.com/).
+A working demo is available on Heroku<sup id="a1">[1](#f1)</sup> at [https://cascade-app.herokuapp.com/](https://cascade-app.herokuapp.com/).
 
-Use the email address `test@test` to login and browse the app.
+Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test@test.com` to login and browse the app.
 
 ### Local Installation
 
@@ -37,7 +37,7 @@ Use the email address `test@test` to login and browse the app.
     ```Bash
     $ cd .. && mkdir ./casCade-database && cp ../casCade/api-base/database.json ./casCade-database
     ```
-6. Change to the `casCade-database` directory and launch `json-server`:
+6. Change to the casCade-database directory and launch JSON Server:
     ```Bash
     $ json-server --watch default-entries.json --port 8088
     ```
@@ -51,6 +51,12 @@ Use the email address `test@test` to login and browse the app.
     ```
 9. Once casCade loads in the browser, click the Register tab to sign up for a new account and login.
 
+
+---
+
+## Footnotes
+- <b id="f1">[1]</b> Heroku will periodically cycle apps into a [sleep state](https://blog.heroku.com/app_sleeping_on_heroku), please allow an additional moment on first load.  [↩](#a1)
+- <b id="f1">[2]</b> Heroku will reset the `json-server` database to its default state from time to time, expect all demo account data to be removed.
 
 ---
 ...in progress
