@@ -1,70 +1,56 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![casCade Logo with Internet Arcade citation](./src/assets/documentation/casCade-Logo-sc.png)
+# [casCade &#8211; A Classic Arcade Web App](https://cascade-app.herokuapp.com/)
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+CasCade is a classic arcade single-page application. This application provides an intuitive front-end layout powered by Archive.org’s Internet Arcade collection. I made this application to provide an easy-to-use, inviting design that allows users to access and play their arcade favorites. 
 
-### `yarn start`
+This application offers multiple views to access the game library, including Library, Favorites, Search, and Shuffle. This app was built using React, RESTful APIs via [json-server](https://github.com/typicode/json-server), [notistack notification library](https://github.com/iamhosseindhv/notistack), and styled with [Material-UI](https://github.com/mui-org/material-ui).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Online Demo
 
-### `yarn test`
+A working demo is available on Heroku at [https://cascade-app.herokuapp.com/](https://cascade-app.herokuapp.com/).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Use the email address `test@test` to login and browse the app.
 
-### `yarn build`
+### Local Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  Download and install [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+    - If Node.js and npm are already installed, use `node -v && npm -v` to check the version and verify that both versions are `v10.24.1` & `6.14.13` or greater.
+    - If the version is older than the minimum requirement, update to the latest stable version of [node](https://docs.npmjs.com/try-the-latest-stable-version-of-node) & [npm](https://docs.npmjs.com/try-the-latest-stable-version-of-npm).
+2. Use `https` or `SSH` to clone the project folder to a local directory:
+    ```Bash
+    $ git clone ...
+    ```
+3. From the cloned project directory:
+    ```Bash
+    $ npm install
+    ```
+4. Install the JSON Server node package:
+    ```Bash
+    $ npm install -g json-server
+    ```
+5. Navigate ⬆ up from the cloned project one directory level, create a new directory and copy the default database.json file:
+    ```Bash
+    $ cd .. && mkdir ./casCade-database && cp ../casCade/api-base/database.json ./casCade-database
+    ```
+6. Change to the `casCade-database` directory and launch `json-server`:
+    ```Bash
+    $ json-server --watch default-entries.json --port 8088
+    ```
+7.  Use your preferred code editor to find & replace the string `https://cascade-app.herokuapp.com/` with `http://localhost:8088/` in the following files:
+    - `./src/components/auth/Login.js`
+    - `./src/components/auth/Register.js`
+    - `./src/components/favorites/FavoritesProvider.js`
+8. From the project root directory, run the following:
+    ```Bash
+    $ npm start
+    ```
+9. Once casCade loads in the browser, click the Register tab to sign up for a new account and login.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+...in progress
