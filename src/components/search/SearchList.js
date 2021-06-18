@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Typography, Paper, LinearProgress } from "@material-ui/core";
+import React, { useEffect, useContext } from "react";
+import { Typography, Paper, LinearProgress, Grid } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { SearchCard } from "./SearchCards";
 import { SearchContext } from "./SearchProvider";
@@ -91,56 +91,65 @@ const SearchProgress = withStyles((theme) => ({
 
 export const SearchList = () => {
 
-    const { results, responseHeaders } = useContext(SearchContext)
-    const [ searchReady, setSearchReady ] = useState(false);
+    const { searchReady, setSearchReady, results, responseHeaders, pageLoaded, setPageLoaded } = useContext(SearchContext)
     const classes = useStyles();
 
     useEffect(() => {
-        if(!results.length)
-        {
+        if(results.length > 0 && responseHeaders) {
             setSearchReady(true)
+        } else if (pageLoaded === undefined) {
+            setSearchReady(true)
+        } else {
+            setSearchReady(false)
         }
-    }, [results])
+        // eslint-disable-next-line
+    }, [searchReady, results])
+
+    useEffect(() => {
+        setPageLoaded(undefined);
+    }, [setPageLoaded])
     
     return (
         <>  <div className={classes.paperContainer}>
                 {results.length > 0 ? 
                     <Paper elevation={4} className={classes.paper}>
-                        <Typography variant="body1" className={clsx(classes.strong, classes.typeOffset)}>{results.length }</Typography><Typography variant="body1"> matches found.</Typography>
+                        <Typography variant="body1" className={clsx(classes.strong, classes.typeOffset)}>{results.length }</Typography><Typography variant="body1"> matches found</Typography>
                     </Paper>
                     : 
                     <Typography></Typography>
                 }
-                { results.length === 0 ?
+                { results.length === 0 && searchReady ?
                     responseHeaders.QTime > 1 ?
                     <Paper elevation={4} className={classes.paper}>
-                        <Typography variant="body1" className={clsx(classes.strong)}>No matches found.</Typography>
+                        <Typography variant="body1" className={clsx(classes.strong)}>No matches found</Typography>
                     </Paper>: 
                     <Typography></Typography>
                     :
                     <Typography></Typography>
                 }
                 {
-                    results === [] && responseHeaders === [] ? 
+                    !results && !responseHeaders ? 
                     <Paper elevation={4} className={classes.bluePaper}>
-                        <Typography variant="body1" className={clsx(classes.strong)}>Find a game!</Typography>
+                        <Typography variant="body1" className={clsx(classes.strong)}>Search for a game!</Typography>
                     </Paper>
                     :
                     <Typography></Typography>
                 }                            
             </div>
-            <div className={classes.cardContainer}>
-                {searchReady
-                    ?
-                    results.map((gameQuery) => {                 
-                        return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery}/>
-                    })
-                    :
-                    <div className={classes.statusContainer}>
-                        <SearchProgress />                   
-                    </div>
-                }
-            </div>
+            <Grid>
+                <div className={classes.cardContainer}>                    
+                    {// eslint-disable-next-line
+                    searchReady && responseHeaders && pageLoaded !== undefined || !pageLoaded ?
+                        results.map((gameQuery) => {
+                            return <SearchCard key={`${gameQuery.identifier}--searchCard`} game={gameQuery}/>
+                        })
+                        :
+                        <div className={classes.statusContainer}>
+                            <SearchProgress />
+                        </div>
+                    }
+                </div>
+            </Grid>
         </>
     )
 
