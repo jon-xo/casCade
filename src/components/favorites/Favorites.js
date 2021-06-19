@@ -63,33 +63,6 @@ export const FavBanner = () => {
 };
 
 
-export const LibraryBanner = () => {
-    const classes = useStyles();
-
-    return (
-        <>
-
-            <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                >
-                    <Grid item>
-                        <Paper className={classes.titlePaper}>
-                            <Typography variant="h3" className={classes.iconText}>Library</Typography>
-                            <Typography variant="body1" className={classes.iconText}>Browse all titles</Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item>
-                    </Grid>
-                </Grid>
-        
-        </>
-    )
-};
-
-
 export const Favorites = () => {
 
     return (

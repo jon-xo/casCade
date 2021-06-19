@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { SearchBar } from "./SearchBar";
 import "../Cascade.css";
+import clsx from "clsx"
 
 
 // Declare variable to import material-ui components and specify local theme overrides 
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         }
+    },
+    searchContainer: {
+        minWidth: '50vw',
+        maxWidth: '95vw',
     }
 }))
 
@@ -25,13 +30,14 @@ export const Search = () => {
     
     return (
         <>
-            <div classes={classes.root}>
+            <div>
                 <Grid
                     container 
                     direction="row"
                     justify="center"
                     alignItems="center"
                     spacing={3}
+                    className={clsx(classes.searchContainer)}
                 >
                     <Grid item xs={10}>
                         <SearchBar />
