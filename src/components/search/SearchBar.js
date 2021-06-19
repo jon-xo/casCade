@@ -89,24 +89,24 @@ const useStyles = makeStyles((theme) => ({
     inputText: {
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
+        //transition: theme.transitions.create('width'),
         // width: '45%',
         [theme.breakpoints.up('sm')]: {
-            width: '30vw',
+            width: '60vw',
             '&:focus': {
                 width: '48vw',
             }
         },
         [theme.breakpoints.up('md')]: {
-            width: '30vw',
+            width: '60vw',
             '&:focus': {
                 width: '54vw',
             }
         },
         [theme.breakpoints.up('lg')]: {
-            width: '30vw',
+            width: '60vw',
             '&:focus': {
-                width: '62vw',
+                width: '22vw',
             }
         }
     },
@@ -189,7 +189,7 @@ const QueryAlert = (props) => {
 export const SearchBar = (props) => {
     // API provider is received via useContext
     // and imported as deconstructed object.
-    const { getSearchResults } = useContext(SearchContext)
+    const { setResults, getSearchResults, setSearchReady, setPageLoaded } = useContext(SearchContext)
     
     // queryEvent state used for search string is declared
     // as an empty string
@@ -210,6 +210,9 @@ export const SearchBar = (props) => {
         // outgoing state prevents useEffect from accessing
         // the API on initial page load. 
         if(outgoing === true) {
+            setResults([]);
+            setSearchReady(false)
+            setPageLoaded(false)
             getSearchResults(queryEvent)
             .then(() => {   
                 // SearchRouter stores current path object
@@ -224,8 +227,10 @@ export const SearchBar = (props) => {
             // Function then returns outgoing state back
             // to false via setOutgoing
             .then(setOutgoing(false))
+            .then(setSearchReady(true))
+            .then(setPageLoaded(true))
         }
-    }, [outgoing, getSearchResults, history, queryEvent])
+    }, [outgoing, getSearchResults, history, queryEvent, setPageLoaded, setSearchReady, setResults])
     
     // On input change, the input value is passed to the encodeURIcomponent method
     // and recives URL encoding before it is used in API call.
