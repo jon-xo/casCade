@@ -2,6 +2,19 @@
 ![casCade Logo with Internet Arcade citation](./src/assets/documentation/casCade-Logo-sc.png)
 # [casCade &#8211; A Classic Arcade Web App](https://cascade-app.herokuapp.com/)
 
+## Table of Contents
+  - [About](#about)
+  - [Getting Started](#getting-started)
+     - [Online Demo](#online-demo)
+     - [Local Installation](#local-installation)
+   - [Usage](#usage)
+     - [Home](#home)
+     - [Library](#library)
+     - [Favorites](#favorites)
+     - [Search](#search)
+     - [Game Player](#game-player)
+   - [Footnotes](#footnotes)
+
 ## About
 
 CasCade is a classic arcade single-page application. This application provides an intuitive front-end layout powered by Archive.org’s Internet Arcade collection. I made this application to provide an easy-to-use, inviting design that allows users to access and play their arcade favorites. 
@@ -53,34 +66,51 @@ Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test
 
 ## Usage
 
-casCade is comprised of four sections:
+casCade is comprised of five sections:
 - Home
 - Library
 - Favorites
 - Search
+- Game Player
 
 ### Home
 ![casCade Home View](./src/assets/documentation/cas-home-rm.png)
 
+Home provides basic getting started instructions, a minified search bar and shuffle option.
+
+Using the search affordance will redirect you to the Search view to view the results. The shuffle option will select a game at random and load the game player.
 
 ### Library
 ![casCade Library View](./src/assets/documentation/cas-library-rm.png)
 
+Library provides a list of titles available from the Internet Arcade collection. To optimize the application, library results are limited to 150. This can be altered in the `LibraryList` react hook, located in `./src/components/library/Library`.
+
+Game cards contain game details, notes, and favorite status. Game details include release date and publisher and category. If available, user notes are also displayed. The favorites button will add a game to the current user's favorites, if a title has already been added, this option will allow the user to redirect to the game title in favorites.
 
 ### Favorites
 ![casCade Favorites View](./src/assets/documentation/cas-favorites-rm.png)
 
+The Favorites view provides the same options as the Library view, with the addition of being able to add and edit notes and remove titles from the Favorites list.
+
+Once a title is successfully modified, the browser displays a toast-style notification in the lower right-hand corner.
+
 ## Search
 ![casCade Search View](./src/assets/documentation/cas-search-rm.png)
+
+The Search view allows users to locate games by title and view any associated results. If the game does not exist in the database, the page will confirm that no matching results are found.
+
+The Game cards provide the same features as the Library view.
+
+## Game Player
+
+![Game Player View](./src/assets/documentation/cas-player-rm.png)
+
+Clicking the play button on any game card or using the Shuffle option will load the selected game to the player.
+
+Selecting the power button above the game preview will load the game in the embedded emulator. The help button in the upper right corner will provide basic game controls. Game details are also available in the player.
 
 ---
 
 ## Footnotes
 - <b id="f1">[1]</b> Heroku will periodically cycle apps into a [sleep state](https://blog.heroku.com/app_sleeping_on_heroku), please allow an additional moment on first load.  [↩](#a1)
 - <b id="f2">[2]</b> Heroku will reset the `json-server` database to its default state from time to time, expect all demo account data to be removed.  [↩](#a2)
-
----
-...in progress
-
-
-A classic arcade single-page web application built using React.js, RESTful APIs, and Material-UI.
