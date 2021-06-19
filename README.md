@@ -60,6 +60,18 @@ casCade is comprised of four sections:
 - Search
 
 ### Home
+![casCade Home View](./src/assets/documentation/cas-home-rm.png)
+
+
+### Library
+![casCade Library View](./src/assets/documentation/cas-library-rm.png)
+
+
+### Favorites
+![casCade Favorites View](./src/assets/documentation/cas-favorites-rm.png)
+
+## Search
+![casCade Search View](./src/assets/documentation/cas-search-rm.png)
 
 ---
 
